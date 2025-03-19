@@ -1,0 +1,39 @@
+Cache
+
+- @EnableCaching
+- Types
+	- inmemory
+	- ditributed using Redis
+		- spring.cache.type=redis
+		- spring-boot-starter-data-redis
+	
+	
+	
+- @Cacheable(value="",key="")
+	- using concurrentHashmap
+- @CachePut
+	- for update [cache is updated with latest value]
+- @CacheEvict
+	- for delete [deleted item is deleted from Cache]
+	
+Logging
+--------
+- bydeafault logback - impl is Sl4j is used
+	- loggerfactory.getLogger
+- other log4j2
+- levels
+	- FATAL
+	- ERROR
+	- WARN
+	- INFO
+	- DEBUG
+	- TRACE
+	- logging.level.root=debug
+	- logging.level.com.deepak.service=trace
+- @Sl4j from lombok.sl4j
+	- log.info
+	
+Pergormance
+-----------
+- jprofiler
+- Jmeter

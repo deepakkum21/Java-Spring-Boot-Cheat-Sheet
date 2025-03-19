@@ -1,0 +1,379 @@
+Maven
+	- project managment via POM
+	- Lifecycle [validate,compile, test, package, verify, install, deploy]
+	- each has goals, new goal can be added via <plugins> <phase><goal>
+	- any of the phase prior phase and all its goals run
+	
+Servlet
+	- servlet container
+	- web.xml
+		- servlet mapping
+		
+Custom Annotation
+	- public @interface CustomAnnotationName
+	- method target
+		- no parameter, no body
+		- retrun type primitive, string, array, enum
+		
+	@Target(ElementType.METHOD)
+	@Retention(RetentionPolicy.RUNTIME)
+	public @interface CustomAnnotation {
+		String key() default "mydefaultName";
+	}
+	
+	@CustomAnnotation(key="newOverrideKey")
+	
+Meta Annotation property
+	- @Target({ElementType.METHOD,ElementType.CLASS
+		- where the annotation can be applied [method,class,constructor , parameter, field, type(class, enum, interface)]
+	- @Retention({RetentionPolicy.SOURCE})
+		- how particular amnotation will be stored
+			- RetentionPolicy.SOURCE: discarded by compiler, only for readability
+			- RetentionPolicy.CLASS: recorded in .class file but ignored by JVM runtime
+			- RetentionPolicy.RUNTIME : recorded in .class file also available during runtime
+
+Spring MVC
+Mannualy deploy to servlet container [war/jar]
+	1. request comes to tomcat[servlet container]
+	2. gets forwarded to dispatcher servlet
+	3. choose the correct controller using HandlerMapping
+	4. then IOC
+	5. invokes the controller mapping
+	6. retuns the response
+Extend one DispatcherInitializer
+@EnableWebMVC
+@ComponentScan
+@Configuration
+
+SPING BOOT	
+----------
+1. Dependency Managment [no need to mention version]
+	- spring-boot-starter-parent <spring boot version>
+	- spring-boot-starter-web
+2. Auto configuration
+	- no need to DispatcherInitializer
+	- adds @EnableAutoConfiguration, @ComponentScan,@SpringBootConfiguration, if property is provided it configures datasource 	
+3. Auto deployment to embeded Tomcat
+4. Helps to create prod ready app quickly
+5. Spring Boot DevTools
+6. Actuator
+7. cli 
+
+	= All anotations are resolved though REFLECTION
+	
+@SpringBootApplication
+	@EnableAutoConfiguration
+	@ComponentScan
+	@SpringBootConfiguration
+		- run(class, args)
+		
+@RestController [@controller + @ResponseBody]
+	- if only @Controller is present no @ResponseBody then spring will try to find a view of the returned value[value.jsp]
+
+@RequestMapping [@Mapping]
+	- value/path, method
+	
+@RequestParam = queryy parameter 
+	- deafult is true
+	- to some kind of preprocesing before the params are assigned to arguments
+	  can run a CustomPropertyEditor [like to convert the dataType[custom] from string[default of querry param]
+	  
+@RequestBody
+	- Bind the body of HTTP request (typically JSON) to controller method parameter (java object).
+	
+@Component
+	- Class level anotation
+	- making the bean available for component scan
+	- cannot be created if class is outside spring container
+
+@Bean
+	- method level
+	- written inside @Configuration
+	- to register the bean in Application context explicitly
+	- can be created if class is outside spring container
+
+@ConditionalOnBean(beanName)
+	- if a particular beanName is present then only 
+	
+@ConditionalOnClass(class)
+	- if a particular class is present then only 
+	
+@ConditionalOnProperty(prefix,value, havingValue, matchIfMissing)
+	- if condition is satified then only create the bean
+	- mysql.enabled=true [prefix = mysql,value=enabled, havingValue=true, matchIfMissing={if mysql.enabled is not present in property file)
+	- make @Autowired(required=false)
+  adv
+	- toggling of feature
+	- reduce startup time
+	- reduce unnecessary creation of beans 
+  disadvantage
+	- overuse can make code complicated
+	- missconfiguration can happen
+
+@EnableGlobalMethodSecurity
+@EnableWebSecurity
+@PreAuthorize(hasRole(" ")) hasAuthority
+@EnableAspectJAutoProxy
+@AspectJ
+
+@Scope("singleton")
+- applied to any Spring-managed bean class (typically annotated with @Service, @Component, @Repository, or @Controller
+	- "singleton" (default)
+	- "prototype" :-  new instance of the bean is created every time it is requested
+	- "request": A new instance of the bean is created for each HTTP request
+	- "session": A new instance of the bean is created for each HTTP session
+	- "application": A single instance of the bean is created for the entire lifecycle of the Spring context
+	- "websocket": Similar to the request and session scopes, but it is used specifically in the context of WebSockets.
+  
+BEAN LIFECYCLE
+--------------
+- Instantiation: The Spring container creates the bean.
+- Dependency Injection: Spring injects dependencies into the bean (via constructor, setter, or field injection).
+- BeanPostProcessor Before Initialization: 
+	- postProcessBeforeInitialization() Allows you to modify the bean before initialization.
+- Initialization:
+	- Custom initialization methods (via @PostConstruct, InitializingBean[afterPropertiesSet()], or init-method).
+- BeanPostProcessor After Initialization: 
+	- postProcessAfterInitialization() Allows you to modify the bean after initialization.
+- Destruction: When the container is shut down, or the bean is no longer needed, Spring will destroy the bean and clean up any resources.
+	- @predestroy => cleanup
+	- implement DisposableBean Interface using destroy()
+	
+Dependency Injection
+--------------------
+1. Field Injection
+	- fields of the class
+	- using reflection
+	- easy to use
+  disadvantage
+	- cannot with immutable fields
+	- chances of NPE
+	
+	class B {
+		@Autowired
+		Order order }
+	
+2. Setter Injection
+	- @Autowired in setter method
+		@Autowired
+		void setOrder(Order order) {this order = order)}
+   Advan
+	- dependency can be changed wrt to implemented classes, what is passed after object creation
+	- can pass mock object for testing
+   Disad
+	- cannot make the property or field as immutable by using final
+
+3. Constructor Injection
+	- can create immutable using final
+	- dependency is resolved at the time of initialization of object
+	- [spring 4.3]when only one constrctor no need to use @Autowired on constructor
+	- fail fast exception causght at compile time
+	
+ISSUES with DI
+--------------
+1. Circular Dependency
+	- first refactor
+	- use @Lazy on field/setter/constrctor injection
+2. Unsatisfied Dependency
+	- @Primary when there are multiple implemenation classes of DI object
+	- @Qualifier("name") with @Autowired
+	
+Dynamic Creation of Bean
+------------------------
+1. Create obj with @Autowired and @Qualifier
+	- in the method check [param boolean ] check using if else which type if bean obj is required
+2. Via @Configuration create a @Bean via method
+	- same using param assign the value using @value for which type of bean required via if else and return with new Object
+
+@Transactional
+- follows ACID
+	- Atomicity - if any operation fails all successfull transaction shoud be rolled back
+	- Consistensy - ensures after db state after/before transaction should be consistent
+	- Isolation - if multiple transaction are happening in paralled , no one should interfear each other
+	- Duarbility - ensures committed data is not lost
+- uses AOP
+- spring-boot-started-data-jpa
+- @EnableTransactionManagement in main class // optional
+- class level
+	- applied to all public method
+	- not to private method
+- method level
+	- only to the particular method
+	
+Transaction Management
+----------------------
+	- Declarative [@Transactional]
+		- atomicity, rollback,propagation when multiple methods invoked
+		- Propagation type
+			- REQUIRED:  (default): If a transaction exists, use it; if not, create a new one
+			- REQUIRED_NEW:  Always create a new transaction, suspend the existing one if an
+			- NESTED: Execute the transaction in a nested fashion within an existing one.
+			- SUPPORTS: If a transaction exists, execute within the transaction. If no transaction exists, execute without a transaction.
+			- MANDATORY: If a transaction exists, execute within it. If no transaction exists, throw an exception (TransactionRequiredException).
+			- NOT_SUPPORTED: If a transaction exists, suspend it. Execute the method outside any transaction.
+			- NEVER; The method must not run within a transaction.If a transaction exists,an exception will be thrown (IllegalTransactionStateException)
+			
+		- Isolation	[default depends on DB used]: how changes made by one transaction is visible to transaction runing in parallel
+		
+									Dirty Read     Concurrency       Non-repeatable read problem       Phantom Read Problem
+									-------------------------------------------------------------------------------------------
+									value changed                 if same value is read multiple      getting different result using same querry when
+									without commit                times but gets different value       run another time , as before 2nd read someone 
+									is read                                                            inserted the data
+			- READ_UNCOMMITTED  -     Y               High              Y                               Y
+				- no read/write locks are acquired [shared/exclsuive lock]
+				- best for ONLY READ operations
+			- READ_COMMITTED          N               little less       Y                               Y
+				- read:Shared lock and released as soon as read is done
+				- write:Exclusive lock and is kept till end of transaction
+			- REPEATABLE_COMMITTED    N               little less       N                               Y
+				- read:Shared lock and is kept till end of transaction
+				- write:Exclusive lock and is kept till end of transaction
+			- SERILIZABLE             N               less              N                               N
+				- read:Shared lock and is kept till end of transaction
+				- write:Exclusive lock and is kept till end of transaction
+				
+	- Programatic [PlatformTransactionManager Interface]
+		- DataSourceTransactionManager: For JDBC-based transactions.
+		- JpaTransactionManager: For JPA (Java Persistence API) transactions.
+		- HibernateTransactionManager: For Hibernate transactions.
+	
+@EnableAsync [creates bean for async functionality]
+------------
+
+@Async [method level]
+	- used to mark method that should run asynchronously
+	- runs in a new thread without blocking main thread
+
+- if no ThreadPoolTaskExecutor is configured then spring creates one DEFAULT threadPoolTaskExecutor
+	- corePool = 8
+	- maxPool = Integer.MAX
+	- queueCapacity= Integer.MAX
+	- keepalive = 60
+  Disadvantage
+	- under utilization of thread since queue size is too big, new thread from max pool will not be created
+	- high latency
+	- thread exhaustion
+	- high memory usage
+- ThreadPoolTaskExecutor is a spring wrapper of ThreadPoolExecutor java
+
+- create Bean of threadPoolTaskExecutor 
+- if bean of java ThreadPoolExecutor is created then, spring will check if default threadPoolTaskExecutor, it will not find and 
+	SimpleAsyncTaskExecutor will be used, 
+		- which is not recomended as it keeps on creating new thread without using queue
+		- overhead of creating new threads which is costly
+- to use above java ThreadPoolExecutor  this when bean of java ThreadPoolExecutor is created, give a name @Bean('myThreadPoolExecutor')
+	and while @Async('myThreadPoolExecutor')
+- if you don't want the confusion of using by bean name and always want the deafult executor set by you [java /spring one]
+	- create a configuration and implement AsyncConfigurer
+		- getAsyncExecutor() and create ThreadPoolExecutor or ThreadPoolTaskExecutor
+		- remember since its not a Bean, therefor not singleton[ implement such that of sigleton]
+		
+Conditions for @Async to create new thread
+-------------------------------------------
+1. public method where @Async is used
+2. Different class: should be defined in different class from where it is invoked
+	- if not provided above 2 condition, because of AOP, interception will not work
+
+Challenges with @Async & @Transactional used togther
+---------------------------------------------------
+1. @Transactional is in different class and from there method is called where it is in different class with @Async 
+	- Transaction context is not transfered like Propagation level[REQUIRED,REQUIRED_NEW,NESTED] from caller thread to new thread
+2. @Transactional and @Async both are in same but the calling method is in different class having @Transactional too
+	- Transaction context of calling menthod will not be transafered to @Async method @Transactional [SUPPORTS/MANDATORY]
+	- always run in new transaction
+3. Recomended way
+	use @Async and then call method having @Transactional
+	
+@Async method return type
+-------------------------
+- future [now deprecated]
+- completableFuture [get()] wait to get the value
+
+Exception Handling
+------------------
+1. method having return type
+	-  when completableFuture.get() is invoked if exception present will get
+2. method returning void
+	- try catch where @Async used
+	- implement AsyncUncaughtExceptionHandler -> handleUncaughtException()
+		- Configure which implement AsyncConfigurer and override getAsyncUncaughtExceptionHandler return class having above AsyncUncaughtExceptionHandler
+		
+Interceptor
+-----------
+A. before reaching Controller
+	1. implement handlerInterceptor @Component
+		- preHandle(HttpServletRequest, HttpResponseRequest)=> boolean [if return false next interceptor or controller will nt be invoked]
+		- postHandle(HttpServletRequest, HttpResponseRequest)   // not excuted if exception
+		- afterCompletion(HttpServletRequest, HttpResponseRequest)  //similar to finally [it will execute if successful for exception)
+		
+	2. for which controller/api this custom interceptor should invode
+		- implement WebMVCConfigurer @Configuration
+		- register the interceptor by overriding addInterceptor
+			- registry.addInterceptor(myCustomInterceptor).addPathPatterns("api","..").excludePathPatterns("apiToBeExcluded","...")
+
+B. After Controller is invoked 
+	- using customAnnotation
+	- this interceptor @Component @AspectJ
+		- @Around("@annotation="customAnnotation")
+		
+Interceptor	
+	- are invoked after dispatcherServlet/servlet and before it reached controller
+	- order will be followed how they have been registered in Class implementing WebMVCConfigurer
+
+Filters
+-------
+	- are called for request and response before it reaches to dispatcherServlet/servlet
+	- like springsecurity
+	- implement Filter/onceperFilter
+		- init
+		- doFilter
+		- destroy
+	- filterChain.doFilter()  // to invoke next filters
+	- filter Registeration
+		- FilterRegisterationBean
+		- can add URLPattrens
+		- setOrder
+
+Repository [I]
+	- CrudRepository - return type is Iterator
+		- ListCrudRepository - return type List
+	- PageAndSortingRepository -  return type is Iterator
+		- ListPageAndSortingRepository-  - return type List
+    - JPARepository implement[ListCrudRepository & ListPageAndSortingRepository]
+	
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+		

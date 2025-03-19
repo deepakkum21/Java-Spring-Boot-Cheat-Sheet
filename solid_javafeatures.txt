@@ -1,0 +1,72 @@
+Liskov Substitution Principle (LSP)
+	- Objects of a superclass should be replaceable with objects of a subclass without affecting the correctness of the program.
+Interface Segregation Principle (ISP)
+	- Clients should not be forced to depend on interfaces they do not use
+Dependency Inversion Principle (DIP)
+	-  This principle encourages decoupling by making higher-level classes depend on interfaces or abstract classes rather than concrete classes. It helps reduce tight coupling between classes, making code more flexible and easier to maintain.
+
+Java 8
+- lamda
+- functional 
+- streams
+- default method in interfaces
+- completableFuture
+	
+JAVA 9
+- List.of("a","ab") -> immutableList
+- module creation
+- private method in inetrfaces
+
+JAVA 10
+- List.copyOf(list) -> immutableList
+- var -> local-Variable Type Inference
+
+JAVA 17
+- Sealed Classes => This helps in restricting the subclassing of a class, ensuring that only specific, predefined classes can extend or implement it, making the code more maintainable and secure.
+	public sealed class Shape permits Circle, Square {}
+- Pattern Matching switch
+	return switch (shape) {
+        case Triangle t && (t.getNumberOfSides() != 3) -> "This is a weird triangle";
+        case Circle c && (c.getNumberOfSides() != 0) -> "This is a weird circle";
+        default -> "Just a normal shape";
+    };
+
+JAVA 21
+- Virtual thread
+	- more light weight & can create millions of virtual threads
+	- cost efficient
+	- managed by JVM and not by platform
+- Pattren matching in switch improvements
+- Scoped Values
+	- Scoped values enable you to share data safely across different threads without the need for synchronization mechanisms like locks. This can be useful for applications that need to pass context (e.g., user data, session information) between different parts of a program running in different threads.
+
+- String Template
+	String name = "Java";
+String version = "21";
+String message = String templated: "The language is {name}, version {version}";
+System.out.println(message);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

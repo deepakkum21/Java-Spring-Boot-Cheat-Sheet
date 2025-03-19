@@ -1,0 +1,206 @@
+https://engineeringdigest.medium.com/multithreading-in-java-39f34724bbf6
+Thread State
+	- new
+	- runnable
+	- waiting
+	- interrpted
+	- terminated
+	
+method
+	- start
+	- sleep
+	- interrupt
+	- run
+	- join(threadName) = wait for thrradName thread to complete
+	- yield = give chance to anither thread
+	- setPriority
+	
+Interensic lock
+	- synchronised
+	   - to avoid deadlock use block level
+extrensic lock
+	- ReentrantLock
+	- ReentrantLockReadWriteLock
+
+Synchronised => to avoid chaningthe value by multiple threads
+	- method
+	- block (this)
+	
+	
+Lock [I] - ReentrantLock  [final black can call unblock)
+	- lock
+	- unlock
+	- trylock
+	- trylockwithtime - to wait till a particular time to get lock
+	- [to avoid deadlock]a thread can have its own lock again = no of lock should be = no of unlock
+	- lockInterruptibility - thread with lock can with interrupted
+	
+	Adavnt
+		- fairness
+		- lockInterruptibility
+		- read/write lock
+	
+lock fairness
+	- it maintains the order of request and to avoid starvation
+	- new ReentrantLock(true)
+	
+Read/write lock
+ReadWriteLock rwLock = new ReentrantLockReadWriteLock()
+	- has 2 locks
+		a. rwLock.readLock()  = this lock can be accuired by multiple thrads concurrently but if no writelock is accuired
+		b. rwLock.writeLock()
+		
+		
+Thread Communication  [can only be called from synchronised method/block]
+	- wait      = release the current accuired lock and wait till notify/notifyAll is called
+	- notify    = notifies a single thread who is waiting for that resource
+	- notifyAll = notifies all thread that are waiting
+		
+ThreadSafe
+	- when multiple threads are accessing with causing any unrelaible data or side effects
+	- STringBuffer
+	- concurrentHashMap
+	- ThreadLocal - thread to have its own isolated value
+	- Atomicity [AtomicInteger]
+	
+ThreadPool
+	why?
+		- resourceManagement
+		- increase in response time as no need to create thread from scratch
+		- controll over thread count, not creating infinite
+		
+Executors <java 5>
+	why?
+	- manual thread management
+	- resource management
+	- Scalability
+	- thread resuse
+	- error handling
+	
+	a. Executor[I]
+		- execute (Runnable) - void
+	
+	b. ExecutorService implements Executor => to create a FixedThreadPool
+		- submit(runnable) - returns Future
+		- execute (Runnable) - void
+		- submit(callable) - returns Future
+		- shutdownNow
+		- shutdown - waits for all the already submitted task
+		- awaitTermination(time)
+		- invokeAll(collection of Callables) - returns list of futures 
+		- invokeAny(collection of Callables) - returns when 1st task is completed and other task are cancelled
+		
+	c. ScheduleExecutorService implements ExecutorService
+		- schedule (runnable)
+		- schedule (callable
+		- scheduleAtFixedRate
+		- scheduleAtFixedDelay
+		
+	d. 
+		
+Future
+	- wants to returns when tasks are completed
+	- isCancelled
+	- cancel(boolean) - true[cancel if it is running)
+	- isDone
+	- get = blocks till result is get from future
+	
+ThreadPoolTypes
+- Execuotrs.newCachedThreadPool
+	- it is a synchronous queue
+	- if all threads are busy, create a new one and add to pool
+	- if any thread is ideal for specific time 60 sec, kill that thread
+	- used for small tasks
+- Execuotrs.SingleThreadExecutor
+	- same as FixedThreadPool, but with 1 thread
+	- want exceution in order
+- Execuotrs.FixedThreadPool
+- Execuotrs.ScheduleThreadPool
+- Execuotrs.newVirtualThreadPerTaskExecutor [java21]
+	- thread.ofVirtual().start(()-> task)
+
+CountDownLatch
+	- count()
+	- used to make the main thread wait till all the task are completed, instead of calling future.get on each excuterService.
+	- once count becomes 0 cannot be reused again
+	- cannot reset
+	
+Cyclic Barrier
+	- await()
+	- reset()
+	- doesnot block the main thread
+	- used when we want all the threads to reach a particular logic, till that u wantthe threads which have reached to wait for other thread
+	
+Completablefuture <java 8>
+	- handle async task
+	- completableFuture.supplyAsync( supplier)
+	- get()
+	- getNow(valueifabsentfromCompletableFuture)
+	
+Volatile
+	- use only for flag
+	- Threads keep a copy of variable, to avoid that
+	
+Atomicity
+	- for making thread safe 
+	- when multiple threads tries to use the same variable for update
+	
+ForkJoinPool <java 7>
+	- Introduced in Java 7
+	- Based on Forking & Joining
+	- Forking-Dividing into sub-tasks
+	- Joining-Combining result
+	- Recursive Tasks
+	- Work-Stealing Algorithm
+	- override compute()
+	
+ThreadLocal
+-----------
+- provides thread-local variables
+- Each thread accessing a ThreadLocal variable has its own independent copy of the variable
+- internal whereever value is set, it gets sets to the current thread
+- when using threadPool [resuing the thread]
+	- cause memory leaks by keeping references to objects that are no longer needed
+		- call remove() after the thread task completes
+- We need only 1 object of ThreadLocal class and each thread can use it to set and get its own Thread-variable variable.
+
+Virtual Thread
+--------------
+	- Thread.ofVirtual().start(()-> )
+	- Executors.newVirtualThreadPerTaskExecutor()
+- higher throughput not latency, 
+- light weight, 
+- less expensive
+- now JVM manages thread instead of OS
+- When some thread goes on waiting state/not in running states, JVM assigns the OS thread to some other virtual thread.
+	- faster
+- can create million of virtual threads.
+- prior to virtual thread JVM just provided the warpper around OS thread.
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
