@@ -14,27 +14,11 @@ SQL injection
 Spring Security
 ---------------
 @EnableWebSecurity <spring-boot-starter-security>
-1. depending on the authenticationType secutity filter will be invoked
+1. depending on the authenticationType security filter will be invoked
 2. then passed to AuthenticationManager I [authenticate() -> ProviderManager
-3. delegates to AuthenicationProvider
+3. delegates to AuthenticationProvider
 4. bean securityFilterChain
-	- autheticationProvider
-	
-Optional
---------
-- a developer an forget to check for null, to avoid this Optional[means it can have null]
-- creation
-	- Optional.of(): if null is sent will throw error
-	- Optional.ofNullable(): can assign null
-	- Optinal.empty(): if null can assign empty
-- access
-	- optionalObject.isPresent():- check if value is not null
-		- optionalObject.get to get the value
-	- optionalObject.ifPresent(consumer): value passed to consumer is value present in optional
-	- optionalObject.orElse("defaultValue"): if value is null or empty, defaultValue will
-	- optionalObject.orElseGet(supplier)
-	- optionalObject.orElseThrow(supplier)
-- can use intermideate operation like map with optionalObject before getting the value and latter can get the value
+	- authenticationProvider
 
 Date & Time classes
 -------------------

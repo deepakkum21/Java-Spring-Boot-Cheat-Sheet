@@ -1,41 +1,45 @@
 API Gateway
 	- route to correct microservice
-	- API composition - additional logic to chekc if some addition checks needs to be done [mb device api/pc api] - additional response need to send
+	- API composition - additional logic to check if some addition checks needs to be done [mb device api/pc api] - additional response need to send
 	- Authentication 
-		- validating the access token with autorization server
+		- validating the access token with authorization server
 	- rate limiting
 		- 429 too many request
 	- service discovery [eureka/zuul]
-		- keep tarck of regiterated service/ deregsiteration
+		- keep track of registerted service/ deregsiteration
 		- ips keep of changing with scaling
 		- keep track of health
 	- logging
 	- caching
-	- tranformation of response
+	- transformation of response
 	
 
 How Microservice communicate with each other
 --------------------------------------------
 - Service discovery capability
-	- to get the url and port of the microserivce with whom need to communicate
-- load balncer
-	- load balancer url/port of the microserivce with whom need to communicate [not used as it increases latency]
+	- to get the url and port of the microservice with whom need to communicate
+- load balancer
+	- load balancer url/port of the microservice with whom need to communicate [not used as it increases latency]
 - authorization /authentication
 	- permission
 - circuit breaker [hystrix]
 	- when a particular service is failing , it will not allow any invocation of that service for a particular time
 - retry
 
-All above can be managed by SERVOCE MESH [ISTIO] using side car which is present in each instance and provide all the capabilities for service to service communication  side card to side communication using DATA PLANE and all are controlled using CONTROL PLANE
+All above can be managed by SERVICE MESH [ISTIO] using side car which is present in each instance and provide all the capabilities for service to service communication  side card to side communication using DATA PLANE and all are controlled using CONTROL PLANE
 
 
 TimeLimiter using Resilience4j	
 ------------------------------
-- call to a service should not exceed a particular time duration defined in peoperty
+- call to a service should not exceed a particular time duration defined in property
 - if taking more time the service method will be interrupted and fallback method will be called
 	- resilience4j-spring-boot2
-	- in application.property add timeoutDuartion
+	- in application.property add timeoutDuration
 	- @TimeLimiter(name="",fallbackMethod="fallbackMethodName")
+
+Distributed trace
+-----------------
+- sleuth
 		
 		
 		
