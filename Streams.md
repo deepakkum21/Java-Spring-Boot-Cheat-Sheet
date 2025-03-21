@@ -159,3 +159,91 @@
         // Transform a list of numbers into a list of their binary representations
         System.out.println(intList1.stream().map(Integer::toBinaryString)  // Convert each number to its binary string
                 .collect(Collectors.toList()));
+
+## Advance Stream
+
+Stream Grouping by Multiple Fields: Given a list of employees with fields name, department, and salary, how would you use the Stream API to group the employees first by department and then by salary range (e.g., "low", "medium", "high")?
+
+Combining Streams in Parallel Processing: How can you process multiple streams concurrently (in parallel) using Stream API and merge the results into a single list? Explain the potential risks of parallel stream usage and how to mitigate them.
+
+Custom Collectors: Implement a custom Collector that groups strings by their first letter, but instead of creating a Map<Character, List<String>>, create a Map<Character, Set<String>>, ensuring that there are no duplicates for any character.
+
+FlatMap with Nested Lists: You are given a list of students, each of whom has a list of grades. Using flatMap, write a stream operation to get a list of all students' grades in a single stream and then find the highest grade.
+
+Distinct Based on Multiple Fields: Given a list of objects, implement a stream operation to find distinct objects based on multiple fields (e.g., name and age for a Person object) without overriding equals and hashCode.
+
+Complex Mapping with Transformation: You have a list of orders where each order contains a list of items. Each item has a price. Write a stream operation that maps the orders to the total price of items in each order, and then sorts them by the total price in descending order.
+
+Reducing Complex Data Structures: Given a list of Employee objects, each with a salary, implement a reduce operation that finds the employee with the highest salary. Then, modify it to return both the employee and their salary in the form of a custom result object.
+
+Custom Sorting with Multiple Comparators: You have a list of Person objects, each with age, name, and height attributes. Write a stream operation that sorts the list first by age (ascending), then by name (alphabetically), and finally by height (in descending order).
+
+Handling Null Values in Streams: Given a list of Person objects (which may have null values), how can you safely handle null values in a stream, especially when performing operations like filtering, mapping, or reducing?
+
+Stream Limitations and Performance Considerations: In a large dataset, how would you efficiently use Stream to find the top 10 highest-paid employees, considering performance and memory efficiency? Discuss the tradeoffs of using intermediate operations like skip(), limit(), and sorted().
+
+Advanced FlatMap Usage for Nested Lists: Given a nested structure like List<List<Integer>>, write a Stream operation to find the sum of all numbers within the nested lists that are greater than a given threshold (e.g., 100).
+
+Collecting with Multiple Operations: Implement a Collector that collects all elements in a stream into a Map<String, Integer>, where the key is the string and the value is the length of the string, but only for strings that are longer than 3 characters.
+
+Using Optional with Stream Operations: How would you safely find the first element in a list that is divisible by both 3 and 5, and if no such element exists, return an appropriate default value using Optional?
+
+Stream of Random Numbers and Statistical Operations: Generate a stream of 1000 random integers, and then use the Stream API to calculate the mean, max, and min of the numbers. Use Collectors.teeing() to combine two statistical operations (e.g., average and count) into one result.
+
+Complex Filter and Map Operations: Given a list of Product objects, where each product has a category, name, and price, write a stream operation that filters out products in the "electronics" category, then maps them to a string format like "Product [name] costs [price]", and finally collects them into a List<String>.
+
+     // Implement a custom Collector that groups strings by their first letter, but instead of creating a Map<Character, List<String>>,
+        // create a Map<Character, Set<String>>, ensuring that there are no duplicates for any character.
+        List<String> strList4 = Arrays.asList("Deepak","Kumar","DBS Tech India","Apple","Deepak","Kumar");
+        System.out.println(strList4.stream().collect(Collectors.groupingBy(x->x.substring(0,1), Collectors.toSet())));
+
+        // Stream Grouping by Multiple Fields: Given a list of employees with fields name, department, and salary,
+        // how would you use the Stream API to group the employees first by department and then by salary range
+        Map<String, Map<String, List<Employee>>> groupedEmployees = employees.stream()
+                .collect(Collectors.groupingBy(Employee::getDepartment,
+                        Collectors.groupingBy(employee -> getSalaryRange(employee.getSalary()))));
+        private static String getSalaryRange(double salary) {
+            if (salary < 60000) {
+                return "low";
+            } else if (salary <= 100000) {
+                return "medium";
+            } else {
+                return "high";
+            }
+        }
+
+        // Distinct Based on Multiple Fields: Given a list of objects, implement a stream operation to find distinct objects based on multiple fields
+        // (e.g., name and age for a Person object) without overriding equals and hashCode.
+
+        List<Person> personList = Arrays.asList(new Person(21,"Deepak"), new Person(18,"Anjani"), new Person(33,"rakesh"));
+        System.out.println(personList.stream().collect(Collectors.toMap(
+                person->new AbstractMap.SimpleEntry<>(person.getName(), person.getAge()), // composite key (name, age)
+                person->person, // value is the person itself
+                (existing, replacement) -> existing)) // resolve conflicts by keeping the existing entry
+                .values()
+                .stream().toList());
+
+        // Combining Streams in Parallel Processing: How can you process multiple streams concurrently (in parallel)
+        // using Stream API and merge the results into a single list? Explain the potential risks of parallel stream usage and how to mitigate them.
+        List<Integer> list11 = Arrays.asList(1, 2, 3, 4, 5);
+        List<Integer> list12 = Arrays.asList(6, 7, 8, 9, 10);
+        List<Integer> list13 = Arrays.asList(11, 12, 13, 14, 15);
+
+        System.out.println(Stream.of(list12.parallelStream(),list11.parallelStream(),list13.parallelStream())
+                .flatMap(Function.identity()).toList());
+
+        // Complex Mapping with Transformation: You have a list of orders where each order contains a list of items.
+        // Each item has a price. Write a stream operation that maps the orders to the total price of items in each order,
+        // and then sorts them by the total price in descending order.        List<Order> orderlist = new ArrayList<>();
+        List<Order> orderList = new ArrayList<>();
+        List<Item> itemList1 = Arrays.asList(new Item(22, "Apple"), new Item(22, "Banana"));
+        List<Item> itemList2 = Arrays.asList(new Item(212, "Pencil"), new Item(32, "Pen"));
+        List<Item> itemList3 = Arrays.asList(new Item(122, "Shoe"), new Item(52, "Bag"));
+        orderList.add(new Order(itemList1));
+        orderList.add(new Order(itemList2));
+        orderList.add(new Order(itemList3));
+
+        orderList.stream()
+                .sorted((o1, o2) ->
+                        Double.compare(o2.getItemList().stream().mapToDouble(Item::getPrice).sum(), o1.getItemList().stream().mapToDouble(Item::getPrice).sum())) // Sort by total price in descending order
+                .toList().forEach(System.out::println);
