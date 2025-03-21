@@ -2,8 +2,8 @@ Cache
 
 - @EnableCaching
 - Types
-	- inmemory
-	- ditributed using Redis
+	- in-memory
+	- distributed using Redis
 		- spring.cache.type=redis
 		- spring-boot-starter-data-redis
 	

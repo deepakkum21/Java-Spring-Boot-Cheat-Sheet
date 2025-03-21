@@ -36,7 +36,7 @@ JAVA 21
 	- more light weight & can create millions of virtual threads
 	- cost efficient
 	- managed by JVM and not by platform
-- Pattren matching in switch improvements
+- Pattern matching in switch improvements
 - Scoped Values
 	- Scoped values enable you to share data safely across different threads without the need for synchronization mechanisms like locks. This can be useful for applications that need to pass context (e.g., user data, session information) between different parts of a program running in different threads.
 
@@ -45,6 +45,15 @@ JAVA 21
 String version = "21";
 String message = String templated: "The language is {name}, version {version}";
 System.out.println(message);
+
+## JAVA 23
+- can add statements before super() call;
+
+## JAVA 24
+- Permanently disable of java security manager
+- window 32 bit end of support
+- switch 
+	case int i when i>100 && i<500 -> "success"
 
 
 
