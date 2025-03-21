@@ -58,4 +58,5 @@
   - `optionalObject.orElse("defaultValue")`: if value is null or empty, defaultValue will
   - `optionalObject.orElseGet(supplier)`
   - `optionalObject.orElseThrow(supplier)`
+  - `optionalObject.ifPresentOrElse(consumer, ()->  )`
 - can use intermediate operation like map with optionalObject before getting the value and latter can get the value
