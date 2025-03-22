@@ -67,14 +67,14 @@ ThreadPool
 	why?
 		- resourceManagement
 		- increase in response time as no need to create thread from scratch
-		- controll over thread count, not creating infinite
+		- control over thread count, not creating infinite
 		
 Executors <java 5>
 	why?
 	- manual thread management
 	- resource management
 	- Scalability
-	- thread resuse
+	- thread reuse
 	- error handling
 	
 	a. Executor[I]
@@ -92,7 +92,7 @@ Executors <java 5>
 		
 	c. ScheduleExecutorService implements ExecutorService
 		- schedule (runnable)
-		- schedule (callable
+		- schedule (callable)
 		- scheduleAtFixedRate
 		- scheduleAtFixedDelay
 		
@@ -101,41 +101,41 @@ Executors <java 5>
 Future
 	- wants to returns when tasks are completed
 	- isCancelled
-	- cancel(boolean) - true[cancel if it is running)
+	- cancel(boolean) - true[cancel if it is running]
 	- isDone
 	- get = blocks till result is get from future
 	
 ThreadPoolTypes
-- Execuotrs.newCachedThreadPool
+- Executors.newCachedThreadPool
 	- it is a synchronous queue
 	- if all threads are busy, create a new one and add to pool
 	- if any thread is ideal for specific time 60 sec, kill that thread
 	- used for small tasks
-- Execuotrs.SingleThreadExecutor
+- Executors.SingleThreadExecutor
 	- same as FixedThreadPool, but with 1 thread
-	- want exceution in order
-- Execuotrs.FixedThreadPool
-- Execuotrs.ScheduleThreadPool
-- Execuotrs.newVirtualThreadPerTaskExecutor [java21]
+	- want execution in order
+- Executors.FixedThreadPool
+- Executors.ScheduleThreadPool
+- Executors.newVirtualThreadPerTaskExecutor [java21]
 	- thread.ofVirtual().start(()-> task)
 
 CountDownLatch
 	- count()
-	- used to make the main thread wait till all the task are completed, instead of calling future.get on each excuterService.
+	- used to make the main thread wait till all the task are completed, instead of calling future.get on each executerService.
 	- once count becomes 0 cannot be reused again
 	- cannot reset
 	
 Cyclic Barrier
 	- await()
 	- reset()
-	- doesnot block the main thread
-	- used when we want all the threads to reach a particular logic, till that u wantthe threads which have reached to wait for other thread
+	- doesn't block the main thread
+	- used when we want all the threads to reach a particular logic, till that u want the threads which have reached to wait for other thread
 	
-Completablefuture <java 8>
+CompletableFuture <java 8>
 	- handle async task
 	- completableFuture.supplyAsync( supplier)
 	- get()
-	- getNow(valueifabsentfromCompletableFuture)
+	- getNow(valueIfAbsentFromCompletableFuture)
 	
 Volatile
 	- use only for flag
@@ -158,8 +158,8 @@ ThreadLocal
 -----------
 - provides thread-local variables
 - Each thread accessing a ThreadLocal variable has its own independent copy of the variable
-- internal whereever value is set, it gets sets to the current thread
-- when using threadPool [resuing the thread]
+- internal where-ever value is set, it gets sets to the current thread
+- when using threadPool [reusing the thread]
 	- cause memory leaks by keeping references to objects that are no longer needed
 		- call remove() after the thread task completes
 - We need only 1 object of ThreadLocal class and each thread can use it to set and get its own Thread-variable variable.
@@ -175,7 +175,7 @@ Virtual Thread
 - When some thread goes on waiting state/not in running states, JVM assigns the OS thread to some other virtual thread.
 	- faster
 - can create million of virtual threads.
-- prior to virtual thread JVM just provided the warpper around OS thread.
+- prior to virtual thread JVM just provided the wrapper around OS thread.
 
 
 	
