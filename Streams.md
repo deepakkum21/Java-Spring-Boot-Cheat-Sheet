@@ -7,6 +7,19 @@
 - `Stream.generate(Math::random).limit(5)`
 - `Stream.iterate(seed, function)`
 
+## Handling Null values while filter,reduce,map in streams
+
+- ### Filter
+  - use `filter(Objects::nonNull)`
+- ### Map
+
+  - use `map(p -> Optional.ofNullable(p.getName()).orElse("Unknown"))`
+
+        List<String> names = people.stream()
+            .filter(Objects::nonNull)  // Remove null values
+            .map(p -> Optional.ofNullable(p.getName()).orElse("Unknown"))  // Safely map null name to "Unknown"
+            .collect(Collectors.toList());
+
 ## Sample beginner level Stream program
 
         String s = "deepak";
@@ -192,7 +205,7 @@ Stream of Random Numbers and Statistical Operations: Generate a stream of 1000 r
 
 Complex Filter and Map Operations: Given a list of Product objects, where each product has a category, name, and price, write a stream operation that filters out products in the "electronics" category, then maps them to a string format like "Product [name] costs [price]", and finally collects them into a List<String>.
 
-     // Implement a custom Collector that groups strings by their first letter, but instead of creating a Map<Character, List<String>>,
+        // Implement a custom Collector that groups strings by their first letter, but instead of creating a Map<Character, List<String>>,
         // create a Map<Character, Set<String>>, ensuring that there are no duplicates for any character.
         List<String> strList4 = Arrays.asList("Deepak","Kumar","DBS Tech India","Apple","Deepak","Kumar");
         System.out.println(strList4.stream().collect(Collectors.groupingBy(x->x.substring(0,1), Collectors.toSet())));
@@ -245,5 +258,24 @@ Complex Filter and Map Operations: Given a list of Product objects, where each p
 
         orderList.stream()
                 .sorted((o1, o2) ->
-                        Double.compare(o2.getItemList().stream().mapToDouble(Item::getPrice).sum(), o1.getItemList().stream().mapToDouble(Item::getPrice).sum())) // Sort by total price in descending order
+                        Double.compare(o2.getItemList().stream()
+                        .mapToDouble(Item::getPrice).sum(), o1.getItemList().stream().mapToDouble(Item::getPrice).sum())) // Sort by total price in descending order
                 .toList().forEach(System.out::println);
+
+
+        // Reducing Complex Data Structures: Given a list of Employee objects, each with a salary, implement a reduce operation that finds the employee with the highest salary.
+        // Then, modify it to return both the employee and their salary in the form of a custom result object.
+        List<Employee> empList = Arrays.asList(new Employee(2200, "Deepak"), new Employee(2200, "Shiv"), new Employee(2300, "Rakesh"));
+        empList.stream()
+                .reduce((e1, e2) -> e1.getSalary() > e2.getSalary() ? e1 : e2)
+                .map(employee -> new Result(employee, employee.getSalary()));
+
+        // Custom Sorting with Multiple Comparators: You have a list of Person objects, each with age, name, and height attributes.
+        // Write a stream operation that sorts the list first by age (ascending), then by name (alphabetically), and finally by height (in descending order).
+        List<Person> personList1 = Arrays.asList(new Person(21,"Deepak",22), new Person(18,"Anjani",56), new Person(33,"rakesh",43));
+        personList1.stream()
+                .sorted(
+                        Comparator.comparingInt(Person::getAge)
+                        .thenComparing(Person::getName)
+                        .thenComparing(Comparator.comparingDouble(Person::getHeight).reversed())
+                );
