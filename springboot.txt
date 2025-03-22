@@ -124,6 +124,9 @@ SPING BOOT
 	- "session": A new instance of the bean is created for each HTTP session
 	- "application": A single instance of the bean is created for the entire lifecycle of the Spring context
 	- "websocket": Similar to the request and session scopes, but it is used specifically in the context of WebSockets.
+
+## Q> in a bean defined as Singleton a property having Prototype Scope, whether the property will behave as prototype?
+Ans> No as the same instance is returned as Upper level is Singleton and property is never getting chance ti re-initiate to behave as prototype
   
 BEAN LIFECYCLE
 --------------

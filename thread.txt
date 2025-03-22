@@ -27,7 +27,7 @@ Synchronised => to avoid chaningthe value by multiple threads
 	- block (this)
 	
 	
-Lock [I] - ReentrantLock  [final black can call unblock)
+Lock [I] - ReentrantLock  [final black can call unblock]
 	- lock
 	- unlock
 	- trylock
