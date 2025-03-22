@@ -173,19 +173,11 @@
         System.out.println(intList1.stream().map(Integer::toBinaryString)  // Convert each number to its binary string
                 .collect(Collectors.toList()));
 
+        // Using Optional with Stream Operations: How would you safely find the first element in a list that is divisible by both 3 and 5,
+        // and if no such element exists, return an appropriate default value using Optional?
+        System.out.println(intList1.stream().filter(x->x%5==0 && x%3==0).findFirst().orElse(100));
+
 ## Advance Stream
-
-Stream Limitations and Performance Considerations: In a large dataset, how would you efficiently use Stream to find the top 10 highest-paid employees, considering performance and memory efficiency? Discuss the tradeoffs of using intermediate operations like skip(), limit(), and sorted().
-
-Advanced FlatMap Usage for Nested Lists: Given a nested structure like List<List<Integer>>, write a Stream operation to find the sum of all numbers within the nested lists that are greater than a given threshold (e.g., 100).
-
-Collecting with Multiple Operations: Implement a Collector that collects all elements in a stream into a Map<String, Integer>, where the key is the string and the value is the length of the string, but only for strings that are longer than 3 characters.
-
-Using Optional with Stream Operations: How would you safely find the first element in a list that is divisible by both 3 and 5, and if no such element exists, return an appropriate default value using Optional?
-
-Stream of Random Numbers and Statistical Operations: Generate a stream of 1000 random integers, and then use the Stream API to calculate the mean, max, and min of the numbers. Use Collectors.teeing() to combine two statistical operations (e.g., average and count) into one result.
-
-Complex Filter and Map Operations: Given a list of Product objects, where each product has a category, name, and price, write a stream operation that filters out products in the "electronics" category, then maps them to a string format like "Product [name] costs [price]", and finally collects them into a List<String>.
 
         // Implement a custom Collector that groups strings by their first letter, but instead of creating a Map<Character, List<String>>,
         // create a Map<Character, Set<String>>, ensuring that there are no duplicates for any character.
@@ -261,6 +253,37 @@ Complex Filter and Map Operations: Given a list of Product objects, where each p
                         .thenComparing(Person::getName)
                         .thenComparing(Comparator.comparingDouble(Person::getHeight).reversed())
                 );
+
+        // Advanced FlatMap Usage for Nested Lists: Given a nested structure like List<List<Integer>>,
+        // write a Stream operation to find the sum of all numbers within the nested lists that are greater than a given threshold (e.g., 100).
+        List<List<Integer>> nestedIntList = Arrays.asList(
+                Arrays.asList(1,4,9,100,200,300,400),
+                Arrays.asList(100,200,300,400));
+        int threshold=100;
+        System.out.println(nestedIntList.stream().flatMap(List::stream).filter(x->x>threshold).mapToInt(Integer::intValue).sum());
+
+        // Collecting with Multiple Operations: Implement a Collector that collects all elements in a stream into a Map<String, Integer>,
+        // where the key is the string and the value is the length of the string, but only for strings that are longer than 3 characters.
+        System.out.println(strList4.stream().filter(Objects::nonNull)
+                .filter(x-> x.length()>3).collect(Collectors.toSet())  // to set to avoid duplicate keys
+                .stream().collect(Collectors.toMap(x->x, String::length)));
+
+        // Stream of Random Numbers and Statistical Operations: Generate a stream of 1000 random integers,
+        // and then use the Stream API to calculate the mean, max, and min of the numbers.
+        // Use Collectors.teeing() to combine two statistical operations (e.g., average and count) into one result.
+        var result= Stream.generate(Math::random).limit(1000).collect(Collectors.teeing(
+                Collectors.averagingInt(Integer::intValue),
+                Collectors.counting(),
+                (avg,count)-> Map.of("average",avg,"count",count)
+        ));
+
+        // Complex Filter and Map Operations: Given a list of Product objects, where each product has a category, name, and price,
+        // write a stream operation that filters out products in the "electronics" category,
+        // then maps them to a string format like "Product [name] costs [price]", and finally collects them into a List<String>.
+        products.stream()
+            .filter(product -> "electronics".equals(product.getCategory()))  // Filter out electronics products
+            .map(product -> "Product " + product.getName() + " costs " + product.getPrice())  // Map to formatted string
+            .collect(Collectors.toList());
 
 ## for finding top [k] from big list keeping performance
 
