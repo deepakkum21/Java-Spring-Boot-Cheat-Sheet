@@ -134,9 +134,52 @@
 - `Constructor`
 - `@PostConstruct`
 - `InitializingBean[I] - afterPropertiesSet()`
-- `custom @Bean initialization using @Configuration classes`
+- `custom @Bean initialization using @Configuration classes, @Bean(initMethod="methodName")`
 - `Bean Post Process before Initialization => BeanPostProcessor[I] => postProcessBeforeInitialization()`
 - `Bean Post Process after Initialization => BeanPostProcessor[I] => postProcessAfterInitialization()`
 - `@PreDestroy`
 - `Disposable[I] - Destroy()`
-- `Custom @Bean Cleanup using @Configuration classes`
+- `Custom @Bean Cleanup using @Configuration classes, @Bean(destroyMethod="methodName")`
+
+## @ComponentScan
+
+- `tells the Spring container where to search for Spring components (beans).`
+- It helps Spring discover and register beans automatically based on annotations
+- it is present as part of @SpringBootApplication
+- `if using @ComponentScan mandatory to use @Configuration`
+- ### Component Scan with Default Package
+  - if @ComponentScan is used `without specifying the basePackages attribute`, Spring will `scan the package where the configuration class (@Configuration) is located`.
+- ### Specifying Multiple Packages
+        @Configuration
+        @ComponentScan(basePackages = {"com.example.myapp", "com.example.other"})
+            public class AppConfig {
+        }
+- ### Scan Specific Classes (basePackageClasses)
+        @Configuration
+        @ComponentScan(basePackageClasses = MyService.class)  // Specify the class to base the scan on
+            public class AppConfig {
+        }
+- ### excludeFilters
+
+  - exclude by Annotation
+
+          @ComponentScan(
+              basePackages = "com.example.myapp",
+              excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, value = Deprecated.class)
+          )
+
+  - exclude by type
+
+         @ComponentScan(
+            basePackages = "com.example.myapp",
+            excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = MyService.class)
+        )
+
+- ### includeFilters
+
+  - exclude by Annotation
+  - exclude by type
+
+- ### lazyInit (Default: false)
+  - If set to true, Spring will initialize the scanned beans lazily, `meaning they will only be created when they are first needed`.
+  - `@ComponentScan(lazyInit = true) `
