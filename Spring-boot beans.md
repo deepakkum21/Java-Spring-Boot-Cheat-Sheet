@@ -141,6 +141,27 @@
 - `Disposable[I] - Destroy()`
 - `Custom @Bean Cleanup using @Configuration classes, @Bean(destroyMethod="methodName")`
 
+## Control the initialization order of Spring beans
+
+`@DependsOn`
+
+        @Configuration
+        public class AppConfig {
+
+            @Bean
+            @DependsOn("beanA")  // BeanB depends on BeanA, so BeanA will be created first
+            public BeanB beanB() {
+                System.out.println("BeanB is created");
+                return new BeanB();
+            }
+
+            @Bean
+            public BeanA beanA() {
+                System.out.println("BeanA is created");
+                return new BeanA();
+            }
+        }
+
 ## @ComponentScan
 
 - `tells the Spring container where to search for Spring components (beans).`
