@@ -204,3 +204,22 @@
 - ### lazyInit (Default: false)
   - If set to true, Spring will initialize the scanned beans lazily, `meaning they will only be created when they are first needed`.
   - `@ComponentScan(lazyInit = true) `
+
+## Limiting Creation of beans
+
+- `using @Conditional` where class `implements Condition I`
+
+        @Configuration
+        public class MyConfiguration {
+
+            @Bean
+            @Conditional(MyCondition.class)
+            public MyService myService() {
+                return new MyService();
+            }
+        }
+
+        class MyCondition implements Condition {
+            @Override
+            // matches method
+        }
