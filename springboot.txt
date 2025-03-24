@@ -24,7 +24,7 @@ Custom Annotation
 	@CustomAnnotation(key="newOverrideKey")
 	
 Meta Annotation property
-	- @Target({ElementType.METHOD,ElementType.CLASS
+	- @Target({ElementType.METHOD,ElementType.CLASS})
 		- where the annotation can be applied [method,class,constructor , parameter, field, type(class, enum, interface)]
 	- @Retention({RetentionPolicy.SOURCE})
 		- how particular amnotation will be stored
@@ -118,8 +118,8 @@ SPING BOOT
 
 @Scope("singleton")
 - applied to any Spring-managed bean class (typically annotated with @Service, @Component, @Repository, or @Controller
-	- "singleton" (default)
-	- "prototype" :-  new instance of the bean is created every time it is requested
+	- "singleton" (default) & Eager initialized
+	- "prototype" :-  new instance of the bean is created every time it is requested & lazy initialization
 	- "request": A new instance of the bean is created for each HTTP request
 	- "session": A new instance of the bean is created for each HTTP session
 	- "application": A single instance of the bean is created for the entire lifecycle of the Spring context
@@ -160,25 +160,25 @@ Dependency Injection
 	- @Autowired in setter method
 		@Autowired
 		void setOrder(Order order) {this order = order)}
-   Advan
+   Advantages
 	- dependency can be changed wrt to implemented classes, what is passed after object creation
 	- can pass mock object for testing
-   Disad
+   Disadvantage
 	- cannot make the property or field as immutable by using final
 
 3. Constructor Injection
 	- can create immutable using final
 	- dependency is resolved at the time of initialization of object
-	- [spring 4.3]when only one constrctor no need to use @Autowired on constructor
-	- fail fast exception causght at compile time
+	- [spring 4.3]when only one constructor no need to use @Autowired on constructor
+	- fail fast exception caught at compile time
 	
 ISSUES with DI
 --------------
 1. Circular Dependency
 	- first refactor
-	- use @Lazy on field/setter/constrctor injection
+	- use @Lazy on field/setter/constructor injection
 2. Unsatisfied Dependency
-	- @Primary when there are multiple implemenation classes of DI object
+	- @Primary when there are multiple implementation classes of DI object
 	- @Qualifier("name") with @Autowired
 	
 Dynamic Creation of Bean
@@ -190,10 +190,10 @@ Dynamic Creation of Bean
 
 @Transactional
 - follows ACID
-	- Atomicity - if any operation fails all successfull transaction shoud be rolled back
+	- Atomicity - if any operation fails all successful transaction should be rolled back
 	- Consistensy - ensures after db state after/before transaction should be consistent
-	- Isolation - if multiple transaction are happening in paralled , no one should interfear each other
-	- Duarbility - ensures committed data is not lost
+	- Isolation - if multiple transaction are happening in parallel , no one should interfear each other
+	- Durability - ensures committed data is not lost
 - uses AOP
 - spring-boot-started-data-jpa
 - @EnableTransactionManagement in main class // optional
