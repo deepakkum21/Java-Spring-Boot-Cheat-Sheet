@@ -45,9 +45,9 @@ Extend one DispatcherInitializer
 @ComponentScan
 @Configuration
 
-SPING BOOT	
+SPRING BOOT	
 ----------
-1. Dependency Managment [no need to mention version]
+1. Dependency Management [no need to mention version]
 	- spring-boot-starter-parent <spring boot version>
 	- spring-boot-starter-web
 2. Auto configuration
@@ -59,7 +59,7 @@ SPING BOOT
 6. Actuator
 7. cli 
 
-	= All anotations are resolved though REFLECTION
+	= All annotations are resolved though REFLECTION
 	
 @SpringBootApplication
 	@EnableAutoConfiguration
@@ -73,16 +73,16 @@ SPING BOOT
 @RequestMapping [@Mapping]
 	- value/path, method
 	
-@RequestParam = queryy parameter 
-	- deafult is true
-	- to some kind of preprocesing before the params are assigned to arguments
+@RequestParam = query parameter 
+	- default is true
+	- to some kind of preprocessing before the params are assigned to arguments
 	  can run a CustomPropertyEditor [like to convert the dataType[custom] from string[default of querry param]
 	  
 @RequestBody
 	- Bind the body of HTTP request (typically JSON) to controller method parameter (java object).
 	
 @Component
-	- Class level anotation
+	- Class level annotation
 	- making the bean available for component scan
 	- cannot be created if class is outside spring container
 
@@ -99,7 +99,7 @@ SPING BOOT
 	- if a particular class is present then only 
 	
 @ConditionalOnProperty(prefix,value, havingValue, matchIfMissing)
-	- if condition is satified then only create the bean
+	- if condition is satisfied then only create the bean
 	- mysql.enabled=true [prefix = mysql,value=enabled, havingValue=true, matchIfMissing={if mysql.enabled is not present in property file)
 	- make @Autowired(required=false)
   adv
@@ -108,7 +108,7 @@ SPING BOOT
 	- reduce unnecessary creation of beans 
   disadvantage
 	- overuse can make code complicated
-	- missconfiguration can happen
+	- miss-configuration can happen
 
 @EnableGlobalMethodSecurity
 @EnableWebSecurity
@@ -139,7 +139,7 @@ BEAN LIFECYCLE
 - BeanPostProcessor After Initialization: 
 	- postProcessAfterInitialization() Allows you to modify the bean after initialization.
 - Destruction: When the container is shut down, or the bean is no longer needed, Spring will destroy the bean and clean up any resources.
-	- @predestroy => cleanup
+	- @preDestroy => cleanup
 	- implement DisposableBean Interface using destroy()
 	
 Dependency Injection

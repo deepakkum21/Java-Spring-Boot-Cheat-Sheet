@@ -261,3 +261,31 @@
 ## Q> in a bean defined as Singleton a property having Prototype Scope, whether the property will behave as prototype?
 
 Ans> No as the same instance is returned as Upper level is Singleton and property is never getting chance ti re-initiate to behave as prototype
+
+## How to configure profile config dynamically
+
+. 2 ways
+· 1 while application startup using command
+. mvn spring-boot:run -Dspring-boot.run.profiles=prod
+. Add profile in pom.xml
+
+          <profiles>
+            <profile>
+              <id>local</id>
+              <properties>
+                <spring-boot.run.profiles>dev</spring-boot.run.profiles>
+              </properties>
+            </profile>
+            <profile>
+              <id>production</id>
+              <properties>
+                <spring-boot.run.profiles>prod</spring-boot.run.profiles>
+              </properties>
+            </profile>
+          </profiles>
+
+. And run using mvn spring-boot:run -Pproduction [pom profile id]
+
+## @Profile Annotation
+
+. Using Profile annotation we can tell spring boot, to create a bean only when particular profile is set
