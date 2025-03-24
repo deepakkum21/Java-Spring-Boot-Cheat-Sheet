@@ -57,6 +57,15 @@
         ConfigurableApplicationContext applicationContext = SpringApplication.run(EcomApplication.class, args);
         applicationContext.getBean("nameOfTheBean")
 
+## Bean Creation
+
+- `Eager`
+  - `when application starts`
+  - `singleton beans`
+- Lazy
+  - `When beans are needed`
+  - `prototype / @Lazy`
+
 ## Bean LifeCycle [https://docs.spring.io/spring-framework/reference/core/beans/factory-nature.html]
 
 1.  ### Bean Creation
@@ -223,3 +232,32 @@
             @Override
             // matches method
         }
+
+## Bean Scope
+
+- `"singleton"`
+  - (default)
+  - `Eager initialized`
+- `"prototype"` :-
+  - new instance of the bean is created every time it is requested
+  - `lazy initialization`
+- `"request"`:
+
+  - A new instance of the bean is `created for each HTTP request`
+  - `lazy initialization`
+  - gets a error of bean unsatisfied when request bean is present inside singleton bean
+
+    - sol:- `create proxy`
+
+            @Scope(value = "request", proxyMode = ScopedProxyMode. TARGET_CLASS )
+
+- `"session"`:
+  - A new instance of the bean is created for each HTTP session
+- "`application`":
+  - A single instance of the bean is created for the entire lifecycle of the Spring context
+- "`websocket`":
+  - Similar to the request and session scopes, but it is used specifically in the context of WebSockets.
+
+## Q> in a bean defined as Singleton a property having Prototype Scope, whether the property will behave as prototype?
+
+Ans> No as the same instance is returned as Upper level is Singleton and property is never getting chance ti re-initiate to behave as prototype
