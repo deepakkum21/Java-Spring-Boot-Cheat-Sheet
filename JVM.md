@@ -14,14 +14,14 @@
    - #### linking
      - 3 tasks
      - `verification`:
-     - ensuring correctness of .class class
-     - check the format
+       - ensuring correctness of .class class
+       - check the format
      - throw java.lang.VerifyError
      - `preparation`
-     - Allocates memory for static members
-     - initialize memory to default values
+       - Allocates memory for static members
+       - initialize memory to default values
      - `resolution`
-     - transforms symbolic references into direct references
+       - transforms symbolic references into direct references
    - #### initialization
      - static variables are assigned with values.
      - will be done from top to bottom
