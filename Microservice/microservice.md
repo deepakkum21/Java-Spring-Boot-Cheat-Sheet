@@ -165,3 +165,45 @@ public class OrderProducer {
     }
 }
 ```
+
+### Kafka Consumer
+
+- `@KafkaListener(topics = "order-topic")`
+
+```java
+   @KafkaListener(topics = "order-topic")
+    public void consumeOrderConfirmationNotifications(OrderConfirmation orderConfirmation) throws MessagingException {
+        log.info(format("Consuming the message from order-topic Topic:: %s", orderConfirmation));
+        repository.save(
+                Notification.builder()
+                        .type(ORDER_CONFIRMATION)
+                        .notificationDate(LocalDateTime.now())
+                        .orderConfirmation(orderConfirmation)
+                        .build()
+        );
+        var customerName = orderConfirmation.customer().firstname() + " " + orderConfirmation.customer().lastname();
+        emailService.sendOrderConfirmationEmail(
+                orderConfirmation.customer().email(),
+                customerName,
+                orderConfirmation.totalAmount(),
+                orderConfirmation.orderReference(),
+                orderConfirmation.products()
+        );
+    }
+```
+
+### Kafka Serializer - producer & consumer
+
+- `need to define the serializer and deserializer if producing & consuming custom objects other than String`
+- for PRODUCER [in producer service properties]
+
+```java
+        spring:
+          kafka:
+            producer:
+              bootstrap-servers: localhost:9092
+              key-serializer: org.apache.kafka.common.serialization.StringSerializer
+              value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+              properties:
+                spring.json.type.mapping: orderConfirmation:com.alibou.ecommerce.kafka.OrderConfirmation
+```
