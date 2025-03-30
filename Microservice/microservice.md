@@ -48,6 +48,7 @@
 - Eureka Server `acts as a registry where microservices can register themselves`, and the client applications can discover these services `without needing to know their IP addresses or hostnames`
 - dependency `config client` & `eureka server`
 
+            ```java
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-config</artifactId>
@@ -56,6 +57,7 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
             </dependency>
+            ```
 
 ### configure Eureka Server in a Spring Boot
 
@@ -70,10 +72,12 @@
 
 - If set to `false`, the Eureka Client `will not register itself with the Eureka Server`. This is useful in scenarios where you want the client to only discover services, but not register itself.
 
+            ```java
             eureka:
                 client:
-                    fetch-registry: true
-                    register-with-eureka: true
+                    fetch-registry: false
+                    register-with-eureka: false
+            ```
 
 ### defaultZone
 

@@ -262,6 +262,19 @@
 
 Ans> No as the same instance is returned as Upper level is Singleton and property is never getting chance ti re-initiate to behave as prototype
 
+## Modern Way of creating object in SPRING boot instead of @Autowired
+
+- `use @RequiredArgsConstructor`
+- `make that object declaration as final`
+
+      ```java
+      @RequiredArgsConstructor
+      public class CustomerController {
+
+        private final CustomerService service;
+      }
+      ```
+
 ## How to configure profile config dynamically
 
 . 2 ways
