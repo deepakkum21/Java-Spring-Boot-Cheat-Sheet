@@ -1,5 +1,7 @@
 # Record
 
+- A record is a `special kind of class designed to act as a transparent carrier for immutable data`
+
 ### 1.Immutability
 
 - Once an object of a record is created, `the components (fields) cannot be changed. They are implicitly final`.
@@ -27,3 +29,22 @@
 
         }
         ```
+
+        ```java
+        public record CustomerRequest(
+            String id,
+            @NotNull(message = "Customer firstname is required")
+            String firstname,
+            @NotNull(message = "Customer firstname is required")
+            String lastname,
+            @NotNull(message = "Customer Email is required")
+            @Email(message = "Customer Email is not a valid email address")
+            String email,
+            Address address
+        ) {
+
+        }
+
+```
+
+```
