@@ -31,6 +31,34 @@
 
 - Inside configurations folder, the name of the config file should be `{springApplicationNameMentionedInRespectiveApplicationFile}.yml`
 
+- `Common properties for all configs` can be put inside `application.properties/yml` Inside configurations folder
+- common properties like
+
+  - eureka server hostname
+  - defaultzone
+  - override-system-properties
+
+  ```java
+      eureka:
+        instance:
+          hostname: localhost
+        client:
+          service-url:
+            defaultZone: http://localhost:8761/eureka
+      name:
+        value: alibou
+      spring:
+        cloud:
+          config:
+            override-system-properties: false    // so that whatever properties mentioned in specific service properties file are not override
+
+      management:
+        tracing:
+          sampling:
+            probability: 1.0
+
+  ```
+
 ### How other service will import config from config server
 
 - `spring.config.import= optional:configserver:http://localhost:port`
@@ -98,3 +126,42 @@
 ## Customer - Microservice
 
 - dependency `config client` & `eureka Discovery client`
+
+## KAFKA
+
+### Kafka Topic Bean
+
+```java
+@Configuration
+public class KafkaOrderTopicConfig {
+
+    @Bean
+    public NewTopic orderTopic() {
+        return TopicBuilder
+                .name("order-topic")
+                .build();
+    }
+}
+```
+
+### Kafka Producer
+
+```java
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class OrderProducer {
+
+    private final KafkaTemplate<String, OrderConfirmation> kafkaTemplate;
+
+    public void sendOrderConfirmation(OrderConfirmation orderConfirmation) {
+        log.info("Sending order confirmation");
+        Message<OrderConfirmation> message = MessageBuilder
+                .withPayload(orderConfirmation)
+                .setHeader(TOPIC, "order-topic")
+                .build();
+
+        kafkaTemplate.send(message);
+    }
+}
+```
