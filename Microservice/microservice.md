@@ -69,6 +69,8 @@
 - Enable the `@RefreshScope annotation on beans whose properties you want to be reloaded at runtime.`
 - This can be done by calling the `/actuator/refresh endpoint`
 
+---
+
 ## SERVER DISCOVERY
 
 - service discovery tool built on top of Netflix Eureka
@@ -76,7 +78,7 @@
 - Eureka Server `acts as a registry where microservices can register themselves`, and the client applications can discover these services `without needing to know their IP addresses or hostnames`
 - dependency `config client` & `eureka server`
 
-            ```java
+            ```xml
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-config</artifactId>
@@ -127,6 +129,8 @@
 
 - dependency `config client` & `eureka Discovery client`
 
+---
+
 ## KAFKA
 
 ### Kafka Topic Bean
@@ -171,15 +175,15 @@ public class OrderProducer {
 - `need to define the serializer and deserializer if producing & consuming custom objects other than String`
 - for PRODUCER [in producer service properties]
 
-```java
-        spring:
-          kafka:
-            producer:
-              bootstrap-servers: localhost:9092
-              key-serializer: org.apache.kafka.common.serialization.StringSerializer
-              value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-              properties:
-                spring.json.type.mapping: orderConfirmation:com.alibou.ecommerce.kafka.OrderConfirmation
+```yml
+spring:
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: orderConfirmation:com.alibou.ecommerce.kafka.OrderConfirmation
 ```
 
 ### Kafka Consumer
@@ -210,7 +214,7 @@ public class OrderProducer {
 
 ### Kafka De-Serializer - Consumer
 
-```java
+```yml
 spring:
   kafka:
     consumer:
@@ -223,3 +227,158 @@ spring:
         spring.json.trusted.packages: 'com.alibou.ecommerce.kafka.*'
         spring.json.type.mapping: orderConfirmation:com.alibou.ecommerce.kafka.order.OrderConfirmation,paymentConfirmation:com.alibou.ecommerce.kafka.payment.PaymentConfirmation
 ```
+
+---
+
+## API GATEWAY
+
+- dependency
+
+  - `client-config`
+  - `eureka-client`
+  - `gateway`
+
+```xml
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+```
+
+### properties
+
+```yml
+spring:
+  cloud:
+    gateway:
+      discovery:      // to get all the available microservices from the eureka server
+        locator:
+          enabled: true
+      routes:
+        - id: customer-service
+          uri: lb:http://CUSTOMER-SERVICE
+          predicates:
+            - Path=/api/v1/customers/**
+        - id: order-service
+          uri: lb:http://ORDER-SERVICE
+          predicates:
+            - Path=/api/v1/orders/**
+        - id: order-lines-service
+          uri: lb:http://ORDER-SERVICE
+          predicates:
+            - Path=/api/v1/order-lines/**
+        - id: product-service
+          uri: lb:http://PRODUCT-SERVICE
+          predicates:
+            - Path=/api/v1/products/**
+        - id: payment-service
+          uri: lb:http://PAYMENT-SERVICE
+          predicates:
+            - Path=/api/v1/payments/**
+```
+
+### # Types of Predicates in API Gateway
+
+- Predicates in API Gateway are` used to route or filter incoming HTTP requests based on specific conditions`. Below are the common types of predicates used in API Gateway.
+
+## 1. **Path-Based Predicate**
+
+- **Definition**: A predicate based on the URL path of the incoming request.
+- **Usage**: Routes requests to different backends or services depending on the resource path.
+- **Example**:
+  - `GET /api/v1/users` → Routes requests to the backend for user resources.
+  - `POST /api/v1/orders` → Routes requests to the backend for order resources.
+
+## 2. **Method-Based Predicate**
+
+- **Definition**: A predicate based on the HTTP method (GET, POST, PUT, DELETE, etc.).
+- **Usage**: Routes requests based on the HTTP method used.
+- **Example**:
+  - `GET /api/v1/users` → Fetch user data.
+  - `POST /api/v1/users` → Create a new user.
+  - `PUT /api/v1/users/{id}` → Update user info.
+  - `DELETE /api/v1/users/{id}` → Delete a user.
+
+## 3. **Query String Parameter Predicate**
+
+- **Definition**: A predicate that evaluates query string parameters in the URL.
+- **Usage**: Routes requests or customizes behavior based on query parameters.
+- **Example**:
+  - `GET /api/v1/products?category=electronics`
+  - Routes requests based on the `category` query parameter.
+
+## 4. **Header-Based Predicate**
+
+- **Definition**: A predicate that evaluates HTTP headers in the request.
+- **Usage**: Routes requests based on headers like `Authorization`, `Content-Type`, or custom headers.
+- **Example**:
+  - `GET /api/v1/products` with header `Accept: application/json`
+  - `POST /api/v1/orders` with header `Authorization: Bearer <token>`
+
+## 5. **Body Content Predicate (Request Body)**
+
+- **Definition**: A predicate based on the content or structure of the request body.
+- **Usage**: Routes requests or applies logic based on the body of the request.
+- **Example**:
+  - `POST /api/v1/users` with body `{ "role": "admin" }`
+  - Routes or filters based on the role field in the body.
+
+## 6. **Stage-Based Predicate**
+
+- **Definition**: A predicate based on the stage of the API Gateway (e.g., `dev`, `prod`, `staging`).
+- **Usage**: Routes or applies different configurations based on the API stage.
+- **Example**:
+  - `dev/api/v1/users`
+  - `prod/api/v1/users`
+
+## 7. **IP Address-Based Predicate**
+
+- **Definition**: A predicate based on the source IP address of the request.
+- **Usage**: Routes or applies logic based on the client's IP address.
+- **Example**:
+  - Allow requests only from IP `192.168.1.0/24`.
+
+## 8. **Custom Authorization Predicate (JWT, OAuth, etc.)**
+
+- **Definition**: A predicate based on the presence and validity of a custom authorization token, such as JWT or OAuth tokens.
+- **Usage**: Validates that requests contain valid credentials or tokens before processing.
+- **Example**:
+  - `Authorization: Bearer <JWT>`
+  - Validates that the request has a valid authorization token.
+
+## 9. **Geolocation-Based Predicate**
+
+- **Definition**: A predicate that uses the geolocation of the client to route traffic or apply logic.
+- **Usage**: Routes requests to region-specific endpoints or customizes responses based on location.
+- **Example**:
+  - Requests from the US are routed to a US-based endpoint, and requests from Europe go to a European endpoint.
+
+## 10. **Rate Limiting Predicate**
+
+- **Definition**: A predicate that limits the rate of incoming requests to prevent abuse or overloading.
+- **Usage**: Restricts the number of requests from a specific client within a given time frame.
+- **Example**:
+  - Allow a maximum of 100 requests per minute per user.
+
+## Summary of Common Predicates in API Gateway:
+
+- **Path-based predicates**: Route based on resource paths.
+- **Method-based predicates**: Apply based on HTTP methods (GET, POST, etc.).
+- **Query string parameters**: Use parameters like `?id=123`.
+- **Headers**: Route or filter based on request headers.
+- **Request body**: Apply logic based on the body content.
+- **Stage**: Apply predicates based on deployment stages (dev, prod).
+- **IP address**: Route based on client IP.
+- **Authorization**: Validate tokens like JWT.
+- **Geolocation**: Route based on geographical location.
+- **Rate limiting**: Control the frequency of requests.
+
+These predicates help manage traffic, enforce security, and define routing rules for your APIs, ensuring efficient and secure operation.
