@@ -192,7 +192,7 @@ Dynamic Creation of Bean
 - follows ACID
 	- Atomicity - if any operation fails all successful transaction should be rolled back
 	- Consistensy - ensures after db state after/before transaction should be consistent
-	- Isolation - if multiple transaction are happening in parallel , no one should interfear each other
+	- Isolation - if multiple transaction are happening in parallel , no one should interfere each other
 	- Durability - ensures committed data is not lost
 - uses AOP
 - spring-boot-started-data-jpa
@@ -202,6 +202,10 @@ Dynamic Creation of Bean
 	- not to private method
 - method level
 	- only to the particular method
+
+- by default spring only rolls back runtime exception
+	- @Transactional(rollbackFor=Exception.class)
+	- will rollback for all checked and unchecked exception
 	
 Transaction Management
 ----------------------
