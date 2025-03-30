@@ -38,25 +38,24 @@
   - defaultzone
   - override-system-properties
 
-  ```java
-      eureka:
-        instance:
-          hostname: localhost
-        client:
-          service-url:
-            defaultZone: http://localhost:8761/eureka
-      name:
-        value: alibou
-      spring:
-        cloud:
-          config:
-            override-system-properties: false    // so that whatever properties mentioned in specific service properties file are not override
+  ```yml
+  eureka:
+    instance:
+      hostname: localhost
+    client:
+      service-url:
+        defaultZone: http://localhost:8761/eureka
+  name:
+    value: alibou
+  spring:
+    cloud:
+      config:
+        override-system-properties: false    // so that whatever properties mentioned in specific service properties file are not override
 
-      management:
-        tracing:
-          sampling:
-            probability: 1.0
-
+  management:
+    tracing:
+      sampling:
+        probability: 1.0
   ```
 
 ### How other service will import config from config server
@@ -382,3 +381,40 @@ spring:
 - **Rate limiting**: Control the frequency of requests.
 
 These predicates help manage traffic, enforce security, and define routing rules for your APIs, ensuring efficient and secure operation.
+
+---
+
+## Distributed Tracing [Zipkin / OpenTelemetry]
+
+- technique used `to monitor and troubleshoot the performance of distributed systems`, typically in microservices architectures.
+- It helps trace the `flow of requests as they travel through various services in a system`, allowing you to track their journey and understand how long each component takes to process requests.
+- This provides visibility into the system's behavior, making it easier to identify bottlenecks, failures, and performance issues.
+- **key concepts**
+
+  - `Trace`:
+
+    - A trace represents the entire journey of a request across different services in a distributed system. It consists of multiple spans that describe individual operations within the system.
+
+  - `Span`:
+    - A span is a single unit of work or operation. It represents a request or a task that is processed by a service (for example, a database query or HTTP request to another service). Each span has:
+      - A start time and an end time.
+      - An operation name (e.g., "GET /users").
+
+- dependency
+
+```xml
+        <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-tracing-bridge-brave</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.zipkin.reporter2</groupId>
+			<artifactId>zipkin-reporter-brave</artifactId>
+		</dependency>
+
+```
