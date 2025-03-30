@@ -166,6 +166,22 @@ public class OrderProducer {
 }
 ```
 
+### Kafka Serializer - producer
+
+- `need to define the serializer and deserializer if producing & consuming custom objects other than String`
+- for PRODUCER [in producer service properties]
+
+```java
+        spring:
+          kafka:
+            producer:
+              bootstrap-servers: localhost:9092
+              key-serializer: org.apache.kafka.common.serialization.StringSerializer
+              value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+              properties:
+                spring.json.type.mapping: orderConfirmation:com.alibou.ecommerce.kafka.OrderConfirmation
+```
+
 ### Kafka Consumer
 
 - `@KafkaListener(topics = "order-topic")`
@@ -192,18 +208,18 @@ public class OrderProducer {
     }
 ```
 
-### Kafka Serializer - producer & consumer
-
-- `need to define the serializer and deserializer if producing & consuming custom objects other than String`
-- for PRODUCER [in producer service properties]
+### Kafka De-Serializer - Consumer
 
 ```java
-        spring:
-          kafka:
-            producer:
-              bootstrap-servers: localhost:9092
-              key-serializer: org.apache.kafka.common.serialization.StringSerializer
-              value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-              properties:
-                spring.json.type.mapping: orderConfirmation:com.alibou.ecommerce.kafka.OrderConfirmation
+spring:
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: paymentGroup,orderGroup
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: 'com.alibou.ecommerce.kafka.*'
+        spring.json.type.mapping: orderConfirmation:com.alibou.ecommerce.kafka.order.OrderConfirmation,paymentConfirmation:com.alibou.ecommerce.kafka.payment.PaymentConfirmation
 ```
