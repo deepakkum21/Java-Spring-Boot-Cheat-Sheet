@@ -1,5 +1,6 @@
 ## maximum sum of all sub-arrays of size K - use QUEUE to store
 
+```java
         static int maxSum(int arr[], int n, int k) {
             // n must be greater
             if (n <= k) {
@@ -24,9 +25,11 @@
 
             return max_sum;
         }
+```
 
 ## Smallest sub-array with sum greater than a given value - [Using Two Pointers]
 
+```java
         static int smallestSubWithSum(int x, int[] arr) {
 
             int i = 0, j = 0;
@@ -61,9 +64,11 @@
             if (ans == Integer.MAX_VALUE) return 0;
             return ans;
         }
+```
 
 ## Subarray with Given Sum - K
 
+```java
         static ArrayList<Integer> subarraySum(int[] arr, int target) {
             // Initialize window
             int s = 0, e = 0;
@@ -97,9 +102,11 @@
             res.add(-1);
             return res;
         }
+```
 
 ## Maximum of all subarrays of size K - DEQUEUE
 
+```java
         static ArrayList<Integer> maxOfSubarrays(int[] arr, int k) {
             int n = arr.length;
 
@@ -153,9 +160,11 @@
 
             return res;
         }
+```
 
 ## Longest Subarray With Sum K || Smallest Subarray with SUM k - [Hash Map and Prefix Sum]
 
+```java
         static int longestSubarray(int[] arr, int k) {
             Map<Integer, Integer> mp = new HashMap<>();
             int res = 0;
@@ -180,9 +189,11 @@
 
             return res;
         }
+```
 
 ## Find maximum (or minimum) sum of a subarray of size k - QUEUE
 
+```java
     static int maxSum(int arr[], int n, int k)  {
         // k must be smaller than n
         if (n < k) {
@@ -221,6 +232,7 @@
           m = Math.max(m, su);
         return m;
     }
+```
 
 ## Longest Substring Without Repeating Characters
 
@@ -238,6 +250,7 @@
   Output: 6
   Explanation: The longest substring without repeating characters is “abcdef”.
 
+```java
             static int longestUniqueSubstr(String s) {
                 int n = s.length();
                 int res = 0;
@@ -267,9 +280,11 @@
                 }
                 return res;
             }
+```
 
 ## First negative integer in every window of size k - [Dequeue]
 
+```java
             public static int[] firstNegInt(int[] arr, int k) {
                 Deque<Integer> dq = new LinkedList<>();
                 List<Integer> res = new ArrayList<>();
@@ -308,9 +323,11 @@
 
                 return res.stream().mapToInt(i -> i).toArray();
             }
+```
 
 ## Count Distinct Elements In Every Window of Size K
 
+```java
     static List<Integer> countDistinct(int[] arr, int k) {
         int n = arr.length;
         ArrayList<Integer> res = new ArrayList<>();
@@ -339,3 +356,4 @@
 
         return res;
     }
+```
