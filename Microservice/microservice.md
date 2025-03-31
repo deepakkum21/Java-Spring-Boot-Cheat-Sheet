@@ -15,19 +15,23 @@
 - `@EnableConfigServer`
 - dependency `spring-cloud-config-server`
 
+```xml
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-server</artifactId>
         </dependency>
+```
 
 - set path from where to find configurations
 
-        spring:
-            cloud:
-                config:
-                    server:
-                        native:
-                            search-locations: classpath:/configurations
+```yml
+spring:
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/configurations
+```
 
 - Inside configurations folder, the name of the config file should be `{springApplicationNameMentionedInRespectiveApplicationFile}.yml`
 
@@ -77,7 +81,7 @@
 - Eureka Server `acts as a registry where microservices can register themselves`, and the client applications can discover these services `without needing to know their IP addresses or hostnames`
 - dependency `config client` & `eureka server`
 
-            ```xml
+```xml
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-config</artifactId>
@@ -86,7 +90,7 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
             </dependency>
-            ```
+```
 
 ### configure Eureka Server in a Spring Boot
 
@@ -101,22 +105,24 @@
 
 - If set to `false`, the Eureka Client `will not register itself with the Eureka Server`. This is useful in scenarios where you want the client to only discover services, but not register itself.
 
-            ```java
-            eureka:
-                client:
-                    fetch-registry: false
-                    register-with-eureka: false
-            ```
+```yml
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+```
 
 ### defaultZone
 
 - defines the` URL of the Eureka Server`.
 - It is `used by the client to know where to register itself and where to query for service instances`.
 
-            eureka:
-                client:
-                    service-url:
-                        defaultZone: http://localhost:8761/eureka/
+```yml
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+```
 
 ### What is eureka.instance.hostname property used for?
 
@@ -403,7 +409,7 @@ These predicates help manage traffic, enforce security, and define routing rules
 - dependency
 
 ```xml
-        <dependency>
+    <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
