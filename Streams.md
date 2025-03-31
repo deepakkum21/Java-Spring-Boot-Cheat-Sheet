@@ -21,7 +21,7 @@
             .collect(Collectors.toList());
 
 ## Sample beginner level Stream program
-
+```java
         String s = "deepak";
         System.out.println(s.chars().mapToObj(a-> (char)a).collect(Collectors.groupingBy(a -> a, Collectors.counting())));
 
@@ -306,3 +306,4 @@
             });
 
         List<Employee> top10Employees = new ArrayList<>(topEmployees);
+```
