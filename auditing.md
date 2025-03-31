@@ -24,7 +24,7 @@
 
 - To track users with `@CreatedBy and @LastModifiedBy`, you'll need to `implement the AuditorAware interface` to provide the current user.
 
-        ```java
+```java
         @Component
         public class CustomAuditorAware implements AuditorAware<String> {
             @Override
@@ -33,4 +33,4 @@
                 return Optional.of("CurrentUser");
             }
         }
-        ```
+ ```
