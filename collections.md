@@ -17,3 +17,5 @@
 
 - Space Complexity
   - O(n)
+
+![Collection -java21](./img/collection-java21.png)
