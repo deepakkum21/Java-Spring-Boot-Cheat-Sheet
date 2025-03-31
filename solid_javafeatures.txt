@@ -37,6 +37,9 @@ JAVA 21
 	- cost efficient
 	- managed by JVM and not by platform
 - Pattern matching in switch improvements
+- `sequenced collection [uniformity] `- 
+	- [getFirst(), getLast(), removeFirst(), removeLast(), reversed()] [List]
+	- sequencedMap firstEntry(), lastEntry(), putFirst(), putLast() - Map
 - Scoped Values
 	- Scoped values enable you to share data safely across different threads without the need for synchronization mechanisms like locks. This can be useful for applications that need to pass context (e.g., user data, session information) between different parts of a program running in different threads.
 
