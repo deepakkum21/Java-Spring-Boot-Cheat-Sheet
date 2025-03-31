@@ -20,7 +20,7 @@
 
 - A record `implicitly extends java.lang.Record, so it cannot extend other classes`. However, it `can implement interfaces`.
 
-        ```java
+```java
         public record Person(String name, int age) {
             // You can add additional methods or logic if needed
             public String greeting() {
@@ -28,9 +28,10 @@
             }
 
         }
-        ```
+```
 
-        ```java
+
+```java
         public record CustomerRequest(
             String id,
             @NotNull(message = "Customer firstname is required")
@@ -45,6 +46,6 @@
 
         }
 
-```
+
 
 ```
