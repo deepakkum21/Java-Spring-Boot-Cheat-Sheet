@@ -21,6 +21,7 @@
             .collect(Collectors.toList());
 
 ## Sample beginner level Stream program
+
 ```java
         String s = "deepak";
         System.out.println(s.chars().mapToObj(a-> (char)a).collect(Collectors.groupingBy(a -> a, Collectors.counting())));
@@ -284,17 +285,21 @@
             .filter(product -> "electronics".equals(product.getCategory()))  // Filter out electronics products
             .map(product -> "Product " + product.getName() + " costs " + product.getPrice())  // Map to formatted string
             .collect(Collectors.toList());
+```
 
 ## for finding top [k] from big list keeping performance
 
 - `sorted() + limit()` has time complexity of `O(n log n)`
 
+```java
         employees.stream().sorted(
             Comparator.comparingDouble(Employee::getSalary).reversed() // Sort by salary in descending order
         ).limit(10).toList();
+```
 
 - use `priority queue` has time complexity of `O(n log k)`
 
+```java
         PriorityQueue<Employee> topEmployees = new PriorityQueue<>(Comparator.comparingDouble(Employee::getSalary));
 
         employees.stream()
@@ -306,4 +311,33 @@
             });
 
         List<Employee> top10Employees = new ArrayList<>(topEmployees);
+```
+
+## Write a program to sort on last on last name if last name is same sort on middle name and if middle name is equal then sort on first name
+
+```java
+        List<String> names = Arrays.asList("rahul kumar rao", "goraw kumar parasa");
+
+        List<String> sortedNames = names.stream()
+            .sorted((name1, name2) -> {
+                // Split the names into parts (first name, middle name, last name)
+                String[] parts1 = name1.split(" ");
+                String[] parts2 = name2.split(" ");
+
+                // Compare last names first
+                int lastNameComparison = parts1[parts1.length - 1].compareTo(parts2[parts2.length - 1]);
+                if (lastNameComparison != 0) {
+                    return lastNameComparison;
+                }
+
+                // If last names are the same, compare middle names
+                int middleNameComparison = parts1[1].compareTo(parts2[1]);
+                if (middleNameComparison != 0) {
+                    return middleNameComparison;
+                }
+
+                // If middle names are the same, compare first names
+                return parts1[0].compareTo(parts2[0]);
+            })
+            .collect(Collectors.toList());
 ```
