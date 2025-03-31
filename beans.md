@@ -54,8 +54,20 @@
     - secure the URL using securityFilterChain`.requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ADMIN")` // Limit access to actuator endpoints to users with "ADMIN" role
 - **Application Context**
 
+```java
         ConfigurableApplicationContext applicationContext = SpringApplication.run(EcomApplication.class, args);
         applicationContext.getBean("nameOfTheBean")
+```
+
+### To get all the beans
+
+```java
+    public static void main(String[] args) {
+      ConfigurableApplicationContext applicationContext = SpringApplication.run(DemoApplication.class, args);
+      Arrays.stream(applicationContext.getBeanDefinitionNames()).sorted()
+          .forEach(System.out::println);
+    }
+```
 
 ## Bean Creation
 
@@ -89,6 +101,7 @@
       - `Implementing InitializingBean interface`: Spring will invoke the afterPropertiesSet() method after dependency injection.
       - Using `custom @Bean initialization methods in @Configuration classes`.
 
+```java
               @Configuration
               public class AppConfig {
 
@@ -104,6 +117,7 @@
                       System.out.println("Custom initialization logic for MyService.");
                   }
               }
+```
 
       - `Implementing BeanPostProcessor interface` = postProcessBeforeInitialization()
 
@@ -154,6 +168,7 @@
 
 `@DependsOn`
 
+```java
         @Configuration
         public class AppConfig {
 
@@ -170,6 +185,7 @@
                 return new BeanA();
             }
         }
+```
 
 ## @ComponentScan
 
@@ -193,17 +209,21 @@
 
   - exclude by Annotation
 
+```java
           @ComponentScan(
               basePackages = "com.example.myapp",
               excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, value = Deprecated.class)
           )
+```
 
-  - exclude by type
+- exclude by type
 
+```java
          @ComponentScan(
             basePackages = "com.example.myapp",
             excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = MyService.class)
         )
+```
 
 - ### includeFilters
 
@@ -218,6 +238,7 @@
 
 - `using @Conditional` where class `implements Condition I`
 
+```java
         @Configuration
         public class MyConfiguration {
 
@@ -232,6 +253,7 @@
             @Override
             // matches method
         }
+```
 
 ## Bean Scope
 
@@ -282,6 +304,7 @@ Ans> No as the same instance is returned as Upper level is Singleton and propert
 . mvn spring-boot:run -Dspring-boot.run.profiles=prod
 . Add profile in pom.xml
 
+```xml
           <profiles>
             <profile>
               <id>local</id>
@@ -296,6 +319,7 @@ Ans> No as the same instance is returned as Upper level is Singleton and propert
               </properties>
             </profile>
           </profiles>
+```
 
 . And run using mvn spring-boot:run -Pproduction [pom profile id]
 
