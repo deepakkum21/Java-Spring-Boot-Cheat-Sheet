@@ -155,3 +155,26 @@
 ---
 
 ## ISOLATION LEVELS
+
+- Isolation [default depends on DB used]: how changes made by one transaction is visible to transaction running in parallel
+
+| Propagation Type     | Dirty Read                           | Non-repeatable read problem                                                       | Phantom Read Problem                                                                                                                   | Concurrency |
+| -------------------- | ------------------------------------ | --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+|                      | value changed without commit is read | if same value is read multiple times but gets different value [single row/record] | getting different result using same query when run another time , as before 2nd read someone inserted the data [multiple records/rows] |
+| READ_UNCOMMITTED     | Y                                    | Y                                                                                 | Y                                                                                                                                      | High        |
+| READ_COMMITTED       | N                                    | Y                                                                                 | Y                                                                                                                                      | little less |
+| REPEATABLE_COMMITTED | N                                    | N                                                                                 | Y                                                                                                                                      | little less |
+| SERIALIZABLE         | N                                    | N                                                                                 | N                                                                                                                                      | less        |
+
+- `READ_UNCOMMITTED`
+  - `no read/write locks are acquired [shared/exclusive lock]`
+  - `best for ONLY READ operations`
+- `READ_COMMITTED`
+  - `read:Shared lock and released as soon as read is done`
+  - `write:Exclusive lock and is kept till end of transaction`
+- `REPEATABLE_COMMITTED`
+  - read:Shared lock and is kept `till end of transaction `
+  - write:Exclusive lock and is kept till end of transaction
+- `SERIALIZABLE`
+  - read:Shared lock and is kept `till end of transaction[range of records]`
+  - write:Exclusive lock and is kept till end of transaction[range of records]

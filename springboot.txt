@@ -237,8 +237,8 @@ Transaction Management
 				- read:Shared lock and is kept till end of transaction
 				- write:Exclusive lock and is kept till end of transaction
 			- SERIALIZABLE            N               less              N                               N
-				- read:Shared lock and is kept till end of transaction
-				- write:Exclusive lock and is kept till end of transaction
+				- read:Shared lock and is kept till end of transaction[range of records]
+				- write:Exclusive lock and is kept till end of transaction[range of records]
 				
 	- Programmatic [PlatformTransactionManager Interface]
 		- DataSourceTransactionManager: For JDBC-based transactions.
