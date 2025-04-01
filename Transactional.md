@@ -12,23 +12,23 @@
 
 ## 1. Programmatic way
 
-- TransactionManager [I]
-  - PlatformTransactionManager [I] implements TransactionManager
+- `TransactionManager` [I]
+  - `PlatformTransactionManager` [I] implements TransactionManager
     - has methods
-      - getTransaction()
-      - commit()
-      - rollback()
-  - AbstractPlatformTransactionManager implements PlatformTransactionManager
+      - **getTransaction()**
+      - **commit()**
+      - **rollback()**
+  - `AbstractPlatformTransactionManager` implements PlatformTransactionManager
     - provides implementation for
       - getTransaction()
       - commit()
       - rollback()
     - concrete class
-      - DataSourceTransactionManager
-        - JdbcTransactionManager
-      - HibernateTransactionManager
-      - JPATransactionManager
-      - JTATransactionManager - for 2phase commit
+      - `DataSourceTransactionManager`
+        - `JdbcTransactionManager`
+      - `HibernateTransactionManager`
+      - `JPATransactionManager`
+      - `JTATransactionManager` - for 2phase commit
 - to know which transaction manager is used
   `TransactionAspectSupport.currentTransactionStatus()`
 
@@ -125,3 +125,33 @@
         return bookRepository.save(book);
     }
 ```
+
+---
+
+## Transaction Propagation
+
+- Transaction propagation refers to `how transactions behave when a method annotated with @Transactional` is called by another method that may or may not have an active transaction.
+- types
+  - **REQUIRED**: `(default)`:
+    - If a `transaction exists, use it; if not, create a new one`
+  - **REQUIRES_NEW**:
+    - `Always create a new transaction, suspend the existing one if an`
+  - **NESTED**:
+    - Execute the `transaction in a nested fashion within an existing one`.
+    - `useful for partial rollback`
+  - **SUPPORTS**:
+    - `If a transaction exists, execute within the transaction`.
+    - `If no transaction exists, execute without a transaction`.
+  - **MANDATORY**:
+    - If a `transaction exists, execute within it`.
+    - If `no transaction` exists, `throw an exception `(TransactionRequiredException).
+  - **NOT_SUPPORTED**:
+    - If a `transaction exists, suspend it`.
+    - `Execute the method outside any transaction`.
+  - **NEVER**;
+    - The method `must not run within a transaction`.
+    - If a `transaction exists,an exception will be thrown` (IllegalTransactionStateException)
+
+---
+
+## ISOLATION LEVELS
