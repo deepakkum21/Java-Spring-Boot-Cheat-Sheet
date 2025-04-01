@@ -224,9 +224,9 @@ Transaction Management
 		
 									Dirty Read     Concurrency       Non-repeatable read problem       Phantom Read Problem
 									-------------------------------------------------------------------------------------------
-									value changed                 if same value is read multiple      getting different result using same querry when
+									value changed                 if same value is read multiple      getting different result using same query when
 									without commit                times but gets different value       run another time , as before 2nd read someone 
-									is read                                                            inserted the data
+									is read                              [single row/record]             inserted the data [multiple records/rows]
 			- READ_UNCOMMITTED  -     Y               High              Y                               Y
 				- no read/write locks are acquired [shared/exclusive lock]
 				- best for ONLY READ operations
