@@ -156,7 +156,8 @@
 
 ## ISOLATION LEVELS
 
-- Isolation [default depends on DB used]: how changes made by one transaction is visible to transaction running in parallel
+- Isolation `[default depends on DB used]`:
+  - `how changes made by one transaction is visible to transaction running in parallel`
 
 | Propagation Type     | Dirty Read                           | Non-repeatable read problem                                                       | Phantom Read Problem                                                                                                                   | Concurrency |
 | -------------------- | ------------------------------------ | --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
