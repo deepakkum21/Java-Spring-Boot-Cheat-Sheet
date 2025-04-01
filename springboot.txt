@@ -1,5 +1,5 @@
 Maven
-	- project managment via POM
+	- project management via POM
 	- Lifecycle [validate,compile, test, package, verify, install, deploy]
 	- each has goals, new goal can be added via <plugins> <phase><goal>
 	- any of the phase prior phase and all its goals run
@@ -13,12 +13,12 @@ Custom Annotation
 	- public @interface CustomAnnotationName
 	- method target
 		- no parameter, no body
-		- retrun type primitive, string, array, enum
+		- return type primitive, string, array, enum
 		
 	@Target(ElementType.METHOD)
 	@Retention(RetentionPolicy.RUNTIME)
 	public @interface CustomAnnotation {
-		String key() default "mydefaultName";
+		String key() default "myDefaultName";
 	}
 	
 	@CustomAnnotation(key="newOverrideKey")
@@ -27,19 +27,19 @@ Meta Annotation property
 	- @Target({ElementType.METHOD,ElementType.CLASS})
 		- where the annotation can be applied [method,class,constructor , parameter, field, type(class, enum, interface)]
 	- @Retention({RetentionPolicy.SOURCE})
-		- how particular amnotation will be stored
+		- how particular annotation will be stored
 			- RetentionPolicy.SOURCE: discarded by compiler, only for readability
 			- RetentionPolicy.CLASS: recorded in .class file but ignored by JVM runtime
 			- RetentionPolicy.RUNTIME : recorded in .class file also available during runtime
 
 Spring MVC
-Mannualy deploy to servlet container [war/jar]
+Manually deploy to servlet container [war/jar]
 	1. request comes to tomcat[servlet container]
 	2. gets forwarded to dispatcher servlet
 	3. choose the correct controller using HandlerMapping
 	4. then IOC
 	5. invokes the controller mapping
-	6. retuns the response
+	6. returns the response
 Extend one DispatcherInitializer
 @EnableWebMVC
 @ComponentScan
@@ -53,7 +53,7 @@ SPRING BOOT
 2. Auto configuration
 	- no need to DispatcherInitializer
 	- adds @EnableAutoConfiguration, @ComponentScan,@SpringBootConfiguration, if property is provided it configures datasource 	
-3. Auto deployment to embeded Tomcat
+3. Auto deployment to embedded Tomcat
 4. Helps to create prod ready app quickly
 5. Spring Boot DevTools
 6. Actuator
@@ -76,7 +76,7 @@ SPRING BOOT
 @RequestParam = query parameter 
 	- default is true
 	- to some kind of preprocessing before the params are assigned to arguments
-	  can run a CustomPropertyEditor [like to convert the dataType[custom] from string[default of querry param]
+	  can run a CustomPropertyEditor [like to convert the dataType[custom] from string[default of query param]]
 	  
 @RequestBody
 	- Bind the body of HTTP request (typically JSON) to controller method parameter (java object).
@@ -100,7 +100,7 @@ SPRING BOOT
 	
 @ConditionalOnProperty(prefix,value, havingValue, matchIfMissing)
 	- if condition is satisfied then only create the bean
-	- mysql.enabled=true [prefix = mysql,value=enabled, havingValue=true, matchIfMissing={if mysql.enabled is not present in property file)
+	- mysql.enabled=true [prefix = mysql,value=enabled, havingValue=true, matchIfMissing={if mysql.enabled is not present in property file}]
 	- make @Autowired(required=false)
   adv
 	- toggling of feature
@@ -191,7 +191,7 @@ Dynamic Creation of Bean
 @Transactional
 - follows ACID
 	- Atomicity - if any operation fails all successful transaction should be rolled back
-	- Consistensy - ensures after db state after/before transaction should be consistent
+	- Consistency - ensures after db state after/before transaction should be consistent
 	- Isolation - if multiple transaction are happening in parallel , no one should interfere each other
 	- Durability - ensures committed data is not lost
 - uses AOP
@@ -220,7 +220,7 @@ Transaction Management
 			- NOT_SUPPORTED: If a transaction exists, suspend it. Execute the method outside any transaction.
 			- NEVER; The method must not run within a transaction.If a transaction exists,an exception will be thrown (IllegalTransactionStateException)
 			
-		- Isolation	[default depends on DB used]: how changes made by one transaction is visible to transaction runing in parallel
+		- Isolation	[default depends on DB used]: how changes made by one transaction is visible to transaction running in parallel
 		
 									Dirty Read     Concurrency       Non-repeatable read problem       Phantom Read Problem
 									-------------------------------------------------------------------------------------------
@@ -228,7 +228,7 @@ Transaction Management
 									without commit                times but gets different value       run another time , as before 2nd read someone 
 									is read                                                            inserted the data
 			- READ_UNCOMMITTED  -     Y               High              Y                               Y
-				- no read/write locks are acquired [shared/exclsuive lock]
+				- no read/write locks are acquired [shared/exclusive lock]
 				- best for ONLY READ operations
 			- READ_COMMITTED          N               little less       Y                               Y
 				- read:Shared lock and released as soon as read is done
@@ -240,7 +240,7 @@ Transaction Management
 				- read:Shared lock and is kept till end of transaction
 				- write:Exclusive lock and is kept till end of transaction
 				
-	- Programatic [PlatformTransactionManager Interface]
+	- Programmatic [PlatformTransactionManager Interface]
 		- DataSourceTransactionManager: For JDBC-based transactions.
 		- JpaTransactionManager: For JPA (Java Persistence API) transactions.
 		- HibernateTransactionManager: For Hibernate transactions.
@@ -256,7 +256,7 @@ Transaction Management
 	- corePool = 8
 	- maxPool = Integer.MAX
 	- queueCapacity= Integer.MAX
-	- keepalive = 60
+	- keep-alive = 60
   Disadvantage
 	- under utilization of thread since queue size is too big, new thread from max pool will not be created
 	- high latency
