@@ -20,6 +20,8 @@
 
   - `bucket capacity`
   - `Refiller` - refills token in the bucket in X min Y tokens
+  - eg
+    - customer care
 
 - 2. **Leaky bucket**
 
@@ -28,6 +30,8 @@
   - if queue is full request will be denied
   - cons
     - `not suited to burst request` [HOTSTAR IPL MATCH]
+  - eg
+    - youtube video upload
 
 - 3. **Fixed Window Counter**
   - for every fixed window eg 5min a constant eg 10 request will be allowed
