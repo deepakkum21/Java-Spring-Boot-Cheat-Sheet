@@ -2,11 +2,11 @@
 
 ## CLASS DIAGRAM
 
-![class diagram](./img/image.png)
+![class diagram](./img/ecom-1.png)
 
 ## ARCHITECTURE
 
-![Architecture](./img/image1.png)
+![Architecture](./img/ecom-2.png)
 
 ## CONFIG SERVER
 
