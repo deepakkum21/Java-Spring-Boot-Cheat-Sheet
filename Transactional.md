@@ -159,7 +159,7 @@
 - Isolation `[default depends on DB used]`:
   - `how changes made by one transaction is visible to transaction running in parallel`
 
-| Propagation Type     | Dirty Read                           | Non-repeatable read problem                                                       | Phantom Read Problem                                                                                                                   | Concurrency |
+| Propagation Type     | Dirty Read Possible                  | Non-repeatable read problem Possible                                              | Phantom Read Problem Possible                                                                                                          | Concurrency |
 | -------------------- | ------------------------------------ | --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
 |                      | value changed without commit is read | if same value is read multiple times but gets different value [single row/record] | getting different result using same query when run another time , as before 2nd read someone inserted the data [multiple records/rows] |
 | READ_UNCOMMITTED     | Y                                    | Y                                                                                 | Y                                                                                                                                      | High        |
