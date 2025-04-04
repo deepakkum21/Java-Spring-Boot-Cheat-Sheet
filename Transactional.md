@@ -167,6 +167,27 @@
 | REPEATABLE_COMMITTED | N                                    | N                                                                                 | Y                                                                                                                                      | little less |
 | SERIALIZABLE         | N                                    | N                                                                                 | N                                                                                                                                      | less        |
 
+### Problems
+
+#### 1. Dirty Read
+
+- If Transaction A is reading the data which is writing by Transaction B and not yet even committed.
+- If Transaction B does the rollback, then whatever data read by Transaction A is know dirty read.
+
+![dirtyread](./img/dirty-read.png)
+
+#### 2. Non-Repeatable Read
+
+- If suppose Transaction A, reads the same `row several times and there is a chance that it reads different value`.
+  ![non-repeatable read](./img/non-repeatable-read.png)
+
+#### 3. Phantom Read
+
+- If suppose Transaction A, `executes same query several times and there is a chance that the rows returned are different`.
+  ![phantom read](./img/phantom-read.png)
+
+### Isolation level problem sol
+
 - `READ_UNCOMMITTED`
   - `no read/write locks are acquired [shared/exclusive lock]`
   - `best for ONLY READ operations`
