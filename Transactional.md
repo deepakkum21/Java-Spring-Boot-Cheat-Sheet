@@ -198,5 +198,8 @@
   - read:Shared lock and is kept `till end of transaction `
   - write:Exclusive lock and is kept till end of transaction
 - `SERIALIZABLE`
+
   - read:Shared lock and is kept `till end of transaction[range of records]`
   - write:Exclusive lock and is kept till end of transaction[range of records]
+
+  ![isolation level sol](./img/isloation%20sol.png)
