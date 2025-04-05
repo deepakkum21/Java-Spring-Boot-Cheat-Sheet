@@ -28,6 +28,7 @@
 - interface with no methods
   - Cloneable
   - Serializable
+  - Repository
 
 ## for Singleton
 
