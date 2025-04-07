@@ -1,5 +1,7 @@
 # Transaction
 
+- in spring transaction works on `PROXY` based approach
+
 - ACID
   - **A (Atomicity)**
     - Ensures all operations in `transaction are completed successfully. If any operation fails then entire transaction is rolled back`.
@@ -203,3 +205,32 @@
   - write:Exclusive lock and is kept till end of transaction[range of records]
 
   ![isolation level sol](./img/isloation%20sol.png)
+
+## Q> What happens inside when a Service having a method with @Transactional and is autowired.
+
+- When used @Transaction the bean having this transactional is not directly injected, infact `a proxy is created extending the Service class and the proxy of the service is injected to the controller`
+
+```java
+public class BookServiceProxy extends BookService {
+  public void getBook() {
+    try {
+
+      TransactionManager. beginTransaction();
+
+      //Call the Actual Method
+      super.getBook();
+
+      //Commit Transaction if No Exception Occurs
+      TransactionManager.commit();
+    } catch (Exception e) {
+      //  Rollback Transaction on Exception
+      TransactionManager.rollback();
+    }
+  }
+}
+```
+
+## Q> Types of Proxies
+
+- `JDKDynamic Proxy => Interface`
+- `CGLIB Proxy => Class`
