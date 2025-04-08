@@ -20,6 +20,9 @@ Spring Security
 4. bean securityFilterChain
 	- authenticationProvider
 
+## Why csrf.disabled() done
+- as we use stateless app, no session and no cookies
+
 Date & Time classes
 -------------------
 -	problem in old
