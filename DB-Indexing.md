@@ -91,7 +91,7 @@
 
 ## Partitioning VS Sharding
 
-| **Aspect**                 | **Partitioning**                                                                                   | **Sharding**                                                                                      |
+| **Aspect**                 | **Partitioning [data level]**                                                                      | **Sharding [database level]**                                                                     |
 | -------------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | **Definition**             | Dividing a large table into smaller, more manageable pieces (partitions) within the same database. | Dividing data across multiple databases or servers (shards).                                      |
 | **Scope**                  | Happens within a single database.                                                                  | Happens across multiple databases or servers.                                                     |
@@ -102,6 +102,7 @@
 | **Scalability**            | Limited to vertical scaling (scaling up the single database).                                      | Supports horizontal scaling (adding more machines/servers).                                       |
 | **Failure Management**     | Failure of a partition does not affect other partitions, but still within a single database.       | Failure of a shard affects only the data in that shard, but can impact application availability.  |
 | **Data Integrity**         | Easier to maintain consistency (within a single database).                                         | More complex consistency management (due to distributed nature).                                  |
+| **Types**                  | - `Horizontal`:- row level <br/> - `vertical`: column level                                        |                                                                                                   |
 
 ### Which One to Choose?
 
@@ -112,9 +113,12 @@
   - When your data `growth is not expected to exceed the capacity` of a single database or server.
 
 - **Use Sharding**:
+
   - When you `need to scale horizontally, distributing` data across multiple databases or servers to handle a large volume of data.
   - When you need to `support distributed data processing and fault tolerance`.
   - When your `data is too large for a single machine or database` to handle efficiently, and you expect it to grow rapidly.
+
+  ![compare](./img/sharding&partitioning.png)
 
 ---
 
