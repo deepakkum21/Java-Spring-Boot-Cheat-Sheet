@@ -110,7 +110,8 @@ SPRING BOOT
 	- overuse can make code complicated
 	- miss-configuration can happen
 
-@EnableGlobalMethodSecurity
+@EnableGlobalMethodSecurity in old
+@EnableMethodSecurity in SpringSecurity 5.0
 @EnableWebSecurity
 @PreAuthorize(hasRole(" ")) hasAuthority
 @EnableAspectJAutoProxy

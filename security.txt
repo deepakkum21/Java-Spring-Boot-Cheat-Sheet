@@ -15,10 +15,28 @@ Spring Security
 ---------------
 @EnableWebSecurity <spring-boot-starter-security>
 1. depending on the authenticationType security filter will be invoked
-2. then passed to AuthenticationManager I [authenticate() -> ProviderManager
+2. then passed to AuthenticationManager I [authenticate() -> ProviderManager]
 3. delegates to AuthenticationProvider
 4. bean securityFilterChain
 	- authenticationProvider
+
+
+@Configuration
+@EnableMethodSecurity(
+    prePostEnabled = true,  // Enable @PreAuthorize and @PostAuthorize
+    securedEnabled = true,  // Enable @Secured annotation
+    jsr250Enabled = true    // Enable @RolesAllowed annotation
+)
+public class SecurityConfig {
+    // Spring Security method-level security is enabled here
+}
+
+@PreAuthorize: Enables pre-invocation security checks based on SpEL expressions.
+@PostAuthorize: Enables post-invocation security checks based on SpEL expressions.
+@Secured: Restricts method access based on roles/authorities.
+@RolesAllowed: Restricts method access based on roles (from JSR-250).
+@EnableAspectJAutoProxy: (Optional) Enables AOP for method security annotations
+
 
 ## Why csrf.disabled() done
 - as we use stateless app, no session and no cookies
