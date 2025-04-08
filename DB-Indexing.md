@@ -91,18 +91,20 @@
 
 ## Partitioning VS Sharding
 
-| **Aspect**                 | **Partitioning [data level]**                                                                      | **Sharding [database level]**                                                                     |
-| -------------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| **Definition**             | Dividing a large table into smaller, more manageable pieces (partitions) within the same database. | Dividing data across multiple databases or servers (shards).                                      |
-| **Scope**                  | Happens within a single database.                                                                  | Happens across multiple databases or servers.                                                     |
-| **Data Distribution**      | Data is logically split, but resides within one database.                                          | Data is physically distributed across multiple databases or servers.                              |
-| **Goal**                   | Improve performance and manage large datasets within one database.                                 | Distribute data across multiple systems for better scalability and fault tolerance.               |
-| **Application Complexity** | Transparent to the application (database manages it).                                              | The application may need to know which shard holds the data (depending on the sharding strategy). |
-| **Performance**            | Improves performance for specific queries, especially those on large tables.                       | Improves performance and scalability by distributing the load.                                    |
-| **Scalability**            | Limited to vertical scaling (scaling up the single database).                                      | Supports horizontal scaling (adding more machines/servers).                                       |
-| **Failure Management**     | Failure of a partition does not affect other partitions, but still within a single database.       | Failure of a shard affects only the data in that shard, but can impact application availability.  |
-| **Data Integrity**         | Easier to maintain consistency (within a single database).                                         | More complex consistency management (due to distributed nature).                                  |
-| **Types**                  | - `Horizontal`:- row level <br/> - `vertical`: column level                                        |                                                                                                   |
+| **Aspect**                 | **Partitioning [data level]**                                                                      | **Sharding [database level]**                                                                         |
+| -------------------------- | -------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| **Definition**             | Dividing a large table into smaller, more manageable pieces (partitions) within the same database. | Dividing data across multiple databases or servers (shards).                                          |
+| **Scope**                  | Happens within a single database.                                                                  | Happens across multiple databases or servers.                                                         |
+| **Data Distribution**      | Data is logically split, but resides within one database.                                          | Data is physically distributed across multiple databases or servers.                                  |
+| **Goal**                   | Improve performance and manage large datasets within one database.                                 | Distribute data across multiple systems for better scalability and fault tolerance.                   |
+| **Application Complexity** | Transparent to the application (database manages it).                                              | The application may need to know which shard holds the data (depending on the sharding strategy).     |
+| **Performance**            | Improves performance for specific queries, especially those on large tables.                       | Improves performance and scalability by distributing the load.                                        |
+| **Scalability**            | Limited to vertical scaling (scaling up the single database).                                      | Supports horizontal scaling (adding more machines/servers).                                           |
+| **Failure Management**     | Failure of a partition does not affect other partitions, but still within a single database.       | Failure of a shard affects only the data in that shard, but can impact application availability.      |
+| **Data Integrity**         | Easier to maintain consistency (within a single database).                                         | More complex consistency management (due to distributed nature).                                      |
+| **Types**                  | - `Horizontal`:- row level <br/> - `vertical`: column level                                        |                                                                                                       |
+| **Advantages**             |                                                                                                    | - handles large read and writes <br/> - increase overall storage capacity <br/> - higher availability |
+| **Disadvantages**          |                                                                                                    | - operationally complex <br/> - cross hard query is expensive                                         |
 
 ### Which One to Choose?
 
