@@ -55,6 +55,6 @@
 
 ### 2. Unsatisfied Dependency
 
--` @Primary when there are multiple implementation` classes of DI object
+- `@Primary when there are multiple implementation` classes of DI object
 
 - `@Qualifier("name") with @Autowired`
