@@ -115,3 +115,22 @@
   - When you `need to scale horizontally, distributing` data across multiple databases or servers to handle a large volume of data.
   - When you need to `support distributed data processing and fault tolerance`.
   - When your `data is too large for a single machine or database` to handle efficiently, and you expect it to grow rapidly.
+
+---
+
+## Keys in DB
+
+| **Key Type**      | **Description**                                                                      | **Example**                                |
+| ----------------- | ------------------------------------------------------------------------------------ | ------------------------------------------ |
+| **Primary Key**   | Uniquely identifies records in a table. Cannot contain NULL values.                  | `student_id` in a Students table.          |
+| **Foreign Key**   | Refers to the primary key in another table. Ensures referential integrity.           | `student_id` in an Enrollments table.      |
+| **Unique Key**    | Ensures all values in the column are unique, but can contain NULL values.            | `email` in an Employees table.             |
+| **Candidate Key** | A set of columns that can uniquely identify a row; one is chosen as the PK.          | `student_id`, `email` in a Students table. |
+| **Composite Key** | A key made of two or more columns to uniquely identify a record.                     | `order_id`, `product_id` in Orders table.  |
+| **Super Key**     | A set of columns that can uniquely identify a record, but may contain extra columns. | `student_id, email` in a Students table.   |
+| **Alternate Key** | A candidate key not selected as the primary key.                                     | `email` as an alternate key in Students.   |
+| **Secondary Key** | An index key that improves query performance but doesn't enforce data integrity.     | `last_name` in an Employees table.         |
+| **Natural Key**   | A key derived from the data that inherently has a unique meaning.                    | `email` in a Users table.                  |
+| **Surrogate Key** | A system-generated key, typically an auto-incremented value.                         | `order_id` in an Orders table.             |
+| **Index Key**     | Used in indexing to speed up query performance.                                      | `last_name` in an Employees table.         |
+| **Clustered Key** | Determines the physical storage order of rows in a table.                            | `student_id` in a Students table.          |
