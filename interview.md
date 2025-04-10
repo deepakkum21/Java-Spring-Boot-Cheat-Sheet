@@ -29,6 +29,7 @@
   - Cloneable
   - Serializable
   - Repository
+  - TransactionManager
 
 ## for Singleton
 
