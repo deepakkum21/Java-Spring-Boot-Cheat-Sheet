@@ -126,12 +126,33 @@ User Action ---> Domain Logic ---> Create Event ---> Append to Event Store
 
 ---
 
-## Leader Election
+## 5. Leader Election
 
 - `ensures only one leader is present`
 - handles election of leader in the event of leader going down
 - `Zookeeper`
 
 ![leader-election](./img//distributed-design-pattern/leader-election.png)
+
+---
+
+## 6. Publisher/Subscriber
+
+- The **Publish-Subscribe (Pub/Sub)** pattern is a **messaging pattern** where **senders (publishers)** of messages d`o not directly send messages to specific receivers. Instead, messages are published to` a **channel or topic**, and **subscribers** receive only the messages of topics they are interested in.
+- kafka
+
+### 🧠 Core Idea
+
+- **Publisher**: Sends messages (events) to a topic.
+- **Subscriber**: Registers interest in specific topics and receives matching messages.
+- **Broker/Channel**: Mediates between publishers and subscribers.
+
+### 🔄 How It Works
+
+```plaintext
+Publisher ---> Topic/Channel ---> Subscriber(s)
+```
+
+![pub-sub](./img/distributed-design-pattern/pub-sub.png)
 
 ---
