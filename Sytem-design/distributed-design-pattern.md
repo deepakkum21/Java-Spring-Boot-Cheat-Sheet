@@ -125,3 +125,13 @@ User Action ---> Domain Logic ---> Create Event ---> Append to Event Store
 ![event-sourcing](./img/distributed-design-pattern/event-sourcing1.png)
 
 ---
+
+## Leader Election
+
+- `ensures only one leader is present`
+- handles election of leader in the event of leader going down
+- `Zookeeper`
+
+![leader-election](./img//distributed-design-pattern/leader-election.png)
+
+---
