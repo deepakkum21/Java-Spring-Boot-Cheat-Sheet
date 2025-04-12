@@ -156,3 +156,20 @@ Publisher ---> Topic/Channel ---> Subscriber(s)
 ![pub-sub](./img/distributed-design-pattern/pub-sub.png)
 
 ---
+
+## 7. Sharding
+
+- dividing data into different servers
+- reduces latency
+- speed up query execution
+
+![sharding](./img/distributed-design-pattern/sharding.png)
+
+---
+
+## 8. Strangler
+
+- when migrating old/legacy system to new stack
+- migrating incremently
+
+![strangler](./img/distributed-design-pattern/strangler.png)
