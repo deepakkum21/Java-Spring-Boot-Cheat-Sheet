@@ -140,3 +140,9 @@
 | **Surrogate Key** | A system-generated key, typically an auto-incremented value.                         | `order_id` in an Orders table.             |
 | **Index Key**     | Used in indexing to speed up query performance.                                      | `last_name` in an Employees table.         |
 | **Clustered Key** | Determines the physical storage order of rows in a table.                            | `student_id` in a Students table.          |
+
+---
+
+## Visualizing DB Query
+
+![Visualizing DB Query](./img/SQL-query-visual.png)
