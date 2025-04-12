@@ -112,4 +112,16 @@ User Action ---> Domain Logic ---> Create Event ---> Append to Event Store
                                                  ↳ Rebuild State by Replaying Events
 ```
 
+### 🏁 Summary
+
+| Aspect             | Description                                                                                                                                                                                                                                             |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Type**           | Behavioral / Persistence                                                                                                                                                                                                                                |
+| **Use Case**       | Auditing, CQRS, high-performance data replication                                                                                                                                                                                                       |
+| **Main Benefit**   | Immutable event log for traceability and reconstruction                                                                                                                                                                                                 |
+| **Common Pairing** | CQRS, DDD (Domain-Driven Design)                                                                                                                                                                                                                        |
+| Benefits           | 🔍 Full audit trail — you can see exactly what happened and when <br/> ⏪ Time travel — recreate past states by replaying events <br/> 🔁 Replayable — rebuild read models if needed <br/> 📦 Great for CQRS (Command Query Responsibility Segregation) |
+
 ![event-sourcing](./img/distributed-design-pattern/event-sourcing1.png)
+
+---
