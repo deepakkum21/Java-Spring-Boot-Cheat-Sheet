@@ -93,3 +93,23 @@ Client --->     |  (Commands)    |         |   (Queries)    |
 ```
 
 ![cqrs](./img/distributed-design-pattern/cqrs.png)
+
+---
+
+## 4. 📦 Event Sourcing Design Pattern
+
+- **Event Sourcing** is a **`behavioral design pattern`** in which **state changes** in a system are stored as a **`sequence of events`**.
+- Rather than storing the current state, the system **`persists every change`** that occurs.
+
+### 🧠 Core Idea
+
+Instead of saving just the current state in a database, you **store a log of all changes (events)**. The current state is then derived by **replaying** those events.
+
+### 🔄 How It Works
+
+```plaintext
+User Action ---> Domain Logic ---> Create Event ---> Append to Event Store
+                                                 ↳ Rebuild State by Replaying Events
+```
+
+![event-sourcing](./img/distributed-design-pattern/event-sourcing1.png)
