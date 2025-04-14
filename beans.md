@@ -289,13 +289,13 @@ Ans> No as the same instance is returned as Upper level is Singleton and propert
 - `use @RequiredArgsConstructor`
 - `make that object declaration as final`
 
-      ```java
+```java
       @RequiredArgsConstructor
       public class CustomerController {
 
         private final CustomerService service;
       }
-      ```
+ ```
 
 ## How to configure profile config dynamically
 
