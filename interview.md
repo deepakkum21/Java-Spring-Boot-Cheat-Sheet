@@ -133,3 +133,84 @@
 | JVM  | Java Virtual Machine     | Runs Java bytecode on any platform (WORA - Write Once, Run Anywhere) | Part of JRE; contains class loader, memory manager, execution engine |
 | JRE  | Java Runtime Environment | Provides the runtime environment to run Java applications            | JVM + libraries + other runtime components                           |
 | JDK  | Java Development Kit     | Full package for Java development                                    | JRE + development tools like javac, javadoc, jar, etc.               |
+
+### Comparable Vs Comparator
+
+| Feature / Aspect         | Comparable                                  | Comparator                                                       |
+| ------------------------ | ------------------------------------------- | ---------------------------------------------------------------- |
+| Package                  | java.lang                                   | java.util                                                        |
+| Purpose                  | Defines natural ordering                    | Defines custom ordering                                          |
+| Method to implement      | int compareTo(T o)                          | int compare(T o1, T o2)                                          |
+| Modifies original class? | ✅ Yes (implements in the class itself)     | ❌ No (used outside the class)                                   |
+| Used with                | Collections.sort(list)                      | Collections.sort(list, comparator)                               |
+| Flexibility              | Less flexible (only one sort logic)         | More flexible (can have multiple strategies)                     |
+| When to use              | When the object has a single, natural order | When you want different sorting logic or cannot modify the class |
+
+###
+
+```java
+x = 127
+y =127
+x==y  // true
+x.equals(y)  // true
+```
+
+java caches till -127 to 128
+
+### concurrentModificationException
+
+list.remove throws concurrentModificationException
+
+- use iterator remove()
+- CopyOnWriteArrayList
+- list.removeIf
+- concurrentHashMap
+
+### get() vs load()
+
+| Aspect               | get()                                   | load()                                      |
+| -------------------- | --------------------------------------- | ------------------------------------------- |
+| Eager or Lazy?       | ❗ Eager (immediate hit to DB)          | 💤 Lazy (returns a proxy, loads later)      |
+| Return if not found? | null                                    | ❌ Throws ObjectNotFoundException on access |
+| Return type          | Actual entity                           | Proxy of the entity (Hibernate-specific)    |
+| DB Hit               | Happens immediately                     | Happens only when proxy is accessed         |
+| Performance          | Slightly slower (immediate fetch)       | Can be more performant (if not accessed)    |
+| Use Case             | When you need the entity data right now | When you might not use the data immediately |
+| JPA Standard?        | ✅ Yes (EntityManager.find())           | ❌ Hibernate-specific (Session.load())      |
+
+### Hibernate caching
+
+- L1
+  - `Default cache (always enabled)`
+  - Scope: `Session` (Hibernate Session object)
+  - Lifecycle: Exists until the session is closed.
+  - Usage: Automatically caches entities that are read/loaded during a session.
+  - Second-level cache is most useful for read-heavy apps
+  - No extra configuration needed
+
+```java
+Session session = sessionFactory.openSession();
+Employee emp1 = session.get(Employee.class, 1); // hits DB
+Employee emp2 = session.get(Employee.class, 1); // fetched from L1 cache
+session.close();
+```
+
+- L2
+  - `Optional and needs to be explicitly configured`
+  - Scope: `SessionFactory` level
+  - Lifecycle: Lives as long as the SessionFactory lives (shared across sessions)
+  - Purpose: `Reduces DB hits across sessions`
+  - Used with: Entities, collections, queries
+
+```java
+hibernate.cache.use_second_level_cache=true
+
+@Entity
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)   // mention
+public class Employee {
+    @Id
+    private int id;
+    private String name;
+    // other fields
+}
+```
