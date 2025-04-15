@@ -114,3 +114,12 @@
         return "User V1";
     }
 ```
+
+### Access modifiers
+
+| Modifier    | Class | Package | Subclass | World (anywhere) |
+| ----------- | ----- | ------- | -------- | ---------------- |
+| public      | ✅    | ✅      | ✅       | ✅               |
+| protected   | ✅    | ✅      | ✅       | ❌               |
+| (default)\* | ✅    | ✅      | ❌       | ❌               |
+| private     | ✅    | ❌      | ❌       | ❌               |
