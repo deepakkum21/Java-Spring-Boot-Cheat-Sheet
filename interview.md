@@ -73,3 +73,19 @@
 | **FULL JOIN (OUTER)**  | Returns all rows from both tables. If no match, returns `NULL` for the non-matching side.                | All rows from both tables. If no match, `NULL` in columns of the table without a match.                                 | `SELECT * FROM employees FULL JOIN departments ON employees.department_id = departments.department_id;`                          |
 | **CROSS JOIN**         | Returns the Cartesian product of both tables (all combinations of rows).                                 | All combinations of rows from both tables, regardless of whether they match.                                            | `SELECT * FROM employees CROSS JOIN departments;`                                                                                |
 | **SELF JOIN**          | A join where a table is joined with itself. Used for hierarchical relationships.                         | Joins the table with itself based on a relationship (like a manager-employee relationship).                             | `SELECT a.name AS employee_name, b.name AS manager_name FROM employees a LEFT JOIN employees b ON a.manager_id = b.employee_id;` |
+
+---
+
+### dividing by zero
+
+```java
+        int result = 10 / 0;          // This will throw ArithmeticException
+        double result1 = 10.0 / 0;    // Positive infinity
+        double result2 = -10.0 / 0;   // Negative infinity
+        double result3 = 0.0 / 0;     // NaN
+```
+
+### this keyword in lambda
+
+- `this in lambda expressions refers to the outer class` instance where the lambda is defined
+- You `cannot` use this to refer to the lambda instance itself because a `lambda expression does not have its own instance` of the enclosing class
