@@ -424,3 +424,46 @@ These predicates help manage traffic, enforce security, and define routing rules
 		</dependency>
 
 ```
+
+---
+
+## Circuit breaker
+
+# ⚡ Spring Cloud Circuit Breaker vs Hystrix Circuit Breaker
+
+| Feature / Aspect                 | **Hystrix**                          | **Spring Cloud Circuit Breaker**                  |
+| -------------------------------- | ------------------------------------ | ------------------------------------------------- |
+| **Maintained?**                  | ❌ No (Netflix discontinued support) | ✅ Yes (actively maintained by Spring team)       |
+| **Part of Spring Cloud?**        | ✅ Yes (legacy support)              | ✅ Yes (recommended for modern Spring Boot apps)  |
+| **Reactive Support?**            | 🚫 Limited                           | ✅ Native reactive support (`WebFlux`, etc.)      |
+| **Pluggable Backends?**          | 🚫 No (Hystrix only)                 | ✅ Yes – Resilience4j, Sentinel, and even Hystrix |
+| **Modern / Clean API?**          | 😕 Older and more complex            | ✅ Simple, clean, Boot-friendly abstraction       |
+| **Annotation Support**           | `@HystrixCommand`                    | `@CircuitBreaker(name = "X")` via Resilience4j    |
+| **Fallback Support**             | ✅ Yes                               | ✅ Yes                                            |
+| **Integration with Spring Boot** | ✅ Works (but older style)           | ✅ Excellent (native to Spring Boot 2.x/3.x+)     |
+| **Future-Proof?**                | ❌ No                                | ✅ Yes                                            |
+
+### Hystrix:
+
+```java
+@HystrixCommand(fallbackMethod = "fallback")
+public String getData() {
+    // call external API
+}
+```
+
+### Spring Cloud
+
+```xml
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
+</dependency>
+```
+
+```java
+@CircuitBreaker(name = "myService", fallbackMethod = "fallback")
+public String callRemoteService() {
+    // call external API
+}
+```
