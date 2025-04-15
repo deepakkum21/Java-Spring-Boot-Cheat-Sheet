@@ -100,3 +100,17 @@
 | **Returns Saved Entity?**      | ✅ Yes                                                   | ✅ Yes                                                                                  |
 | **Performance**                | Better for bulk/batch operations                         | Slightly heavier (immediate DB interaction)                                             |
 | **Use Case**                   | Standard save inside a transaction                       | When you need the entity persisted _immediately_ eg need of saved record id immediately |
+
+### API versioning
+
+- /v1/api
+- using headers
+  - `Accept: application/vnd.myapp.v1+json`
+  - `X-API-VERSION: 1`
+
+```java
+@GetMapping(headers = "X-API-VERSION=1")
+    public String getUserV1() {
+        return "User V1";
+    }
+```
