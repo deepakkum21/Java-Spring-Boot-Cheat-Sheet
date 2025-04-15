@@ -89,3 +89,14 @@
 
 - `this in lambda expressions refers to the outer class` instance where the lambda is defined
 - You `cannot` use this to refer to the lambda instance itself because a `lambda expression does not have its own instance` of the enclosing class
+
+### Save() vs saveAndFlush()
+
+| Feature / Aspect               | `save()`                                                 | `saveAndFlush()`                                                                        |
+| ------------------------------ | -------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| **Immediate DB Write?**        | ❌ No (deferred until transaction commits or flush call) | ✅ Yes (flushes changes immediately to the database)                                    |
+| **Flush Persistence Context?** | ❌ No                                                    | ✅ Yes                                                                                  |
+| **Within Transaction?**        | ✅ Yes (typically used inside `@Transactional` method)   | ✅ Yes                                                                                  |
+| **Returns Saved Entity?**      | ✅ Yes                                                   | ✅ Yes                                                                                  |
+| **Performance**                | Better for bulk/batch operations                         | Slightly heavier (immediate DB interaction)                                             |
+| **Use Case**                   | Standard save inside a transaction                       | When you need the entity persisted _immediately_ eg need of saved record id immediately |
