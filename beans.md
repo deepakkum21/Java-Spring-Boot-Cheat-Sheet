@@ -280,6 +280,32 @@
 - "`websocket`":
   - Similar to the request and session scopes, but it is used specifically in the context of WebSockets.
 
+## Custom Scope
+
+- `implement Scope`
+  - get()
+  - register()
+  - registerDestructionCallback()
+  - resolveContextualObject()
+  - getConversationId()
+- `Register Your Custom Scope`
+  - create a bean using `CustomScopeConfigurer `
+
+```java
+@Configuration
+public class CustomScopeConfig {
+
+    @Bean
+    public static CustomScopeConfigurer customScopeConfigurer() {
+        CustomScopeConfigurer configurer = new CustomScopeConfigurer();
+        Map<String, Object> scopes = new HashMap<>();
+        scopes.put("myCustomScope", new MyCustomScope());
+        configurer.setScopes(scopes);
+        return configurer;
+    }
+}
+```
+
 ## Q> in a bean defined as Singleton a property having Prototype Scope, whether the property will behave as prototype?
 
 Ans> No as the same instance is returned as Upper level is Singleton and property is never getting chance ti re-initiate to behave as prototype
