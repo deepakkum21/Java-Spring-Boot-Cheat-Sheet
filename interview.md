@@ -117,9 +117,19 @@
 
 ### Access modifiers
 
-| Modifier    | Class | Package | Subclass | World (anywhere) |
-| ----------- | ----- | ------- | -------- | ---------------- |
-| public      | ✅    | ✅      | ✅       | ✅               |
-| protected   | ✅    | ✅      | ✅       | ❌               |
-| (default)\* | ✅    | ✅      | ❌       | ❌               |
-| private     | ✅    | ❌      | ❌       | ❌               |
+| Modifier  | Class | Package | Subclass | World (anywhere) |
+| --------- | ----- | ------- | -------- | ---------------- |
+| public    | ✅    | ✅      | ✅       | ✅               |
+| protected | ✅    | ✅      | ✅       | ❌               |
+| (default) | ✅    | ✅      | ❌       | ❌               |
+| private   | ✅    | ❌      | ❌       | ❌               |
+
+---
+
+### JVM vs JDK vs JRE
+
+| Term | Full Form                | Purpose                                                              | Contains                                                             |
+| ---- | ------------------------ | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| JVM  | Java Virtual Machine     | Runs Java bytecode on any platform (WORA - Write Once, Run Anywhere) | Part of JRE; contains class loader, memory manager, execution engine |
+| JRE  | Java Runtime Environment | Provides the runtime environment to run Java applications            | JVM + libraries + other runtime components                           |
+| JDK  | Java Development Kit     | Full package for Java development                                    | JRE + development tools like javac, javadoc, jar, etc.               |
