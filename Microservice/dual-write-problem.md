@@ -96,7 +96,7 @@ This makes sure that, all the participant services has properly committed the tx
 
   ![alt text](../img/readThroughCache.png)
 
-## 3. Transactional Log Trailing Pattern
+## 3. Transactional Log Tailing Pattern
 
 - No Outbox table is required.
 - `CDC(Change Data Capture) tools like Debezium reads the database table logs to detect changes`.
