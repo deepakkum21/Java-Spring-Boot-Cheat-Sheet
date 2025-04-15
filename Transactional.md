@@ -234,3 +234,20 @@ public class BookServiceProxy extends BookService {
 
 - `JDKDynamic Proxy => Interface`
 - `CGLIB Proxy => Class`
+
+---
+
+# ⚖️ ACID vs BASE in Databases
+
+| Feature               | **ACID** (Traditional Databases)              | **BASE** (NoSQL / Distributed Systems)                |
+| --------------------- | --------------------------------------------- | ----------------------------------------------------- |
+| **Full Form**         | Atomicity, Consistency, Isolation, Durability | Basically Available, Soft state, Eventual consistency |
+| **Consistency Model** | **Strong consistency**                        | **Eventual consistency**                              |
+| **System Type**       | Relational DBs (e.g., MySQL, PostgreSQL)      | NoSQL / Distributed DBs (e.g., Cassandra, DynamoDB)   |
+| **Focus**             | Data correctness & integrity                  | High availability & scalability                       |
+| **Availability**      | Can be compromised during partition           | High availability                                     |
+| **Scalability**       | Vertical (scale-up)                           | Horizontal (scale-out)                                |
+| **Latency**           | Higher (due to strict consistency)            | Lower (due to relaxed constraints)                    |
+| **Ideal Use Case**    | Banking, transactions, sensitive data         | Social media, analytics, distributed caching          |
+
+---
