@@ -167,6 +167,14 @@ x.equals(y)  // true
 
 java caches till -127 to 128
 
+### Why do we need Wrapper classes
+
+- int is primitive
+- so to have object of int we need wrapper
+- `Wrapper takes more memory`
+  - wrapper obj => 16bytes + 4bytes [stack memory ref]
+  - primitive int 4 bytes
+
 ### concurrentModificationException
 
 list.remove throws concurrentModificationException
@@ -275,3 +283,36 @@ public class Employee {
 | ✅ End-to-End (E2E) Testing | Simulate real scenarios across services         | RestAssured, Selenium            |
 | ✅ Component Testing        | Test a single microservice in isolation         | MockServer, WireMock             |
 | ✅ Performance Testing      | Load testing, stress testing                    | JMeter, Gatling                  |
+
+### Java Example of the Diamond Problem (with Interfaces)
+
+```java
+interface A {
+    default void sayHello() {
+        System.out.println("Hello from A");
+    }
+}
+
+interface B {
+    default void sayHello() {
+        System.out.println("Hello from B");
+    }
+}
+
+class C implements A, B {
+    // Compilation error unless we override sayHello()
+}
+```
+
+- `solution`
+  - override method `InterfaceName.super.methodName() `
+
+```java
+class C implements A, B {
+    @Override
+    public void sayHello() {
+        A.super.sayHello(); // or B.super.sayHello();
+        // Or your own implementation
+    }
+}
+```
