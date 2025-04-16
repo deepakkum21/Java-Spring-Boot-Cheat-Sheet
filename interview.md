@@ -331,3 +331,47 @@ class C implements A, B {
 | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
 | default | - You want to add new methods without breaking existing classes <br/> - You want to give optional, overridable behavior                                                      |
 | static  | - You need utility/helper methods tied to the interface <br/> - The method doesn't need access to instance or implementing class data <br/> - `InterfaceName.staticMethod()` |
+
+---
+
+### Create a Custom Marker Interface
+
+1. `Define the Interface`
+
+```java
+public interface Auditable {
+    // No methods, it's just a marker
+}
+```
+
+2. `Implement the Interface in Your Class`
+
+```java
+public class User implements Auditable {
+    private String name;
+    private String email;
+    // ...getters, setters, etc.
+}
+```
+
+3. `Use instanceof` or Reflection to Check the Marker
+
+```java
+public class AuditProcessor {
+
+    public void process(Object obj) {
+        if (obj instanceof Auditable) {
+            System.out.println("Auditing: " + obj.getClass().getSimpleName());
+            // Perform auditing logic
+        } else {
+            System.out.println("Not auditable: " + obj.getClass().getSimpleName());
+        }
+    }
+
+    public static void main(String[] args) {
+        User user = new User();
+        AuditProcessor auditProcessor = new AuditProcessor();
+        auditProcessor.process(user);
+    }
+}
+```
