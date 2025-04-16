@@ -224,3 +224,41 @@ public class Employee {
     // other fields
 }
 ```
+
+---
+
+### What to Do When OutOfMemoryError Occurs
+
+- `Understand the Error Message`
+  - java.lang.OutOfMemoryError: Java heap space → Heap memory full (common).
+  - java.lang.OutOfMemoryError: GC overhead limit exceeded → JVM is spending too much time on GC.
+  - java.lang.OutOfMemoryError: Metaspace (Java 8+) → Class metadata space is full.
+  - java.lang.OutOfMemoryError: Direct buffer memory → Direct (off-heap) memory exhausted.
+  - java.lang.OutOfMemoryError: unable to create new native thread → Too many threads.
+- `Increase Memory Limits`
+
+        # Example for heap space
+        java -Xms512m -Xmx2048m YourApp
+
+        # For Metaspace (Java 8+)
+        java -XX:MaxMetaspaceSize=256m YourApp
+
+- `Analyze Memory Usage` []
+  - VisualVM (comes with JDK)
+  - JProfiler
+- `Check for Memory Leaks`
+  - Unclosed resources (like DB connections, file streams)
+  - Static collections holding references too long
+  - Large caches that never get cleared
+  - Listeners or threads not removed
+  - 🔍 Use heap dump analysis to find objects that should’ve been garbage collected but weren’t.
+    - -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=./heapdump.hprof // Generate heap dump on OOM
+- `Tune Garbage Collection (GC)`
+  - -XX:+UseConcMarkSweepGC, -XX:+UseParallelGC, -XX:+UseG1GC
+- `Fix Thread Issues (If Thread-related OOM)`
+  - Use thread pools (Executors) instead of creating new threads manually.
+- `Optimize Your Code`
+  - Use streams, pagination, batch processing.
+  - Avoid loading huge data into memory all at once (e.g., millions of records from DB).
+  - Clean up unnecessary object references.
+  - Reduce memory footprint of data structures (e.g., use ArrayList instead of LinkedList if insertion order isn’t critical).
