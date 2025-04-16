@@ -320,6 +320,14 @@ class C implements A, B {
 ### Why private in Interface [java 9]
 
 - To help other default or static methods
+- code reusability in interface
 - types
   - `private` => Instance-level helper methods
   - `private static` => Static helper methods
+
+### Interface Static & Default methods
+
+| Feature | When to Use                                                                                                                                                                  |     |
+| ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| default | - You want to add new methods without breaking existing classes <br/> - You want to give optional, overridable behavior                                                      |
+| static  | - You need utility/helper methods tied to the interface <br/> - The method doesn't need access to instance or implementing class data <br/> - `InterfaceName.staticMethod()` |
