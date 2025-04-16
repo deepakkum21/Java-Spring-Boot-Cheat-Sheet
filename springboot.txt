@@ -3,6 +3,7 @@ Maven
 	- Lifecycle [validate,compile, test, package, verify, install, deploy]
 	- each has goals, new goal can be added via <plugins> <phase><goal>
 	- any of the phase prior phase and all its goals run
+	- default scope [compile]
 	
 Servlet
 	- servlet container
