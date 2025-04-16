@@ -375,3 +375,25 @@ public class AuditProcessor {
     }
 }
 ```
+
+---
+
+### Functional Interface?
+
+- `only one abstract method`
+- M`ay have any number of default, static, or private` methods
+
+```java
+@FunctionalInterface
+interface MyFunction {
+    void execute();              // ✔ abstract method (required)
+
+    default void log() {
+        System.out.println("Logging from default method");
+    }
+
+    static void info() {
+        System.out.println("Static method in interface");
+    }
+}
+```
