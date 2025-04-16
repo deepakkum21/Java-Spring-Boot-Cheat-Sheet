@@ -124,6 +124,16 @@
 | (default) | ✅    | ✅      | ❌       | ❌               |
 | private   | ✅    | ❌      | ❌       | ❌               |
 
+### Class can be private?
+
+- `no, classes can't be private`
+- only i`nnerclass can be private`
+- inner class
+  - static
+  - non-static
+  - localinner
+  - anonymous
+
 ---
 
 ### JVM vs JDK vs JRE
