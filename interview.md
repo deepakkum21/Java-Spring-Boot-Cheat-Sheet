@@ -262,3 +262,16 @@ public class Employee {
   - Avoid loading huge data into memory all at once (e.g., millions of records from DB).
   - Clean up unnecessary object references.
   - Reduce memory footprint of data structures (e.g., use ArrayList instead of LinkedList if insertion order isn’t critical).
+
+---
+
+### Types of Microservices Testing
+
+| Test Type                   | Purpose                                         | Tools                            |
+| --------------------------- | ----------------------------------------------- | -------------------------------- |
+| ✅ Unit Testing             | Test small units like methods or classes        | JUnit, Mockito                   |
+| ✅ Integration Testing      | Test how components work together (DB, REST)    | Spring Boot Test, Testcontainers |
+| ✅ Contract Testing         | Ensure service agreements between microservices | Spring Cloud Contract, Pact      |
+| ✅ End-to-End (E2E) Testing | Simulate real scenarios across services         | RestAssured, Selenium            |
+| ✅ Component Testing        | Test a single microservice in isolation         | MockServer, WireMock             |
+| ✅ Performance Testing      | Load testing, stress testing                    | JMeter, Gatling                  |
