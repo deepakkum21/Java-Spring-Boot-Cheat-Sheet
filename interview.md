@@ -316,3 +316,10 @@ class C implements A, B {
     }
 }
 ```
+
+### Why private in Interface [java 9]
+
+- To help other default or static methods
+- types
+  - `private` => Instance-level helper methods
+  - `private static` => Static helper methods
