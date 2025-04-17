@@ -133,6 +133,8 @@
   - non-static
   - localinner
   - anonymous
+- eg `Entry in Map`
+  - Map.Entry<k,v>
 
 ---
 
