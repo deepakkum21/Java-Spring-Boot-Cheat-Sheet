@@ -451,3 +451,30 @@ Spring Boot loads properties from various sources in a specific order (from lowe
 | Thread-safe | ✅ Yes                   | ❌ No                       | ✅ Yes                     |
 | Performance | 🐢 Slowest               | ⚡ Fastest                  | 🐢 Slower (sync overhead)  |
 | Use case    | Read-only or few changes | Many changes, single-thread | Many changes, multi-thread |
+
+---
+
+### behavior if @Configuration is replaced with @Component
+
+```java
+@Configuration
+  public class BaseConfig {
+  @Bean
+  public MyService myService() {
+    return new MyService();
+  }
+
+  @Bean
+  public MyRunner runner() {
+    myService();
+    myService();
+    return new MyRunner();
+  }
+}
+```
+
+- `@Configuration`
+  - `uses CGLib Proxies`
+  - injected beans using `@Bean behave as SINGLETON`
+- `@Component`
+  - injected `beans behave as PROTOTYPE`
