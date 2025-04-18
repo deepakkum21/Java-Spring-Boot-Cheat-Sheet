@@ -442,3 +442,12 @@ Spring Boot loads properties from various sources in a specific order (from lowe
 | Gson                | toJson() + fromJson()      | ❌ No                 | Works on POJOs, very flexible    |
 | Jackson (Alt)       | Similar to Gson            | ❌ No                 | Good for complex JSON structures |
 | ModelMapper / Dozer | Object mapping             | ❌ No                 | Good for mapping between models  |
+
+### String vs stringBuilder vs StringBuffer
+
+| Feature     | String                   | StringBuilder               | StringBuffer               |
+| ----------- | ------------------------ | --------------------------- | -------------------------- |
+| Mutability  | ❌ Immutable             | ✅ Mutable                  | ✅ Mutable                 |
+| Thread-safe | ✅ Yes                   | ❌ No                       | ✅ Yes                     |
+| Performance | 🐢 Slowest               | ⚡ Fastest                  | 🐢 Slower (sync overhead)  |
+| Use case    | Read-only or few changes | Many changes, single-thread | Many changes, multi-thread |
