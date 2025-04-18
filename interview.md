@@ -433,3 +433,12 @@ Spring Boot loads properties from various sources in a specific order (from lowe
 | Removes duplicates | ✅ Yes                         | ❌ No                                         |
 | Performance        | ⛔ Slower (due to sort)        | ⚡ Faster                                     |
 | Use case           | When you want distinct results | When you want everything, duplicates included |
+
+### Deep Copy
+
+| Library             | Method                     | Serializable Required | Notes                            |
+| ------------------- | -------------------------- | --------------------- | -------------------------------- |
+| Apache Commons      | SerializationUtils.clone() | ✅ Yes                | Easiest if already Serializable  |
+| Gson                | toJson() + fromJson()      | ❌ No                 | Works on POJOs, very flexible    |
+| Jackson (Alt)       | Similar to Gson            | ❌ No                 | Good for complex JSON structures |
+| ModelMapper / Dozer | Object mapping             | ❌ No                 | Good for mapping between models  |
