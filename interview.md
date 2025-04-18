@@ -411,3 +411,15 @@ interface MyFunction {
   - override
     - `writeObject`()
     - `readObject`()
+
+### Detailed Spring Boot Configuration Loading Order:
+
+Spring Boot loads properties from various sources in a specific order (from lowest to highest priority):
+
+- `application.yml` (in src/main/resources)
+- `application.properties` (in src/main/resources)
+- `Command-line` arguments
+- `Environment` variables
+- `@PropertySource` annotations
+- `Profile-specific` files like application-dev.properties
+- Code-based `configuration (@Value`, etc.)
