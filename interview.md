@@ -399,3 +399,15 @@ interface MyFunction {
     }
 }
 ```
+
+---
+
+### transient
+
+- `not serialize sensitive info`
+- `default value is present at serialization` of transient
+- still we want serialize
+  - `implement Serializable` [I]
+  - override
+    - `writeObject`()
+    - `readObject`()
