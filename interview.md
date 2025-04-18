@@ -423,3 +423,13 @@ Spring Boot loads properties from various sources in a specific order (from lowe
 - `@PropertySource` annotations
 - `Profile-specific` files like application-dev.properties
 - Code-based `configuration (@Value`, etc.)
+
+---
+
+### Union Vs UnionAll
+
+| Feature            | UNION                          | UNION ALL                                     |
+| ------------------ | ------------------------------ | --------------------------------------------- |
+| Removes duplicates | ✅ Yes                         | ❌ No                                         |
+| Performance        | ⛔ Slower (due to sort)        | ⚡ Faster                                     |
+| Use case           | When you want distinct results | When you want everything, duplicates included |
