@@ -521,3 +521,38 @@ Spring Boot loads properties from various sources in a specific order (from lowe
 | Stores            | Class metadata, method info, static vars    | Same (class metadata, etc.)                                                                                                         |
 | OOM Risk          | OutOfMemoryError: PermGen space             | OutOfMemoryError: Metaspace (if maxed)                                                                                              |
 | GC Behavior       | Collected with Full GC (and slower)         | More efficient management                                                                                                           |
+
+---
+
+### Ways to Exclude Auto-Configuration in Spring Boot
+
+1. `Using exclude in @SpringBootApplication` => Best for excluding known auto-config classes directly
+
+```java
+@SpringBootApplication(
+    exclude = {DataSourceAutoConfiguration.class}
+)
+public class MyApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(MyApplication.class, args);
+    }
+}
+```
+
+2. `Using excludeName in @SpringBootApplication` => Useful when dealing with optional dependencies (e.g., you don’t want to import the actual class).
+
+```java
+@SpringBootApplication(
+    excludeName = {"org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration"}
+)
+public class MyApplication { ... }
+```
+
+3. `Using spring.autoconfigure.exclude in application.properties or application.yml`
+
+```yml
+spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+```
