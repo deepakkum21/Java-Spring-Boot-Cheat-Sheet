@@ -491,3 +491,18 @@ Spring Boot loads properties from various sources in a specific order (from lowe
 | Fail-safe behavior         | ❌ No (throws ConcurrentModificationException)                                                       | ✅ Yes (weakly consistent, no exception)                                  |
 | Preferred for              | Simple thread-safe use in low-contention scenarios                                                   | High-performance, scalable concurrent apps                                |
 | Introduced in              | Java 1.2 (Collections utility)                                                                       | Java 1.5 (java.util.concurrent)                                           |
+
+---
+
+### Enumeration vs Iteration
+
+| Feature              | Enumeration                                 | Iterator                                                                     |
+| -------------------- | ------------------------------------------- | ---------------------------------------------------------------------------- |
+| Introduced in        | Java 1.0                                    | Java 1.2 (as part of the Collections Framework)                              |
+| Interface            | java.util.Enumeration                       | java.util.Iterator                                                           |
+| Supports             | Only Vector, Hashtable (legacy classes)     | All modern Collection types (e.g., ArrayList, HashSet, etc.)                 |
+| Methods              | hasMoreElements(), nextElement()            | hasNext(), next(), remove()                                                  |
+| Can remove elements? | ❌ No                                       | ✅ Yes (remove() method)                                                     |
+| Fail-fast?           | ❌ No (Enumeration is not fail-fast)        | ✅ Yes (throws ConcurrentModificationException if modified during iteration) |
+| Thread-safety        | ✅ Safer in multi-threaded context (Vector) | ❌ Needs external sync (except Concurrent collections)                       |
+| Preferred for        | Legacy code or read-only traversal          | Modern Java collections (preferred overall)                                  |
