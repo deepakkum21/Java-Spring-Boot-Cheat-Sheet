@@ -478,3 +478,16 @@ Spring Boot loads properties from various sources in a specific order (from lowe
   - injected beans using `@Bean behave as SINGLETON`
 - `@Component`
   - injected `beans behave as PROTOTYPE`
+
+---
+
+### 🧵 SynchronizedMap vs ConcurrentMap
+
+| Feature                    | SynchronizedMap (Collections.synchronizedMap()) <br/> `Collections.synchronizedMap(new HashMap<>())` | ConcurrentMap (ConcurrentHashMap, etc.) <br/> `new ConcurrentHashMap<>()` |
+| -------------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Thread safety              | ✅ Yes (via synchronization wrapper)                                                                 | ✅ Yes (via fine-grained concurrency)                                     |
+| Performance in concurrency | 🚫 Slower (locks the entire map)                                                                     | ✅ Faster (locks only parts — bucket-level)                               |
+| Null keys/values allowed?  | ✅ Yes (depends on underlying map, e.g., HashMap)                                                    | ❌ No (neither null keys nor null values)                                 |
+| Fail-safe behavior         | ❌ No (throws ConcurrentModificationException)                                                       | ✅ Yes (weakly consistent, no exception)                                  |
+| Preferred for              | Simple thread-safe use in low-contention scenarios                                                   | High-performance, scalable concurrent apps                                |
+| Introduced in              | Java 1.2 (Collections utility)                                                                       | Java 1.5 (java.util.concurrent)                                           |
