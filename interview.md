@@ -506,3 +506,18 @@ Spring Boot loads properties from various sources in a specific order (from lowe
 | Fail-fast?           | ❌ No (Enumeration is not fail-fast)        | ✅ Yes (throws ConcurrentModificationException if modified during iteration) |
 | Thread-safety        | ✅ Safer in multi-threaded context (Vector) | ❌ Needs external sync (except Concurrent collections)                       |
 | Preferred for        | Legacy code or read-only traversal          | Modern Java collections (preferred overall)                                  |
+
+---
+
+### Permgen vs Metaspace in Java
+
+| Feature           | PermGen (Permanent Generation)              | Metaspace                                                                                                                           |
+| ----------------- | ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Introduced in     | Java 1.2                                    | Java 8 (replaces PermGen)                                                                                                           |
+| Removed in        | ❌ Removed in Java 8                        | ✅ Present from Java 8 onward                                                                                                       |
+| Location          | Part of the JVM heap                        | Outside the heap (native memory)                                                                                                    |
+| Size              | Fixed size (default or via -XX:MaxPermSize) | Dynamically expands (unless limited)                                                                                                |
+| Configurable with | -XX:PermSize, -XX:MaxPermSize               | -XX:MetaspaceSize, -XX:MaxMetaspaceSize <br/> If you don’t set MaxMetaspaceSize, `it will expand until system memory is exhausted`. |
+| Stores            | Class metadata, method info, static vars    | Same (class metadata, etc.)                                                                                                         |
+| OOM Risk          | OutOfMemoryError: PermGen space             | OutOfMemoryError: Metaspace (if maxed)                                                                                              |
+| GC Behavior       | Collected with Full GC (and slower)         | More efficient management                                                                                                           |
