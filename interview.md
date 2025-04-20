@@ -623,3 +623,26 @@ files.forEach(handleCheckedException(file -> {
 | -------------- | --------------------------- | --------------------------------------------------------- |
 | Unchecked      | ✅ Yes                      | Handle with try/catch or ignore                           |
 | Checked        | ❌ No                       | Wrap with try/catch OR use helper method/custom interface |
+
+---
+
+### param we should check before deciding any data structure
+
+1. `Type of Data / Nature of Data`
+
+- Is it primitive, object-based, hierarchical, relational
+- Are elements unique or can they repeat?
+
+2. `Operations You Need to Perform`
+3. Time Complexity Constraints
+4. Memory Usage
+5. `Concurrency / Thread-Safety`
+
+- Single-threaded environment? ➝ Use non-synchronized collections (ArrayList, HashMap)
+- Multi-threaded environment? ➝ Use concurrent structures:
+  - ConcurrentHashMap, CopyOnWriteArrayList, BlockingQueue
+- Or wrap with Collections.synchronizedList(...)
+
+6. `Mutability / Immutability`
+
+- Use Collections.unmodifiableList(...) or Java 9+ factory methods (List.of(...))
