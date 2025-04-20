@@ -6,7 +6,7 @@ Dependency Inversion Principle (DIP)
 	-  This principle encourages decoupling by making higher-level classes depend on interfaces or abstract classes rather than concrete classes. It helps reduce tight coupling between classes, making code more flexible and easier to maintain.
 
 Java 8
-- lamda
+- lambda
 - functional 
 - streams
 - default method in interfaces
@@ -15,7 +15,7 @@ Java 8
 JAVA 9
 - List.of("a","ab") -> immutableList
 - module creation
-- private method in inetrfaces
+- private method in interfaces
 
 JAVA 10
 - List.copyOf(list) -> immutableList
@@ -30,7 +30,7 @@ JAVA 11
 		"test".repeat(3);       // "testtesttest"
 
 JAVA 17
-- Sealed Classes => This helps in restricting the subclassing of a class, ensuring that only specific, predefined classes can extend or implement it, making the code more maintainable and secure.
+- Sealed Classes => This helps in restricting the sub-classing of a class, ensuring that only specific, predefined classes can extend or implement it, making the code more maintainable and secure.
 	public sealed class Shape permits Circle, Square {}
 - Pattern Matching switch
 	return switch (shape) {
