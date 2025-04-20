@@ -21,6 +21,14 @@ JAVA 10
 - List.copyOf(list) -> immutableList
 - var -> local-Variable Type Inference
 
+JAVA 11
+- Local-Variable Syntax for Lambda Parameters
+	- (var x, var y) -> x + y   //new
+	- string new functions
+		" ".isBlank();          // true
+		" Java 11 ".strip();    // "Java 11" (trims Unicode)
+		"test".repeat(3);       // "testtesttest"
+
 JAVA 17
 - Sealed Classes => This helps in restricting the subclassing of a class, ensuring that only specific, predefined classes can extend or implement it, making the code more maintainable and secure.
 	public sealed class Shape permits Circle, Square {}
