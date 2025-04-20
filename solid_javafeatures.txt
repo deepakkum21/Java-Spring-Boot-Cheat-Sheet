@@ -11,6 +11,10 @@ Java 8
 - streams
 - default method in interfaces
 - completableFuture
+- date & time are immutable
+	- timezone
+	- new package
+	- more methods & subtracting nad adding
 	
 JAVA 9
 - List.of("a","ab") -> immutableList
