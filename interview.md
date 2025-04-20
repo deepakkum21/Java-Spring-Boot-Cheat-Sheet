@@ -556,3 +556,70 @@ spring:
     exclude:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 ```
+
+---
+
+### handling checked & unchecked exception in lambda expression
+
+1. `Unchecked Exceptions (RuntimeException)`
+
+```java
+list.forEach(s -> {
+    try {
+        System.out.println(s.toUpperCase());
+    } catch (NullPointerException e) {
+        System.out.println("Null value encountered!");
+    }
+});
+```
+
+2. `Checked Exception`
+
+```java
+files.forEach(file -> {
+    Files.readAllLines(Path.of(file)); // ❌ Compilation error (IOException is checked)
+});
+```
+
+- 1. Wrap in try-catch block inside lambda
+
+```java
+files.forEach(file -> {
+    try {
+        List<String> lines = Files.readAllLines(Path.of(file));
+        lines.forEach(System.out::println);
+    } catch (IOException e) {
+        System.err.println("Error reading file: " + file);
+    }
+});
+```
+
+- 2. Create a Custom Functional Interface `That Allows Exceptions`
+
+```java
+@FunctionalInterface
+interface CheckedConsumer<T> {
+    void accept(T t) throws Exception;
+}
+
+static <T> Consumer<T> handleCheckedException(CheckedConsumer<T> consumer) {
+    return t -> {
+        try {
+            consumer.accept(t);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    };
+}
+
+
+files.forEach(handleCheckedException(file -> {
+    List<String> lines = Files.readAllLines(Path.of(file));
+    lines.forEach(System.out::println);
+}));
+```
+
+| Exception Type | Can Use in Lambda Directly? | Solution                                                  |
+| -------------- | --------------------------- | --------------------------------------------------------- |
+| Unchecked      | ✅ Yes                      | Handle with try/catch or ignore                           |
+| Checked        | ❌ No                       | Wrap with try/catch OR use helper method/custom interface |
