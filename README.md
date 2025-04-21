@@ -806,8 +806,19 @@ com.example.secondary.repository
 
 ---
 
-## ❌ Non-Idempotent Method
+### ❌ Non-Idempotent Method
 
 | Method | Idempotent? | Description                                                                                                                                |
 | ------ | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
 | POST   | ❌ No       | Used to create resources or trigger operations. Calling it multiple times usually creates multiple resources or changes things repeatedly. |
+
+### Idempotent HTTP Methods
+
+| Method  | Idempotent?    | Description                                                                                                      |
+| ------- | -------------- | ---------------------------------------------------------------------------------------------------------------- |
+| GET     | ✅ Yes         | Retrieves data. Doesn't change anything.                                                                         |
+| PUT     | ✅ Yes         | Replaces a resource. Multiple PUTs with the same data = same result.                                             |
+| DELETE  | ✅ Yes         | Deletes a resource. Deleting it again doesn’t change the state (resource stays gone).                            |
+| HEAD    | ✅ Yes         | Like GET but only returns headers. Doesn’t affect server state.                                                  |
+| OPTIONS | ✅ Yes         | Returns allowed methods or server capabilities. No side effects.                                                 |
+| PATCH   | ⚠️ No (mostly) | Not guaranteed to be idempotent. Depends on how it's implemented. E.g., incrementing a counter = not idempotent. |
