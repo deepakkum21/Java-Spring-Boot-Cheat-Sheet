@@ -805,3 +805,9 @@ com.example.secondary.repository
 3. `override run()`
 
 ---
+
+## ❌ Non-Idempotent Method
+
+| Method | Idempotent? | Description                                                                                                                                |
+| ------ | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| POST   | ❌ No       | Used to create resources or trigger operations. Calling it multiple times usually creates multiple resources or changes things repeatedly. |
