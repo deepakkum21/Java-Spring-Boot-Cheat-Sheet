@@ -646,3 +646,130 @@ files.forEach(handleCheckedException(file -> {
 6. `Mutability / Immutability`
 
 - Use Collections.unmodifiableList(...) or Java 9+ factory methods (List.of(...))
+
+---
+
+### Configure Multiple DataSource
+
+1. `define each datasource separately with its own configuration, entity manager, and transaction manager` (in case of JPA)
+2. Add dependencies (Maven)
+3. Add properties in application.yml or application.properties
+
+```yml
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/primarydb
+    username: root
+    password: pass
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+secondary:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/secondarydb
+    username: postgres
+    password: pass
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+```
+
+4. Create Config for Primary Datasource (Default)
+
+```java
+@Configuration
+@EnableJpaRepositories(
+    basePackages = "com.example.primary.repository", // your package
+    entityManagerFactoryRef = "primaryEntityManager",
+    transactionManagerRef = "primaryTransactionManager"
+)
+public class PrimaryDataSourceConfig {
+
+    @Primary
+    @Bean
+    @ConfigurationProperties("spring.datasource")
+    public DataSourceProperties primaryDataSourceProperties() {
+        return new DataSourceProperties();
+    }
+
+    @Primary
+    @Bean
+    public DataSource primaryDataSource() {
+        return primaryDataSourceProperties().initializeDataSourceBuilder().build();
+    }
+
+    @Primary
+    @Bean
+    public LocalContainerEntityManagerFactoryBean primaryEntityManager(
+            EntityManagerFactoryBuilder builder) {
+        return builder
+                .dataSource(primaryDataSource())
+                .packages("com.example.primary.model")
+                .persistenceUnit("primary")
+                .build();
+    }
+
+    @Primary
+    @Bean
+    public PlatformTransactionManager primaryTransactionManager(
+            @Qualifier("primaryEntityManager") EntityManagerFactory emf) {
+        return new JpaTransactionManager(emf);
+    }
+}
+```
+
+5. Create Config for Secondary Datasource
+
+```java
+@Configuration
+@EnableJpaRepositories(
+    basePackages = "com.example.secondary.repository",  // base package for secondary datasource
+    entityManagerFactoryRef = "secondaryEntityManager",
+    transactionManagerRef = "secondaryTransactionManager"
+)
+public class SecondaryDataSourceConfig {
+
+    @Bean
+    @ConfigurationProperties("secondary.datasource")
+    public DataSourceProperties secondaryDataSourceProperties() {
+        return new DataSourceProperties();
+    }
+
+    @Bean
+    public DataSource secondaryDataSource() {
+        return secondaryDataSourceProperties().initializeDataSourceBuilder().build();
+    }
+
+    @Bean
+    public LocalContainerEntityManagerFactoryBean secondaryEntityManager(
+            EntityManagerFactoryBuilder builder) {
+        return builder
+                .dataSource(secondaryDataSource())
+                .packages("com.example.secondary.model")
+                .persistenceUnit("secondary")
+                .build();
+    }
+
+    @Bean
+    public PlatformTransactionManager secondaryTransactionManager(
+            @Qualifier("secondaryEntityManager") EntityManagerFactory emf) {
+        return new JpaTransactionManager(emf);
+    }
+}
+```
+
+6.  Define Separate Model and Repository Packages
+
+```java
+com.example.primary.model
+com.example.primary.repository
+com.example.secondary.model
+com.example.secondary.repository
+```
