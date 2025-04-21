@@ -62,7 +62,7 @@ public class SecurityConfig {
 5. Instant: Represents an instantaneous point on the timeline, typically used for machine timestamps.
 6. Duration: Represents a duration of time between two points in time.
 7. Period: Represents a period of time between two dates.
-   8.DateTimeFormatter: Formats and parses dates and times.
+8. DateTimeFormatter: Formats and parses dates and times.
 
 ## Method Reference [::]
 
@@ -75,4 +75,24 @@ public class SecurityConfig {
 
 - `Sits in between servlet and Spring application Context`
 - `DelegatingFilterProxy` works as bridge between servlet and Spring application Context.
--
+
+![filterChainProxy](./img/security/filterchainproxy.png)
+
+- `FilterChainProxy` is the who has `securityFilterChain` where all filters relates to security are present
+
+![FilterList](./img/security/filterchainProxy-FilterList.png)
+
+- spring will` not filter for all types of authentication, for spring provide AuthenticationProvider`
+  - for any auth `provide AuthenticationProvider`
+- in o`rder to spring to know which AuthenticationProvider` to use `AuthenticationManager [I] -> ProviderManager` comes into pic where it behaves as a bridge between filter and AuthenticationProvider
+  - `supports()` of AuthenticationProvider helps in finding which one will be used
+  - AuthenticationProvider has `Authenticate()` which will actually to authentication.
+
+![AuthManager](./img/security/AuthManager.png)
+
+- `SecurityContextHolder` and SecurityContextHolderFilter remembers the context when used password based
+  - has `securityContext/Principal`
+
+![BigPic](./img/security/bigPicSpringSecurity.png)
+
+- `ExceptionTranslationFilter` catches all the exception
