@@ -778,8 +778,8 @@ com.example.secondary.repository
 
 ### Communication b/w Microservices
 
-- Synchronous
+- `Synchronous`
   - rest
   - grpc
-- Asynchronous
+- `Asynchronous`
   - message brokers [kafka]
