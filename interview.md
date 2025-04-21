@@ -619,10 +619,10 @@ files.forEach(handleCheckedException(file -> {
 }));
 ```
 
-| Exception Type | Can Use in Lambda Directly? | Solution                                                  |
-| -------------- | --------------------------- | --------------------------------------------------------- |
-| Unchecked      | ✅ Yes                      | Handle with try/catch or ignore                           |
-| Checked        | ❌ No                       | Wrap with try/catch OR use helper method/custom interface |
+| Exception Type | Can Use in Lambda Directly? | Solution                                                                                           |
+| -------------- | --------------------------- | -------------------------------------------------------------------------------------------------- |
+| Unchecked      | ✅ Yes                      | Handle with try/catch or ignore                                                                    |
+| Checked        | ❌ No                       | Wrap with try/catch OR use helper `method/custom interface where abstract method throws Exception` |
 
 ---
 
