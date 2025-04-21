@@ -773,3 +773,13 @@ com.example.primary.repository
 com.example.secondary.model
 com.example.secondary.repository
 ```
+
+---
+
+### Communication b/w Microservices
+
+- Synchronous
+  - rest
+  - grpc
+- Asynchronous
+  - message brokers [kafka]
