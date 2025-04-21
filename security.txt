@@ -1,4 +1,4 @@
-CSRF [cross site request frogery]
+CSRF [cross site request forgery]
 	- browser sends the session id
 	- use CSRF-token
 
@@ -46,7 +46,7 @@ Date & Time classes
 -	problem in old
 	- date & calender
 		- mutable
-		- consfussing
+		- confusing
 		- limited functionality without zone[no calc]
 
 1. LocalDate: Represents a date without a time zone.
@@ -60,9 +60,9 @@ Date & Time classes
 
 
 Method Reference [::]
-- when lamda expression can be replaced with method of some class/object
-	- the method should do same thing what lamda was suppose to do [same parameter/return]
-- same but with contructor is contructor reference
+- when lambda expression can be replaced with method of some class/object
+	- the method should do same thing what lambda was suppose to do [same parameter/return]
+- same but with constructor is constructor reference
 	- ClassName::new
 
 
