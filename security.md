@@ -1,26 +1,31 @@
-CSRF [cross site request forgery]
-	- browser sends the session id
-	- use CSRF-token
+## Attacks
 
-XSS [cross site scripting]
-	- malicious scripts
-	- can be used to steal the cookie by appending the document.cookie
-	- use angular dom sanitization for all user input
+- CSRF [cross site request forgery]
 
-CORS
+  - browser sends the session id
+  - use CSRF-token
 
-SQL injection
+- XSS [cross site scripting]
 
-Spring Security
----------------
+  - malicious scripts
+  - can be used to steal the cookie by appending the document.cookie
+  - use angular dom sanitization for all user input
+
+- CORS
+
+- SQL injection
+
+## Spring Security
+
 @EnableWebSecurity <spring-boot-starter-security>
+
 1. depending on the authenticationType security filter will be invoked
 2. then passed to AuthenticationManager I [authenticate() -> ProviderManager]
 3. delegates to AuthenticationProvider
 4. bean securityFilterChain
-	- authenticationProvider
+   - authenticationProvider
 
-
+```java
 @Configuration
 @EnableMethodSecurity(
     prePostEnabled = true,  // Enable @PreAuthorize and @PostAuthorize
@@ -36,18 +41,19 @@ public class SecurityConfig {
 @Secured: Restricts method access based on roles/authorities.
 @RolesAllowed: Restricts method access based on roles (from JSR-250).
 @EnableAspectJAutoProxy: (Optional) Enables AOP for method security annotations
-
+```
 
 ## Why csrf.disabled() done
-- as we use stateless app, no session and no cookies
 
-Date & Time classes
--------------------
--	problem in old
-	- date & calender
-		- mutable
-		- confusing
-		- limited functionality without zone[no calc]
+- as we `use stateless app, no session and no cookies`
+
+## Date & Time classes
+
+- problem in old
+  - date & calender
+    - mutable
+    - confusing
+    - limited functionality without zone[no calc]
 
 1. LocalDate: Represents a date without a time zone.
 2. LocalTime: Represents a time without a date or time zone.
@@ -56,39 +62,17 @@ Date & Time classes
 5. Instant: Represents an instantaneous point on the timeline, typically used for machine timestamps.
 6. Duration: Represents a duration of time between two points in time.
 7. Period: Represents a period of time between two dates.
-8.DateTimeFormatter: Formats and parses dates and times.
+   8.DateTimeFormatter: Formats and parses dates and times.
 
+## Method Reference [::]
 
-Method Reference [::]
 - when lambda expression can be replaced with method of some class/object
-	- the method should do same thing what lambda was suppose to do [same parameter/return]
+  - the method should do same thing what lambda was suppose to do [same parameter/return]
 - same but with constructor is constructor reference
-	- ClassName::new
+  - ClassName::new
 
+## Filters
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
+- `Sits in between servlet and Spring application Context`
+- `DelegatingFilterProxy` works as bridge between servlet and Spring application Context.
+-
