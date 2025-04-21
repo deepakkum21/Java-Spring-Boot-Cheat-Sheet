@@ -795,3 +795,13 @@ com.example.secondary.repository
 | Method-based or class-based | Method that returns a bean             | Annotates a class                   |
 | Auto-detected?              | ❌ No (must be manually defined)       | ✅ Yes (via component scanning)     |
 | More control over bean      | ✅ Yes (init params, conditions, etc.) | ❌ Limited                          |
+
+---
+
+### to run some logic as soon application starts
+
+1. Create a class `implementing CommandLineRunner`
+2. Annotate with @Component
+3. `override run()`
+
+---
