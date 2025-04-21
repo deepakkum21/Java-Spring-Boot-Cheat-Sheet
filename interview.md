@@ -783,3 +783,15 @@ com.example.secondary.repository
   - grpc
 - `Asynchronous`
   - message brokers [kafka]
+
+---
+
+### @Bean vs @Component
+
+| Feature                     | @Bean                                  | @Component                          |
+| --------------------------- | -------------------------------------- | ----------------------------------- |
+| Declared in                 | @Configuration class                   | Directly on the class               |
+| When to use                 | 3rd-party classes / custom logic       | Your own classes / simple injection |
+| Method-based or class-based | Method that returns a bean             | Annotates a class                   |
+| Auto-detected?              | ❌ No (must be manually defined)       | ✅ Yes (via component scanning)     |
+| More control over bean      | ✅ Yes (init params, conditions, etc.) | ❌ Limited                          |
