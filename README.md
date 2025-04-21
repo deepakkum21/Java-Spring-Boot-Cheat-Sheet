@@ -822,3 +822,13 @@ com.example.secondary.repository
 | HEAD    | ✅ Yes         | Like GET but only returns headers. Doesn’t affect server state.                                                  |
 | OPTIONS | ✅ Yes         | Returns allowed methods or server capabilities. No side effects.                                                 |
 | PATCH   | ⚠️ No (mostly) | Not guaranteed to be idempotent. Depends on how it's implemented. E.g., incrementing a counter = not idempotent. |
+
+---
+
+### ❌ When Not to Use parallelStream()
+
+- Small collections
+- I/O-heavy operations
+- Order-sensitive operations (unless using .forEachOrdered())
+- Operations involving shared mutable state
+- In environments with limited cores (e.g., containers with CPU limits)
