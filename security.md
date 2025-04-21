@@ -96,3 +96,16 @@ public class SecurityConfig {
 ![BigPic](./img/security/bigPicSpringSecurity.png)
 
 - `ExceptionTranslationFilter` catches all the exception
+
+---
+
+## JWT Auth
+
+- initially all filters are skipped and request is directly sent to controller
+
+![JWT Flow](./img/security/jwt-auth-flow.png)
+
+- Spring by default don't have any support for JWT creation, validation, so use 3rd party libraries
+  - `jjwt-api`
+  - `jjwt-impl`
+  - `jjwt-jackson`
