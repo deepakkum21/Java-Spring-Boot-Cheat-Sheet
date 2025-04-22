@@ -53,3 +53,9 @@ git commit -m "your commit message here"
 ```sh
 git commit -a -m"your commit message here"
 ```
+
+### see your commit history in Git
+
+```sh
+git log
+```
