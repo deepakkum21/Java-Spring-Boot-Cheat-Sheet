@@ -59,3 +59,21 @@ git commit -a -m"your commit message here"
 ```sh
 git log
 ```
+
+### see your commit history including changes in Git
+
+```sh
+git log -p
+```
+
+### see a specific commit in Git
+
+```sh
+git show commit-id
+```
+
+### to see log stats in Git
+
+```sh
+git log --stat
+```
