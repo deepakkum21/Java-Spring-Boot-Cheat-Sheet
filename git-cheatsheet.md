@@ -54,26 +54,65 @@ git commit -m "your commit message here"
 git commit -a -m"your commit message here"
 ```
 
-### see your commit history in Git
+## see your commit history in Git
 
 ```sh
 git log
 ```
 
-### see your commit history including changes in Git
+## see your commit history including changes in Git
 
 ```sh
 git log -p
 ```
 
-### see a specific commit in Git
+## see a specific commit in Git
 
 ```sh
 git show commit-id
 ```
 
-### to see log stats in Git
+## to see log stats in Git
 
 ```sh
 git log --stat
+```
+
+## see changes made before committing them using "diff" in Git
+
+```sh
+git diff
+git diff all_checks.py
+git diff --staged
+```
+
+## see changes using "git add -p"
+
+```sh
+git add -p
+```
+
+## remove tracked files from the current working tree in Git
+
+```sh
+git rm fileName
+```
+
+## rename files in Git
+
+```sh
+git mv oldfile newfile
+```
+
+## revert unstaged changes in Git
+
+```sh
+git checkout filename
+```
+
+## revert staged changes in Git
+
+```sh
+git reset HEAD filename
+git reset HEAD -p
 ```
