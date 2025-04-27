@@ -1,6 +1,6 @@
 # Pillars of Object-Oriented Programming
 
-![Pillars of Object-Oriented Programming](https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fea385c61-b3d2-4ecb-8c22-b43587ea85e5_1280x1585.gif)
+[Pillars of Object-Oriented Programming](https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fea385c61-b3d2-4ecb-8c22-b43587ea85e5_1280x1585.gif)
 
 Abstraction, Encapsulation, Inheritance, and Polymorphism are the four pillars of object-oriented programming. What do they mean?
 
