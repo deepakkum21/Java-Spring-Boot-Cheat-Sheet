@@ -233,7 +233,7 @@ public class BookServiceProxy extends BookService {
 ## Q> Types of Proxies
 
 - `JDKDynamic Proxy => Interface`
-- `CGLIB Proxy => Class`
+- `CGLIB Proxy [Code Generation Lib Proxy] => Class`
 
 ---
 
