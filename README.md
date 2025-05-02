@@ -832,3 +832,27 @@ com.example.secondary.repository
 - Order-sensitive operations (unless using .forEachOrdered())
 - Operations involving shared mutable state
 - In environments with limited cores (e.g., containers with CPU limits)
+
+---
+
+### @component vs @configuration
+
+| Feature              | `@Component`                 | `@Configuration`                                                                                                                                                                                       |
+| -------------------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Purpose              | General-purpose component    | Bean factory/configuration class                                                                                                                                                                       |
+| Bean creation method | Class is itself a bean       | Defines beans via `@Bean` methods                                                                                                                                                                      |
+| Proxying behavior    | Not proxied by default       | `Uses CGLIB proxy to ensure singleton beans`                                                                                                                                                           |
+| Typical use          | Services, repositories, etc. | Centralized configuration or complex bean setup                                                                                                                                                        |
+| Internally           |                              | - `@Component` <br/> - `proxyBeanMethods()` [true] [uses CGLIB proxy to return singleton beans] <br/> - `enforceUniqueMethods()` [true] [to ensure there is no conflicting bean inside @configuration] |
+
+---
+
+### Arrays.asList() vs List.of()
+
+| Feature           | `Arrays.asList()`                                                                                | `List.of()`                                                                       |
+| ----------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
+| Java Version      | Java 1.2+                                                                                        | Java 9+                                                                           |
+| Mutability        | - `Modifiable elements, but fixed size` <br/> - `can update but cannot add new item to the list` | - `Completely immutable` <br/> - can't add also can't update to the existing list |
+| Backing Structure | Backed by array                                                                                  | Not backed by array                                                               |
+| Supports `null`?  | Yes                                                                                              | No (`NullPointerException` if `null` is used)                                     |
+| Performance       | Slightly more overhead due to backing array                                                      | Often faster and safer due to immutability                                        |
