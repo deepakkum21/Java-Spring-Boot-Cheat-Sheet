@@ -880,3 +880,36 @@ public class MyCustomCondition implements Condition {
   }
 }
 ```
+
+---
+
+### FixedRate vs FixedDelay
+
+```java
+@Scheduled(fixedDelay = 5000)
+public void runTask() {
+    // Executes 5 seconds after the previous execution completes
+}
+// Task 1 starts at 0s, ends at 2s
+// Task 2 starts at 7s, ends at 9s
+// Task 3 starts at 14s, ends at 16s
+
+
+@Scheduled(fixedRate = 5000)
+public void runTask() {
+    // Executes every 5 seconds, regardless of how long the task takes
+}
+// Task 1 starts at 0s, ends at 2s
+// Task 2 starts at 5s, ends at 7s
+// Task 3 starts at 10s, ends at 12s
+```
+
+| Attribute    | Interval From      | Starts New Task | Overlap Possible   | Best For                |
+| ------------ | ------------------ | --------------- | ------------------ | ----------------------- |
+| `fixedRate`  | Previous **start** | Every X ms      | Yes (if long task) | Regular, periodic tasks |
+| `fixedDelay` | Previous **end**   | After X ms      | No                 | Non-overlapping tasks   |
+
+### InitialDelay
+
+- Both `fixedRate and fixedDelay` can be combined with initialDelay to delay the first execution
+- attribute specifies `how long to wait after the application starts` (or the task scheduler starts) `before running the method for the first time.`
