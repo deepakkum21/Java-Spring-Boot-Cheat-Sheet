@@ -863,8 +863,20 @@ com.example.secondary.repository
 
 - to `have any condition for Bean`
   - only create 10 beans
-- the class should implement
+- the class `should implement Condition (I)`
+  - `override matches()`
 
 ```java
-@Se
+@Service
+@Conditional(MyCustomCondition.class)
+public class DemoService() {
+
+}
+
+public class MyCustomCondition implements Condition {
+  @override
+  public boolean matches() {
+    return true;
+  }
+}
 ```
