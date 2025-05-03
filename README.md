@@ -856,3 +856,15 @@ com.example.secondary.repository
 | Backing Structure | Backed by array                                                                                  | Not backed by array                                                               |
 | Supports `null`?  | Yes                                                                                              | No (`NullPointerException` if `null` is used)                                     |
 | Performance       | Slightly more overhead due to backing array                                                      | Often faster and safer due to immutability                                        |
+
+---
+
+### @Conditional
+
+- to `have any condition for Bean`
+  - only create 10 beans
+- the class should implement
+
+```java
+@Se
+```
