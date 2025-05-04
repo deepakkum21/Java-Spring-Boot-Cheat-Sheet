@@ -913,3 +913,11 @@ public void runTask() {
 
 - Both `fixedRate and fixedDelay` can be combined with initialDelay to delay the first execution
 - attribute specifies `how long to wait after the application starts` (or the task scheduler starts) `before running the method for the first time.`
+
+---
+
+### Resilience4J
+
+- `RateLimiter`
+- `Circuit Breaker`
+- `Retry`
