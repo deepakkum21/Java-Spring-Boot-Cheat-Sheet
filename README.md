@@ -921,3 +921,53 @@ public void runTask() {
 - `RateLimiter`
 - `Circuit Breaker`
 - `Retry`
+
+---
+
+### Bean overriding in spring boot
+
+1. **Default Behavior (Spring Boot 2.1 and later)**
+
+- By `default, bean overriding is not allowed`.
+- Spring Boot will throw a BeanDefinitionOverrideException.
+
+2. **Enable Bean Overriding**
+
+- Set the following property in your application.properties or application.yml
+
+```properties
+spring.main.allow-bean-definition-overriding=true
+```
+
+```java
+@Configuration
+public class MyConfig {
+
+    @Bean
+    public MyService myService() {
+        return new MyServiceImpl1();
+    }
+
+    // This bean will override the one above if overriding is allowed
+    @Bean
+    public MyService myServiceOverride() {
+        return new MyServiceImpl2();
+    }
+}
+```
+
+3. **Using @Primary or @Qualifier Instead**
+
+```java
+@Bean
+@Primary
+public MyService myPrimaryService() {
+    return new MyServiceImpl2();
+}
+```
+
+```java
+@Autowired
+@Qualifier("myServiceImpl1")
+private MyService myService;
+```
