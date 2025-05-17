@@ -424,6 +424,7 @@ These predicates help manage traffic, enforce security, and define routing rules
 		</dependency>
 
 ```
+```text
 Trace ID: abc123
 |
 |-- Span ID: 1 (Start - API Gateway)
@@ -433,6 +434,7 @@ Trace ID: abc123
     |-- Span ID: 3 (Order Service)
         |
         |-- Span ID: 4 (Database Query)
+```
 
 | Term           | Description                        | Scope                | Used For                              |
 | -------------- | ---------------------------------- | -------------------- | ------------------------------------- |
