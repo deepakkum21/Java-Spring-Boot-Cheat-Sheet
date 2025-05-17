@@ -424,6 +424,34 @@ These predicates help manage traffic, enforce security, and define routing rules
 		</dependency>
 
 ```
+Trace ID: abc123
+|
+|-- Span ID: 1 (Start - API Gateway)
+    |
+    |-- Span ID: 2 (Auth Service)
+    |
+    |-- Span ID: 3 (Order Service)
+        |
+        |-- Span ID: 4 (Database Query)
+
+| Term           | Description                        | Scope                | Used For                              |
+| -------------- | ---------------------------------- | -------------------- | ------------------------------------- |
+| `traceId`      | ID for the **entire trace**        | Across services      | Grouping all spans of a request       |
+| `spanId`       | ID for a **single operation/span** | One service/function | Representing individual units of work |
+| `parentSpanId` | Links a span to its parent         | Within trace         | Building hierarchical call trees      |
+
+```json
+{
+  "traceId": "abc123",
+  "spanId": "span789",
+  "parentSpanId": "span456",
+  "name": "GET /api/orders",
+  "startTime": "...",
+  "endTime": "...",
+  "status": "OK"
+}
+
+```
 
 ---
 
