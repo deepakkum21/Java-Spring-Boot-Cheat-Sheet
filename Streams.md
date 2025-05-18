@@ -7,6 +7,30 @@
 - `Stream.generate(Math::random).limit(5)`
 - `Stream.iterate(seed, function)`
 
+## Short Circuit Streams Operators
+- those that `can stop processing elements early, without traversing the entire stream`.
+- These operations are useful for `improving performance, especially with large data sets` or infinite streams.
+- **Intermediate Operations**
+  - `limit(n)`
+  - `skip(n)`
+- **Terminal Operations**
+  - `anyMatch(Predicate)`: Returns true if any element matches the predicate; stops at the first match.
+  - `allMatch(Predicate)`: Returns false immediately if any element doesn't match.
+  - `noneMatch(Predicate)`: Returns false immediately if any element matches.
+  - `findFirst()`: Returns the first element of the stream, if present
+  - `findAny()`: Returns any element, useful in parallel streams for better performance
+ 
+| Operation     | Type         | Short-Circuiting? | Description                                |
+| ------------- | ------------ | ----------------- | ------------------------------------------ |
+| `limit(n)`    | Intermediate | ✅ Yes             | Processes only first `n` elements          |
+| `skip(n)`     | Intermediate | ⚠️ Partially      | Skips `n` elements, not true short-circuit |
+| `anyMatch()`  | Terminal     | ✅ Yes             | Stops at first match                       |
+| `allMatch()`  | Terminal     | ✅ Yes             | Stops at first non-match                   |
+| `noneMatch()` | Terminal     | ✅ Yes             | Stops at first match                       |
+| `findFirst()` | Terminal     | ✅ Yes             | Returns first element                      |
+| `findAny()`   | Terminal     | ✅ Yes             | Returns any element                        |
+
+
 ## Handling Null values while filter,reduce,map in streams
 
 - ### Filter
