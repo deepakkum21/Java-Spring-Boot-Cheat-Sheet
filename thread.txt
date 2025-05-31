@@ -178,8 +178,13 @@ Virtual Thread
 - prior to virtual thread JVM just provided the wrapper around OS thread.
 
 
-	
-	
+| Use Case                       | Tool                                                 |
+| ------------------------------ | ---------------------------------------------------- |
+| Share data across threads      | `ConcurrentHashMap`, `Atomic*`, synchronized objects |
+| Store thread-specific data     | `ThreadLocal`                                        |
+| Inherit parent’s data in child | `InheritableThreadLocal`                             |
+| Use in thread pools            | Shared context objects, `ExecutorService`            |
+
 	
 	
 	
