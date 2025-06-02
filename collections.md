@@ -19,3 +19,17 @@
   - O(n)
 
 ![Collection -java21](./img/collection-java21.png)
+
+## How sequenced Collection categorized
+
+1. Collection should follow `Predictable Iteration` :
+   Means elements are returned in consistent and well defined order every time we iterate over the collection.
+   So if a collection maintains elements in:
+
+- Insertion order, or
+- Sorted order (e.g., ascending or descending)
+  Then we can say, it follows Predictable iteration.
+
+2. Collection `provide support for Access or Manipulate the First and Last element`
+
+3. Collection `supports Reversible View`
