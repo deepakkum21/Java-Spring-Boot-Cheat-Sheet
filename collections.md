@@ -33,3 +33,7 @@
 2. Collection `provide support for Access or Manipulate the First and Last element`
 
 3. Collection `supports Reversible View`
+
+![sequenced-collection-methods](./img/sequenced-collection-methods.png)
+
+![sequenced-Map-methods](./img/sequenced-Map-methods.png)
