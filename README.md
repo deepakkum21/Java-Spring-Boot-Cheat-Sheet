@@ -971,3 +971,13 @@ public MyService myPrimaryService() {
 @Qualifier("myServiceImpl1")
 private MyService myService;
 ```
+
+---
+
+## API PERFORMANCE
+
+1. Pagination
+2. Async Logging : log to in-memory and after some time write to disk
+3. Caching
+4. Payload compression: protobuf
+5. Connection Pooling
