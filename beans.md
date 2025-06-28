@@ -74,7 +74,7 @@
 - `Eager`
   - `when application starts`
   - `singleton beans`
-- Lazy
+- `Lazy`
   - `When beans are needed`
   - `prototype / @Lazy`
 
@@ -321,7 +321,7 @@ Ans> No as the same instance is returned as Upper level is Singleton and propert
 
         private final CustomerService service;
       }
- ```
+```
 
 ## How to configure profile config dynamically
 
