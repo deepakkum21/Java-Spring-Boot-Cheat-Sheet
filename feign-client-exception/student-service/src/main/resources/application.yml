@@ -1,0 +1,5 @@
+application:
+  services:
+    course:
+      url: http://localhost:8081/api/courses
+

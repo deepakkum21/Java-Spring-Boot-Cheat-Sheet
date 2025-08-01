@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Spring Boot Masterclass",
+    "instructor": "Java Techie",
+    "ratings": [
+      {"studentName": "Alice", "stars": 5, "comment": "Excellent"},
+      {"studentName": "Bob", "stars": 4, "comment": "Very good"},
+      {"studentName": "Charlie", "stars": 5, "comment": "Great explanations!"}
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Microservices with Spring Cloud",
+    "instructor": "Java Techie",
+    "ratings": [
+      {"studentName": "David", "stars": 5, "comment": "Very helpful"},
+      {"studentName": "Eva", "stars": 4, "comment": "Good pace"},
+      {"studentName": "Frank", "stars": 3, "comment": "Some topics missing"}
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Python for Beginners",
+    "instructor": "Java Techie",
+    "ratings": [
+      {"studentName": "Grace", "stars": 5, "comment": "Very easy to follow"},
+      {"studentName": "Hank", "stars": 4, "comment": "Good for beginners"},
+      {"studentName": "Isla", "stars": 4, "comment": "Well explained"}
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Kafka for Developers",
+    "instructor": "Java Techie",
+    "ratings": [
+      {"studentName": "Jake", "stars": 5, "comment": "Very informative"},
+      {"studentName": "Kira", "stars": 5, "comment": "Easy to understand"},
+      {"studentName": "Leo", "stars": 4, "comment": "Great use cases"}
+    ]
+  }
+]
