@@ -981,3 +981,50 @@ private MyService myService;
 3. Caching
 4. Payload compression: protobuf
 5. Connection Pooling
+
+---
+
+## Function Composition in Java
+
+- Function composition means `combining two or more functions to produce a new function`.
+- In Java, it's most commonly used with the **Function<T, R> interface from java.util.function**.
+
+| Method      | Meaning                          | Order     |
+| ----------- | -------------------------------- | --------- |
+| `compose()` | Executes **before** current func | `f(g(x))` |
+| `andThen()` | Executes **after** current func  | `g(f(x))` |
+
+| Method    | Order of Application | Code                                |
+| --------- | -------------------- | ----------------------------------- |
+| `compose` | **Second → First**   | `f.compose(g).apply(x)` = `f(g(x))` |
+| `andThen` | **First → Second**   | `f.andThen(g).apply(x)` = `g(f(x))` |
+
+```java
+import java.util.function.Function;
+
+public class FunctionCompositionExample {
+    public static void main(String[] args) {
+        Function<Integer, Integer> multiplyBy2 = x -> x * 2;
+        Function<Integer, Integer> add3 = x -> x + 3;
+
+        // Compose: add3 then multiplyBy2
+        Function<Integer, Integer> composed1 = multiplyBy2.compose(add3); // multiplyBy2(add3(x))
+        System.out.println(composed1.apply(5)); // (5 + 3) * 2 = 16
+
+        // Compose: multiplyBy2 then add3
+        Function<Integer, Integer> composed2 = multiplyBy2.andThen(add3); // add3(multiplyBy2(x))
+        System.out.println(composed2.apply(5)); // (5 * 2) + 3 = 13
+    }
+}
+```
+
+---
+
+## Function.identity()
+
+- `Returns a function that returns its input`
+
+```java
+Function<String, String> identity = Function.identity();
+System.out.println(identity.apply("Hello")); // Hello
+```
