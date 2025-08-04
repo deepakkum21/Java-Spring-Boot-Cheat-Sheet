@@ -7,7 +7,50 @@
 - `Stream.generate(Math::random).limit(5)`
 - `Stream.iterate(seed, function)`
 
+## Stateful vs Stateless Operation
+
+1. **Stateless**
+
+- operations **do not maintain any state about previously seen elements when processing the current element**.
+- Characteristics:
+  - Each element is processed independently.
+  - More efficient and easier to parallelize.
+  - Usually don't require internal buffering.
+- Examples
+  - map()
+  - filter()
+  - peek()
+  - forEach()
+
+```java
+List<String> names = List.of("Alice", "Bob", "Charlie");
+names.stream()
+     .filter(name -> name.startsWith("A"))  // stateless
+     .forEach(System.out::println);
+```
+
+2. **Stateful**
+
+- operations need to **keep track of previously seen elements to process the current one**.
+- Characteristics:
+  - May require buffering or memory to store elements.
+  - Can hinder performance, especially in parallel streams.
+  - Order-sensitive.
+- Examples:
+  - sorted()
+  - distinct()
+  - limit()
+  - skip()
+
+```java
+List<Integer> numbers = List.of(5, 1, 2, 4, 3);
+numbers.stream()
+       .sorted()          // stateful: needs all elements to sort
+       .forEach(System.out::println);
+```
+
 ## Short Circuit Streams Operators
+
 - those that `can stop processing elements early, without traversing the entire stream`.
 - These operations are useful for `improving performance, especially with large data sets` or infinite streams.
 - **Intermediate Operations**
@@ -19,17 +62,16 @@
   - `noneMatch(Predicate)`: Returns false immediately if any element matches.
   - `findFirst()`: Returns the first element of the stream, if present
   - `findAny()`: Returns any element, useful in parallel streams for better performance
- 
+
 | Operation     | Type         | Short-Circuiting? | Description                                |
 | ------------- | ------------ | ----------------- | ------------------------------------------ |
-| `limit(n)`    | Intermediate | ✅ Yes             | Processes only first `n` elements          |
+| `limit(n)`    | Intermediate | ✅ Yes            | Processes only first `n` elements          |
 | `skip(n)`     | Intermediate | ⚠️ Partially      | Skips `n` elements, not true short-circuit |
-| `anyMatch()`  | Terminal     | ✅ Yes             | Stops at first match                       |
-| `allMatch()`  | Terminal     | ✅ Yes             | Stops at first non-match                   |
-| `noneMatch()` | Terminal     | ✅ Yes             | Stops at first match                       |
-| `findFirst()` | Terminal     | ✅ Yes             | Returns first element                      |
-| `findAny()`   | Terminal     | ✅ Yes             | Returns any element                        |
-
+| `anyMatch()`  | Terminal     | ✅ Yes            | Stops at first match                       |
+| `allMatch()`  | Terminal     | ✅ Yes            | Stops at first non-match                   |
+| `noneMatch()` | Terminal     | ✅ Yes            | Stops at first match                       |
+| `findFirst()` | Terminal     | ✅ Yes            | Returns first element                      |
+| `findAny()`   | Terminal     | ✅ Yes            | Returns any element                        |
 
 ## Handling Null values while filter,reduce,map in streams
 
