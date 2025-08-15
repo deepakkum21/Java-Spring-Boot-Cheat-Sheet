@@ -1032,6 +1032,21 @@ System.out.println(identity.apply("Hello")); // Hello
 
 ## Casting using Pattern Matching [JAVA 16]
 ```
+class Animal{
+}
+
+class Dog extends Animal{
+        void bark(){
+                System.out.println(x:"barking .. ");
+        }
+}
+
+class Cat extends Animal{
+        void meow( ){
+                System.out.println(x:"meow .. ");
+        }
+}
+
 public static void main(String[] args) {
         Animal animal = Math.random() > 0.5 ? new Dog() : new Cat();
 
