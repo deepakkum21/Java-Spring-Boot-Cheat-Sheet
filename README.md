@@ -1028,9 +1028,11 @@ public class FunctionCompositionExample {
 Function<String, String> identity = Function.identity();
 System.out.println(identity.apply("Hello")); // Hello
 ```
+
 ---
 
 ## Casting using Pattern Matching [JAVA 16]
+
 ```
 class Animal{
 }
@@ -1055,3 +1057,38 @@ public static void main(String[] args) {
         }
 }
 ```
+
+---
+
+## @Valid and @Validated
+
+| Aspect                   | **@Valid**                                                                | **@Validated**                                                                                  |
+| ------------------------ | ------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| **Source**               | Jakarta Bean Validation (JSR-303/JSR-380) → `jakarta.validation.Valid`    | Spring Framework → `org.springframework.validation.annotation.Validated`                        |
+| **Scope**                | Standard Java validation annotation                                       | Spring-specific extension of validation                                                         |
+| **Validation Groups**    | ❌ Not supported (validates all constraints)                              | ✅ Supported (can validate specific groups)                                                     |
+| **Cascading Validation** | ✅ Supported (nested objects annotated with `@Valid` get validated)       | ❌ Not directly (but can combine with `@Valid` for cascading)                                   |
+| **Use in Controllers**   | Commonly used to validate `@RequestBody`, form objects, method parameters | Can be used when group-based validation is needed                                               |
+| **Use in Services**      | Not typically used                                                        | Frequently used for **method-level validation** (e.g., on `@Service` classes with `@Validated`) |
+| **Typical Example**      | `public ResponseEntity<?> save(@Valid @RequestBody UserDTO user)`         | `public ResponseEntity<?> save(@Validated(OnCreate.class) @RequestBody UserDTO user)`           |
+| **Best For**             | Simple, general validation needs                                          | Advanced validation with **groups** or method-level validation                                  |
+
+1. `Validation Groups`
+
+- **@Valid** → `No group support (validates all constraints)`.
+- **@Validated** → `Supports groups`.
+
+```java
+
+public class UserDTO {
+
+    @NotNull(groups = OnCreate.class)
+    private String username;
+
+    @NotNull(groups = OnUpdate.class)
+    private Long id;
+}
+```
+
+- `@Valid would validate both username and id.`
+- `@Validated(OnCreate.class) would validate only username.`
