@@ -1092,3 +1092,79 @@ public class UserDTO {
 
 - `@Valid would validate both username and id.`
 - `@Validated(OnCreate.class) would validate only username.`
+
+---
+
+## StreamingResponseBody (Spring MVC) VS Spring Reactive (WebFlux)
+
+1. **StreamingResponseBody (Spring MVC)**
+
+- Part of Spring MVC (Servlet stack) → `blocking, thread-per-request model`.
+- `Allows writing directly to the response’s OutputStream asynchronously`.
+- **Useful for**:
+  - Large file downloads
+  - Server-pushed data (SSE-like use cases, without full reactive stack)
+  - Streaming large JSON arrays/CSV data without holding everything in memory
+- **Characteristics**:
+  - Runs on Servlet container thread (e.g., Tomcat).
+  - `Non-reactive: I/O is still blocking under the hood`.
+  - Better than writing the whole response into memory, but `does not scale well for thousands of concurrent streams`.
+
+```java
+    @GetMapping("/stream")
+    public StreamingResponseBody streamStocks(HttpServletResponse response) {
+        response.setContentType("text/event-stream");
+        return outputStream -> {
+            stockService.getAllStocks()
+                    .forEach(stock -> {
+                        try {
+                            String json = new ObjectMapper()
+                                    .writeValueAsString(stock) + "\n";
+                            outputStream.write(json.getBytes());
+                            outputStream.flush();
+
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex.getMessage());
+                        }
+                    });
+        };
+    }
+```
+
+2. **Spring Reactive (WebFlux)**
+
+- Part of Spring WebFlux `(Reactive stack) → non-blocking, event-loop model` (Netty or Servlet 3.1 async).
+- Uses Project Reactor (Flux/Mono) for back-pressure aware streaming.
+- **Ideal for**:
+  - `High concurrency` (chat apps, notifications, SSE, WebSocket)
+  - Data pipelines
+  - `Real-time APIs`
+  - When client and server both support reactive streaming
+- **Characteristics**:
+  - `Non-blocking, async end-to-end`.
+  - `Scales much better with thousands of clients`.
+  - Requires reactive programming style (Flux/Mono), which is a bigger learning curve.
+  - Works `with Netty or Servlet 3.1 async containers`.
+
+```java
+@GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+public Flux<String> stream() {
+    return Flux.interval(Duration.ofSeconds(1))
+               .map(i -> "Line " + i);
+}
+
+@GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<Stock> streamStocks(){
+        return Flux.fromIterable(stockRepository.findAll())
+                .delayElements(Duration.ofSeconds(1));
+    }
+```
+
+| Feature                         | StreamingResponseBody (Spring MVC) | Spring Reactive (WebFlux) |
+| ------------------------------- | ---------------------------------- | ------------------------- |
+| Programming model               | Servlet (blocking)                 | Reactive (non-blocking)   |
+| Concurrency model               | Thread per request                 | Event loop + backpressure |
+| Streaming style                 | Writes directly to OutputStream    | Flux/Mono with Reactor    |
+| Ease of use                     | Easier, imperative style           | More complex, functional  |
+| Scalability (thousands clients) | Limited                            | High                      |
+| Typical use case                | File download, large response      | SSE, WebSocket, real-time |
