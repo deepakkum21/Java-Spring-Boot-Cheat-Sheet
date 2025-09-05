@@ -424,6 +424,7 @@ These predicates help manage traffic, enforce security, and define routing rules
 		</dependency>
 
 ```
+
 ```text
 Trace ID: abc123
 |
@@ -452,7 +453,6 @@ Trace ID: abc123
   "endTime": "...",
   "status": "OK"
 }
-
 ```
 
 ---
@@ -496,4 +496,56 @@ public String getData() {
 public String callRemoteService() {
     // call external API
 }
+```
+
+---
+
+# Filter/Interceptor IN API GATEWAY
+
+- `AbstractGatewayFilterFactory`
+
+```java
+@Component
+public class JwtValidationGatewayFilterFactory extends AbstractGatewayFilterFactory<Object> {
+
+    private final WebClient webClient;
+
+    public JwtValidationGatewayFilterFactory(WebClient.Builder webClientBuilder,
+                                             @Value("${auth.service.url}") String authServiceUrl) {
+        this.webClient = webClientBuilder.baseUrl(authServiceUrl).build();
+    }
+
+    @Override
+    public GatewayFilter apply(Object config) {
+        return (exchange, chain) -> {
+            String token =
+                    exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+
+            if(token == null || !token.startsWith("Bearer ")) {
+                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                return exchange.getResponse().setComplete();
+            }
+
+            return webClient.get()
+                    .uri("/validate")
+                    .header(HttpHeaders.AUTHORIZATION, token)
+                    .retrieve()
+                    .toBodilessEntity()
+                    .then(chain.filter(exchange));
+        };
+    }
+}
+```
+
+### Mention the filter name under the routes to make use of AbstractGatewayFilterFactory
+
+```yml
+- id: patient-service-route
+  uri: http://patient-service:4000
+  predicates:
+    - Path=/api/patient/**
+  filters:
+    - StripPrefix=1
+    ## JWT VALIDATION using JwtValidationGatewayFilterFactory ie any request matching to predicates will be passed/go via to JwtValidationGatewayFilterFactory
+    - JwtValidation
 ```
