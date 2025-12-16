@@ -107,7 +107,47 @@ private final static void bind() {
 
 ### 2. level [Level level]
 
--
+- for each logger we configure a log level
+- various levels
+  - Error [Highest priority]
+  - Warn
+  - Info [Default]
+  - Debug
+  - Trace [Lowest priority]
+- And each Log statement implicitly has its own level based on the method used.
+
+```text
+log.debug(" ... ");
+log.info(" ... ");
+log.error(" ... ");
+```
+
+- Logger `prints a logs statement only if log statement level is same or higher than the Logger configured level`.
+- `Logging level in spring boot can be changed using application.properties or application.yaml`
+
+```property
+1️⃣ Global Logging Level
+logging.level.root=INFO
+
+2️⃣ Package-Specific Logging
+logging.level.com.myapp=DEBUG
+logging.level.org.springframework=INFO
+logging.level.org.hibernate.SQL=DEBUG
+
+3️⃣ Class-Specific Logging
+logging.level.com.myapp.service.UserService=TRACE
+
+
+🔍 Show SQL Queries (Hibernate)
+logging.level.org.hibernate.SQL=DEBUG
+logging.level.org.hibernate.type.descriptor.sql=TRACE
+
+🌐 REST Request/Response Logs
+logging.level.org.springframework.web=DEBUG
+
+🚀 Startup Logs
+logging.level.org.springframework.boot=INFO
+```
 
 ### 3. Logger parent
 
