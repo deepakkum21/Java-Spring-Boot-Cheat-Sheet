@@ -82,3 +82,37 @@ private final static void bind() {
     <artifactld>spring-boot-starter-log4j2</artifactld>
 </dependency>
 ```
+
+---
+
+## Low Level Design for Logger
+
+![UML](./img/uml.png)
+
+---
+
+## Logger Object
+
+### 1. Name [String name]
+
+- name of the logger, name can be
+  - **package name**
+  - **class name**
+  - **or any string**
+- for any logger name only `1 logger object is create and reused, recommendation is to use className for logger`
+
+```java
+    Logger logger = LoggerFactory.getLogger(PaymentService.class)   // com.abc.PaymentService
+```
+
+### 2. level [Level level]
+
+-
+
+### 3. Logger parent
+
+-
+
+### 4. List<Logger> child
+
+-
