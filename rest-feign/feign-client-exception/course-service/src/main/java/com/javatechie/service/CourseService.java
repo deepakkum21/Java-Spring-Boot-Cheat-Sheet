@@ -1,8 +1,8 @@
-package com.javatechie.service;
+package com.deepak.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.javatechie.dto.Course;
-import com.javatechie.dto.Rating;
+import com.deepak.dto.Course;
+import com.deepak.dto.Rating;
 import jakarta.annotation.PostConstruct;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.util.Optional;
 @Service
 public class CourseService {
 
-    private  List<Course> COURSES = new ArrayList<>();
+    private List<Course> COURSES = new ArrayList<>();
 
     @PostConstruct
     public void init() throws IOException {
@@ -30,11 +30,10 @@ public class CourseService {
         }
     }
 
-
     public Course getCourseById(int id) {
         return COURSES.stream()
                 .filter(course -> course.getId() == id)
-                .findFirst().orElseThrow(()-> new RuntimeException("Course not found with id: " + id));
+                .findFirst().orElseThrow(() -> new RuntimeException("Course not found with id: " + id));
     }
 
     public List<Course> getAllCourses() {

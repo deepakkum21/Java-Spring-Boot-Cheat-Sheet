@@ -1,4 +1,4 @@
-package com.javatechie.dto;
+package com.deepak.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +17,8 @@ public class Course {
     private List<Rating> ratings = new ArrayList<>();
 
     public double getAverageRating() {
-        if (ratings.isEmpty()) return 0;
+        if (ratings.isEmpty())
+            return 0;
         return ratings.stream().mapToInt(Rating::getStars).average().orElse(0);
     }
 }

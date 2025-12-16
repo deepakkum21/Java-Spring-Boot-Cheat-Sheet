@@ -1,40 +1,41 @@
-//package com.javatechie.client;
+// package com.deepak.client;
 //
-//import com.javatechie.dto.Course;
-//import com.javatechie.dto.Rating;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.stereotype.Service;
-//import org.springframework.web.client.RestTemplate;
+// import com.deepak.dto.Course;
+// import com.deepak.dto.Rating;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.http.ResponseEntity;
+// import org.springframework.stereotype.Service;
+// import org.springframework.web.client.RestTemplate;
 //
-//import java.util.Arrays;
-//import java.util.List;
+// import java.util.Arrays;
+// import java.util.List;
 //
-//@Service
-//public class CourseRestClientService {
+// @Service
+// public class CourseRestClientService {
 //
-//    private static final String COURSE_BASE_URL = "http://localhost:8081/api/courses";
+// private static final String COURSE_BASE_URL =
+// "http://localhost:8081/api/courses";
 //
-//    @Autowired
-//    private RestTemplate restTemplate;
+// @Autowired
+// private RestTemplate restTemplate;
 //
-//    public Course getCourseById(int id) {
-//        String url = COURSE_BASE_URL + "/" + id;
-//        ResponseEntity<Course> response = restTemplate
-//                .getForEntity(url, Course.class);
-//        return response.getBody();
-//    }
+// public Course getCourseById(int id) {
+// String url = COURSE_BASE_URL + "/" + id;
+// ResponseEntity<Course> response = restTemplate
+// .getForEntity(url, Course.class);
+// return response.getBody();
+// }
 //
-//    public List<Course> getAllCourses() {
-//        ResponseEntity<Course[]> response = restTemplate
-//                .getForEntity(COURSE_BASE_URL, Course[].class);
-//        return Arrays.asList(response.getBody() != null
-//                ? response.getBody() : null);
-//    }
+// public List<Course> getAllCourses() {
+// ResponseEntity<Course[]> response = restTemplate
+// .getForEntity(COURSE_BASE_URL, Course[].class);
+// return Arrays.asList(response.getBody() != null
+// ? response.getBody() : null);
+// }
 //
-//    public String submitCourseRating(Integer courseId, Rating rating) {
-//        String url = COURSE_BASE_URL + "/" + courseId + "/ratings";
-//        return restTemplate.postForObject(url, rating, String.class);
-//    }
+// public String submitCourseRating(Integer courseId, Rating rating) {
+// String url = COURSE_BASE_URL + "/" + courseId + "/ratings";
+// return restTemplate.postForObject(url, rating, String.class);
+// }
 //
-//}
+// }

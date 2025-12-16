@@ -1,23 +1,20 @@
-package com.javatechie.client;
+package com.deepak.client;
 
-import com.javatechie.config.FeignClientConfig;
-import com.javatechie.dto.Course;
-import com.javatechie.dto.Rating;
+import com.deepak.config.FeignClientConfig;
+import com.deepak.dto.Course;
+import com.deepak.dto.Rating;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "course-client",
-        url = "${application.services.course.url}",
-        configuration = FeignClientConfig.class)
+@FeignClient(name = "course-client", url = "${application.services.course.url}", configuration = FeignClientConfig.class)
 public interface CourseClient {
-
 
     @GetMapping
     List<Course> courses();
-    //create a proxy for the CourseClient
-    //RestTemplate -> build the request
+    // create a proxy for the CourseClient
+    // RestTemplate -> build the request
     // URL , GET , NO , List<COURSE>
 
     @GetMapping("/{id}")

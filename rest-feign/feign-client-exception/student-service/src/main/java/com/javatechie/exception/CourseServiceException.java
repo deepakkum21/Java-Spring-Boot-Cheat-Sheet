@@ -1,4 +1,4 @@
-package com.javatechie.exception;
+package com.deepak.exception;
 
 public class CourseServiceException extends RuntimeException {
     public CourseServiceException(String message) {

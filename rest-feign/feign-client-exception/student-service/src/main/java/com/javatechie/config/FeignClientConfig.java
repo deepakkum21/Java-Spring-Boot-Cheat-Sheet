@@ -1,6 +1,6 @@
-package com.javatechie.config;
+package com.deepak.config;
 
-import com.javatechie.handler.CustomErrorDecoder;
+import com.deepak.handler.CustomErrorDecoder;
 import feign.codec.ErrorDecoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

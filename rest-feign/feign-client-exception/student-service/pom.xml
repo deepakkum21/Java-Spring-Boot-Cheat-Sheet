@@ -8,7 +8,7 @@
 		<version>3.5.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.javatechie</groupId>
+	<groupId>com.deepak</groupId>
 	<artifactId>student-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>student-service</name>

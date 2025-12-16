@@ -1,4 +1,4 @@
-package com.javatechie;
+package com.deepak;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

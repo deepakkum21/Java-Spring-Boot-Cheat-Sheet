@@ -1,6 +1,6 @@
-package com.javatechie.handler;
+package com.deepak.handler;
 
-import com.javatechie.exception.CourseServiceException;
+import com.deepak.exception.CourseServiceException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 
@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 public class CustomErrorDecoder implements ErrorDecoder {
-
 
     @Override
     public Exception decode(String methodKey, Response response) {
