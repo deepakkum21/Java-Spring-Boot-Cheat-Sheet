@@ -151,8 +151,42 @@ logging.level.org.springframework.boot=INFO
 
 ### 3. Logger parent
 
--
+- Logger internally maintains the hierarchy of the logger objects
+
+  ![Logger Parent](./img/loggerParent.png)
+
+- Advantage of maintaining the Parent, Child relationship are:
+
+  1. `Log level inheritance`
+
+  - We don't need to configure each and every class.
+  - For ex: `I can set level on a Package logger and all of its child automatically inherit it.`
+
+  2. Override specific child behavior
+  3. `Accepted logs are propagated upwards`
+
+  - If log is rejected : STOP (do not propagate it)
+
+        ```property
+        logging.level.com.concepts.PaymentController=DEBUG
+        ```
+
+  - for ex: log.trace("trace log statement")
+  - This log is rejected, as Logger level is DEBUG. So Debug and Upper level is only entertained rested is skipped for appender
+  - Only `accepted log is propagated upwards (till ROOT) and all appenders are executed`.
+  - By `default is TRUE, but we can turn it FALSE also`.
 
 ### 4. List<Logger> child
 
--
+---
+
+## Appenders
+
+`Appender is the component that decides where the log will go`:
+
+- console
+- file
+- DB
+- kafka
+
+![Appenders](./img/appender.png)
