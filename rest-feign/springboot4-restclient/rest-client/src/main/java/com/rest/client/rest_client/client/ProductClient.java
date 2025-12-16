@@ -9,7 +9,7 @@ import org.springframework.web.service.annotation.PostExchange;
 
 import java.util.List;
 
-@HttpExchange("http://localhost:9191/products")
+@HttpExchange("http://localhost:9091/products")
 public interface ProductClient {
 
     @PostExchange
