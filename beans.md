@@ -351,4 +351,66 @@ Ans> No as the same instance is returned as Upper level is Singleton and propert
 
 ## @Profile Annotation
 
-. Using Profile annotation we can tell spring boot, to create a bean only when particular profile is set
+## . Using Profile annotation we can tell spring boot, to create a bean only when particular profile is set
+
+---
+
+### @Component vs @Bean
+
+1. `@Component`
+
+- @Component is a `class-level annotation` used to tell Spring:
+  - “This class `is a Spring-managed bean. Please auto-detect it`.”
+- Spring `finds it using component scanning`.
+
+- Use @Component for:
+  - Services
+  - Repositories
+  - Controllers
+  - Utility classes you write
+
+```java
+@Component
+public class EmailService {
+    public void sendEmail() {
+        System.out.println("Email sent");
+    }
+}
+```
+
+2. `@BEan`
+
+- @Bean is a `method-level annotation used inside a configuration class`.
+- It tells Spring:
+  - `“The object returned by this method is a Spring bean.”`
+- When to use @Bean
+  - You `don’t own the class` (third-party library)
+  - You `need custom initialization`
+  - You `want conditional or multiple beans`
+- Use @Bean for:
+  - RestTemplate
+  - ObjectMapper
+  - DataSource
+  - Security configurations
+  - SDK / library objects
+
+```java
+@Bean
+public RestTemplate restTemplate() {
+    return new RestTemplate();
+}
+```
+
+| Feature                      | `@Component`         | `@Bean`                      |
+| ---------------------------- | -------------------- | ---------------------------- |
+| Annotation Level             | Class                | Method                       |
+| Configuration Needed         | No                   | Yes (`@Configuration`)       |
+| Who creates the Object       | Spring               | Developer                    |
+| Third-party Classes          | ❌ No                | ✅ Yes                       |
+| Control Over Creation        | ❌ Minimal           | ✅ Full Control              |
+| External Third party Classes | ❌ Not Possible      | ✅ Possible                  |
+| TConfiguration Logic         | ❌ Avoid             | ✅ Preferred                 |
+| Multiple beans of same type  | ❌ Difficult         | ✅ YeEasys                   |
+| Custom Logic                 | Limited              | Full control                 |
+| Readability                  | Cleaner              | More explicit                |
+| Typical Usage                | Business & App logic | Infrastructure & Integration |
