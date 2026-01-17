@@ -190,3 +190,16 @@ logging.level.org.springframework.boot=INFO
 - kafka
 
 ![Appenders](./img/appender.png)
+
+Will see how to write appender
+. Different types of appender
+Log format
+
+- Log Rotation
+  MDC (Mapped Diagnostic Context)
+  . Correlation ID - uniquely tags a request
+- Async Logging
+  Structured logging (JSON logs)
+  PII (Personally identifiable Information) safe logging
+  . Distributed Logging (multiple microservices logging and how to connect the logs)
+  . Log Aggregation tools
