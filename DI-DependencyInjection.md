@@ -6,7 +6,6 @@
 - `using reflection`
 - easy to use
 - disadvantage
-
   - `cannot be used with immutable fields [final]`
   - `chances of NPE`
 
@@ -58,3 +57,28 @@
 - `@Primary when there are multiple implementation` classes of DI object
 
 - `@Qualifier("name") with @Autowired`
+
+---
+
+## Why Spring recommends Constructor Injection Vs Field Injection
+
+https://www.youtube.com/watch?v=SIapQ7jy8Ms
+
+- Your `class might exist in an INVALID state (NPE)`
+  - field `injection allow creating objects without dependencies.`
+
+```java
+Class A {
+  private void methodC {
+    B b = new B(); // will lead to have C as null if used field injection for C in B
+  }
+}
+
+Class B {
+  @Autowired
+  private C c;  // use constructor injection using final
+
+  private void methodB () {
+  }
+}
+```
