@@ -356,7 +356,7 @@ Ans> No as the same instance is returned as Upper level is Singleton and propert
 ---
 
 ### @Component vs @Bean
-
+`https://www.youtube.com/watch?v=Tx4hFLC_pq4&t=896s`
 1. `@Component`
 
 - @Component is a `class-level annotation` used to tell Spring:
