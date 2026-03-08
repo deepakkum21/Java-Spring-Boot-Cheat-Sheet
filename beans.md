@@ -17,10 +17,8 @@
 ## Bean Creation
 
 - **Java Based Configuration**
-
   - `@Configuration` - Class Level
   - `@Bean` - Method Level
-
     - `Bean Name [for Qualifier] = method Name`
     - `Bean Type = return Type of method`
 
@@ -33,7 +31,6 @@
             }
 
 - **Component Scanning**
-
   - `@Component`
   - `@Service`
   - `@Repository`
@@ -81,22 +78,18 @@
 ## Bean LifeCycle [https://docs.spring.io/spring-framework/reference/core/beans/factory-nature.html]
 
 1.  ### Bean Creation
-
     - The Spring container creates an instance of the bean.
     - using different `configuration methods (annotations like @Component, @Service, @Configuration, or Java-based configuration with @Bean)`
 
 2.  ### Dependency Injection
-
     - Spring Boot uses Dependency Injection (DI) to inject the required dependencies into the bean after it is created. DI can be done via:
       - `Constructor-based` injection
       - `Setter-based` injection
       - `Field-based` injection
 
 3.  ### Bean Initialization
-
     - Once the bean is created and dependencies are injected, Spring checks if there is `any custom initialization logic defined`.
     - There are several ways to define initialization logic in Spring:
-
       - Using `@PostConstruct` annotation: This method will be invoked after the bean is fully initialized and dependencies are injected.
       - `Implementing InitializingBean interface`: Spring will invoke the afterPropertiesSet() method after dependency injection.
       - Using `custom @Bean initialization methods in @Configuration classes`.
@@ -122,14 +115,12 @@
       - `Implementing BeanPostProcessor interface` = postProcessBeforeInitialization()
 
 4.  ### Bean Destruction
-
     - After the bean is no longer needed or the Spring container is shut down, Spring handles the destruction of the bean. This can happen automatically during the context shutdown or through an explicit call.
 
             ConfigurableApplicationContext applicationContext = SpringApplication.run(DemoApplication.class, args);
             applicationContext.close();
 
     - Spring provides several ways to hook into the destruction process:
-
       - Using `@PreDestroy annotation`: This method will be called before the bean is destroyed.
       - `Implementing DisposableBean interface`: Spring will invoke the destroy() method of the interface when the bean is destroyed.
       - Using `custom @Bean destroy methods in @Configuration` classes.
@@ -206,7 +197,6 @@
             public class AppConfig {
         }
 - ### excludeFilters
-
   - exclude by Annotation
 
 ```java
@@ -226,7 +216,6 @@
 ```
 
 - ### includeFilters
-
   - exclude by Annotation
   - exclude by type
 
@@ -264,11 +253,9 @@
   - new instance of the bean is created every time it is requested
   - `lazy initialization`
 - `"request"`:
-
   - A new instance of the bean is `created for each HTTP request`
   - `lazy initialization`
   - gets a error of bean unsatisfied when request bean is present inside singleton bean
-
     - sol:- `create proxy`
 
             @Scope(value = "request", proxyMode = ScopedProxyMode. TARGET_CLASS )
@@ -356,7 +343,9 @@ Ans> No as the same instance is returned as Upper level is Singleton and propert
 ---
 
 ### @Component vs @Bean
+
 `https://www.youtube.com/watch?v=Tx4hFLC_pq4&t=896s`
+
 1. `@Component`
 
 - @Component is a `class-level annotation` used to tell Spring:
@@ -414,3 +403,173 @@ public RestTemplate restTemplate() {
 | Custom Logic                 | Limited              | Full control                 |
 | Readability                  | Cleaner              | More explicit                |
 | Typical Usage                | Business & App logic | Infrastructure & Integration |
+
+---
+
+# Conditional Bean Injection
+
+![sample code](https://github.com/codesnippetjava/conditional-beans-demo)
+
+- Spring to `create beans only when certain conditions` are met (like a property value, class presence, profile, etc.)
+- @ConditionalOnProperty
+- @ConditionalOnMissingBean
+- @ConditionalOnBean
+- @ConditionalOnClass
+- @ConditionalOnExpression
+- @Profile
+- Create Custom Conditions
+
+1. **@ConditionalOnProperty**
+
+- `Creates a bean only if a property has a specific value`
+- `Useful for feature toggles or switching implementations.`
+
+```properties
+payment.gateway=stripe
+```
+
+```java
+@Configuration
+public class PaymentConfig {
+
+    @Bean
+    @ConditionalOnProperty(name = "payment.gateway", havingValue = "stripe")
+    public PaymentService stripePaymentService() {
+        return new StripePaymentService();
+    }
+}
+```
+
+2. **@ConditionalOnMissingBean**
+
+- `Creates a bean only if another bean of the same type does NOT exist.`
+- `Commonly used in Spring Boot auto-configuration.`
+- ✅ If the user defines their own CacheManager, Spring will not create this bean.
+
+```java
+@Configuration
+public class CacheConfig {
+
+    @Bean
+    @ConditionalOnMissingBean
+    public CacheManager cacheManager() {
+        return new DefaultCacheManager();
+    }
+}
+```
+
+3. **@ConditionalOnBean**
+
+- `Creates a bean only if another bean already exists.`
+- `Useful when one component depends on another optional component.`
+- ✅ NotificationService loads only if MailService bean exists.
+
+```java
+@Configuration
+public class NotificationConfig {
+
+    @Bean
+    @ConditionalOnBean(MailService.class)
+    public NotificationService notificationService() {
+        return new EmailNotificationService();
+    }
+}
+```
+
+4. **@ConditionalOnClass**
+
+- `Creates a bean only if a specific class is present in the classpath`
+- `Used heavily in Spring Boot auto configuration.`
+- ✅ If the Redis library is in dependencies → bean loads.
+
+```java
+@Configuration
+@ConditionalOnClass(name = "com.redis.client.RedisClient")
+public class RedisConfig {
+
+    @Bean
+    public RedisService redisService() {
+        return new RedisService();
+    }
+}
+```
+
+5. **@Profile**
+
+- `Loads beans based on active environment profile.`
+
+```properties
+spring.profiles.active=prod
+```
+
+```java
+@Configuration
+@Profile("prod")
+public class ProdDatabaseConfig {
+
+    @Bean
+    public DataSource dataSource() {
+        return new MySQLDataSource();
+    }
+}
+```
+
+6. **Custom Condition (@Conditional)**
+
+- `Can create your own logic to decide when a bean should load.`
+
+```java
+// Create the condition
+public class WindowsCondition implements Condition {
+
+    @Override
+    public boolean matches(ConditionContext context,
+                           AnnotatedTypeMetadata metadata) {
+
+        String os = System.getProperty("os.name");
+        return os.contains("Windows");
+    }
+}
+```
+
+```java
+// use the condition
+@Configuration
+public class OSConfig {
+
+    @Bean
+    @Conditional(WindowsCondition.class)
+    public FileService windowsFileService() {
+        return new WindowsFileService();
+    }
+}
+```
+
+7. **@ConditionalOnExpression**
+
+- in Spring Boot allows a `bean to be created only if a SpEL (Spring Expression Language) expression evaluates to true`
+- `if simple expression is there use @ConditionalOnProperty`
+- Most production projects rarely use @ConditionalOnExpression because @ConditionalOnProperty is cleaner and easier to maintain.
+
+```properties
+feature.payment.enabled=true
+```
+
+```java
+@Configuration
+public class PaymentConfig {
+
+    @Bean
+    @ConditionalOnExpression("${feature.payment.enabled} == true")
+    public PaymentService paymentService() {
+        return new PaymentService();
+    }
+}
+```
+
+| Pros                    | Cons                     |
+| ----------------------- | ------------------------ |
+| Flexible configuration  | Harder debugging         |
+| Environment based beans | Hidden complexity        |
+| Good for auto-config    | Runtime behavior changes |
+| Avoid bean conflicts    | Testing setup needed     |
